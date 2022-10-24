@@ -5,10 +5,21 @@ const createOne = async (productReview: ProductDocument) => {
   return await productReview.save()
 }
 
-const getAll = async () => {
+const getAll = async (page: number, limit: number, sort: string) => {
   return await Product.find()
+    .sort({ [sort]: 1 })
+    .limit(limit)
+    .skip(page * limit)
 }
 
+const findProductReviews = async (id: string) => {
+  const foundOne = await Product.findById(id).populate('reviews')
+  if (foundOne) {
+    return foundOne
+  } else {
+    throw new NotFoundError()
+  }
+}
 const getById = async (id: string) => {
   const foundOne = await Product.findById(id)
   if (foundOne) {
@@ -42,4 +53,5 @@ export default {
   getById,
   updateOne,
   deleteOne,
+  findProductReviews,
 }
