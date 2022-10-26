@@ -5,6 +5,8 @@ import Product from "../../src/models/Product";
 import ProductService from '../../src/services/productService';
 
 import connect, { MongodHelper } from '../db-helper';
+import { category1, category2, category3 } from './../fixtures/category';
+import Category from '../../src/models/Category';
 
 let mongodHelper: MongodHelper 
 
@@ -15,6 +17,7 @@ beforeAll(async () => {
 beforeEach(async () => {
   await Product.insertMany([product1, product2, product3, product4])
   await ProductReview.insertMany([productReviews1, productReviews2])
+  await Category.insertMany([category1, category2, category3])
 })
 
 afterEach(async () => {
@@ -36,7 +39,11 @@ describe('test product service', () => {
   })
   test('find product reviews',async () => {
     const product = await ProductService.findProductReviews(product1._id)
-    console.log(product)
+    // console.log(product)
     expect(product.reviews.length).toBe(2)
+  })
+  test('test findAllPipeline', async () => {
+    const products = await ProductService.findAllPipeline(0, 2, 'price', category3._id)
+    console.log(products)
   })
 })

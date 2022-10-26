@@ -8,8 +8,34 @@ const createOne = async (productReview: ProductDocument) => {
 const getAll = async (page: number, limit: number, sort: string) => {
   return await Product.find()
     .sort({ [sort]: 1 })
-    .limit(limit)
     .skip(page * limit)
+    .limit(limit)
+}
+
+const findAllPipeline = async (
+  page: number,
+  limit: number,
+  sort: string,
+  categoryId: string
+) => {
+  return await Product.aggregate()
+    .sort({ [sort]: 1 })
+    .skip(page * limit)
+    .limit(limit)
+    .lookup({
+      from: 'productreviews',
+      localField: '_id',
+      foreignField: 'productId',
+      as: 'reviews',
+    })
+    .addFields({
+      rate: {
+        $ifNull: [{ $avg: '$reviews.rate' }, 0],
+      },
+    })
+    .match({
+      categories: categoryId,
+    })
 }
 
 const findProductReviews = async (id: string) => {
@@ -54,4 +80,5 @@ export default {
   updateOne,
   deleteOne,
   findProductReviews,
+  findAllPipeline,
 }
