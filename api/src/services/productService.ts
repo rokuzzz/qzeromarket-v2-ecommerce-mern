@@ -16,7 +16,7 @@ const findAllPipeline = async (
   page: number,
   limit: number,
   sort: string,
-  categoryId: string
+  categoryId: string[]
 ) => {
   return await Product.aggregate()
     .sort({ [sort]: 1 })
@@ -34,7 +34,7 @@ const findAllPipeline = async (
       },
     })
     .match({
-      categories: categoryId,
+      categories: { $in: categoryId },
     })
 }
 

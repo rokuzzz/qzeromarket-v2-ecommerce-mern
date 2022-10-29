@@ -43,7 +43,7 @@ describe('test product service', () => {
     expect(product.reviews.length).toBe(2)
   })
   test('test findAllPipeline', async () => {
-    const products = await ProductService.findAllPipeline(0, 2, 'price', category3._id)
-    console.log(products)
+    const products = await ProductService.findAllPipeline(0, 4, 'price', [category1._id, category3._id])
+    expect(products.length).toBe(3)
   })
 })
