@@ -8,6 +8,7 @@ export interface CartDocument extends Document {
       quantity: number
     }
   ]
+  status: 'paid' | 'unpaid'
 }
 
 const CartSchema = new Schema({
@@ -22,6 +23,10 @@ const CartSchema = new Schema({
       quantity: Number,
     },
   ],
+  status: {
+    type: String,
+    enum: ['paid', 'unpaid'],
+  },
 })
 
 const Cart = mongoose.model<CartDocument>('Cart', CartSchema)
