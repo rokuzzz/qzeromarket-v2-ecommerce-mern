@@ -46,6 +46,7 @@ const findProductReviews = async (id: string) => {
     throw new NotFoundError()
   }
 }
+
 const getById = async (id: string) => {
   const foundOne = await Product.findById(id)
   if (foundOne) {

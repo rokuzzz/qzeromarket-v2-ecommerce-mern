@@ -32,6 +32,7 @@
     "mongoose": "^5.11.15",
     "passport": "^0.4.1",
     "passport-local": "^1.0.0",
+    "stripe": "^11.6.0",
     "winston": "^3.2.1"
   },
   "devDependencies": {
