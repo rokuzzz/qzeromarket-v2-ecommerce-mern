@@ -5,8 +5,9 @@ const createOne = async (productReview: ProductDocument) => {
   return await productReview.save()
 }
 
-const getAll = async (page: number, limit: number, sort: string) => {
-  return await Product.find()
+const findAll = async (page: number, limit: number, sort: string) => {
+  return await Product
+    .find()
     .sort({ [sort]: 1 })
     .skip(page * limit)
     .limit(limit)
@@ -47,7 +48,7 @@ const findProductReviews = async (id: string) => {
   }
 }
 
-const getById = async (id: string) => {
+const findById = async (id: string) => {
   const foundOne = await Product.findById(id)
   if (foundOne) {
     return foundOne
@@ -76,8 +77,8 @@ const deleteOne = async (id: string) => {
 
 export default {
   createOne,
-  getAll,
-  getById,
+  findAll,
+  findById,
   updateOne,
   deleteOne,
   findProductReviews,

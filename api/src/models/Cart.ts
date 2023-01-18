@@ -2,27 +2,23 @@ import mongoose, { Document, ObjectId, Schema } from 'mongoose'
 
 export interface CartDocument extends Document {
   userId: ObjectId
-  products: [
-    {
+  products: [{
       productId: ObjectId
       quantity: number
-    }
-  ]
+  }],
   status: 'paid' | 'unpaid'
 }
 
-const CartSchema = new Schema({
+const CartSchema = new Schema<CartDocument>({
   userId: {
     type: Schema.Types.ObjectId,
     ref: 'User',
   },
-  products: [
-    {
+  products: [{
       productId: Schema.Types.ObjectId,
       ref: 'Product',
       quantity: Number,
-    },
-  ],
+  }],
   status: {
     type: String,
     enum: ['paid', 'unpaid'],

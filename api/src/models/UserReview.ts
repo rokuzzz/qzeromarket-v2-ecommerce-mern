@@ -1,9 +1,9 @@
 import mongoose, { Document, ObjectId, Schema } from "mongoose";
 
 export interface UserReviewDocument extends Document{
-  reviewerId: ObjectId,
-  revieweeId: ObjectId,
-  rate: 1|2|3|4|5,
+  reviewerId: ObjectId
+  revieweeId: ObjectId
+  rate: 1 | 2 | 3 | 4 | 5
   comment: string
 }
 

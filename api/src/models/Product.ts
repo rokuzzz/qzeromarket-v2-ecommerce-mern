@@ -9,7 +9,7 @@ export interface ProductDocument extends Document {
   image: string
 }
 
-const ProductSchema = new Schema(
+const ProductSchema = new Schema<ProductDocument>(
   {
     title: {
       type: String,
@@ -21,25 +21,23 @@ const ProductSchema = new Schema(
     },
     sellerId: {
       type: Schema.Types.ObjectId,
-      ref: 'User',
+      ref: 'User'
     },
-    categories: [
-      {
+    categories: [{
         type: Schema.Types.ObjectId,
-        ref: 'Category',
-      },
-    ],
+        ref: 'Category'
+    }],
     image: {
-      type: String,
-    },
+      type: String
+    }
   },
   {
     toJSON: {
-      virtuals: true,
+      virtuals: true
     },
     toObject: {
-      virtuals: true,
-    },
+      virtuals: true
+    }
   }
 )
 

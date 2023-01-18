@@ -11,21 +11,21 @@ const ProductReviewSchema = new Schema<ProductReviewDocument>({
   reviewerId: {
     type: Schema.Types.ObjectId,
     ref: 'User',
-    required: true,
+    required: true
   },
   productId: {
     type: Schema.Types.ObjectId,
     ref: 'Product',
-    required: true,
+    required: true
   },
   rate: {
     type: Number,
     enum: [1, 2, 3, 4, 5],
-    required: true,
+    required: true
   },
   comment: {
-    type: String,
-  },
+    type: String
+  }
 })
 
 const ProductReview = mongoose.model<ProductReviewDocument>(

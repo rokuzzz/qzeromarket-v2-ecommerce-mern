@@ -5,11 +5,11 @@ const createOne = async (productReview: UserDocument) => {
   return await productReview.save()
 }
 
-const getAll = async () => {
+const findAll = async () => {
   return await User.find()
 }
 
-const getById = async (id: string) => {
+const findById = async (id: string) => {
   const foundOne = await User.findById(id)
   if (foundOne) {
     return foundOne
@@ -38,8 +38,8 @@ const deleteOne = async (id: string) => {
 
 export default {
   createOne,
-  getAll,
-  getById,
+  findAll,
+  findById,
   updateOne,
   deleteOne,
 }

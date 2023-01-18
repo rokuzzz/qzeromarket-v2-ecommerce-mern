@@ -5,11 +5,11 @@ const createOne = async (productReview: ProductReviewDocument) => {
   return await productReview.save()
 }
 
-const getAll = async () => {
+const findAll = async () => {
   return await ProductReview.find()
 }
 
-const getById = async (id: string) => {
+const findById = async (id: string) => {
   const foundOne = await ProductReview.findById(id)
   if (foundOne) {
     return foundOne
@@ -18,10 +18,7 @@ const getById = async (id: string) => {
   }
 }
 
-const updateOne = async (
-  id: string,
-  update: Partial<ProductReviewDocument>
-) => {
+const updateOne = async (id: string, update: Partial<ProductReviewDocument>) => {
   const foundOne = await ProductReview.findByIdAndUpdate(id, update)
   if (foundOne) {
     return foundOne
@@ -41,8 +38,8 @@ const deleteOne = async (id: string) => {
 
 export default {
   createOne,
-  getAll,
-  getById,
+  findAll,
+  findById,
   updateOne,
   deleteOne,
 }

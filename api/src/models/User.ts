@@ -10,43 +10,39 @@ export interface UserDocument extends Document {
   reviews: ObjectId[]
 }
 
-const UserSchema = new Schema({
+const UserSchema = new Schema<UserDocument>({
   firstname: {
     type: String,
-    required: true,
+    required: true
   },
   lastname: {
     type: String,
-    required: true,
+    required: true
   },
   username: {
     type: String,
     unique: true,
-    required: true,
+    required: true
   },
   email: {
     type: String,
     unique: true,
-    required: true,
+    required: true
   },
   password: {
     type: String,
-    required: true,
+    required: true
   },
-  address: [
-    {
+  address: [{
       type: Schema.Types.ObjectId,
       ref: 'Address',
-      required: true,
-    },
-  ],
-  reviews: [
-    {
+      required: true
+  }],
+  reviews: [{
       type: Schema.Types.ObjectId,
       ref: 'UserReview',
-      required: true,
-    },
-  ],
+      required: true
+  }],
 })
 
 const User = mongoose.model<UserDocument>('User', UserSchema)
