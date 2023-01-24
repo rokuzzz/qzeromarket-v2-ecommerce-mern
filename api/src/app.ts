@@ -4,6 +4,7 @@ import dotenv from 'dotenv'
 
 import apiErrorHandler from './middlewares/apiErrorHandler'
 import apiContentType from './middlewares/apiContentType'
+import userRoute from './routes/userRoute'
 
 dotenv.config({ path: '.env' })
 const app = express()
@@ -15,7 +16,8 @@ app.set('port', process.env.PORT || 3000)
 app.use(apiContentType)
 app.use(express.json())
 
-// Set up routers
+// Set up routes
+app.use('/api/users', userRoute)
 
 // Custom API error handler
 app.use(apiErrorHandler)

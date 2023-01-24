@@ -6,8 +6,8 @@ export interface UserDocument extends Document {
   username: string
   email: string
   password: string
-  address: ObjectId[]
-  reviews: ObjectId[]
+  // address: ObjectId[]
+  // reviews: ObjectId[]
 }
 
 const UserSchema = new Schema<UserDocument>({
@@ -33,16 +33,16 @@ const UserSchema = new Schema<UserDocument>({
     type: String,
     required: true
   },
-  address: [{
-      type: Schema.Types.ObjectId,
-      ref: 'Address',
-      required: true
-  }],
-  reviews: [{
-      type: Schema.Types.ObjectId,
-      ref: 'UserReview',
-      required: true
-  }],
+  // address: [{
+  //     type: Schema.Types.ObjectId,
+  //     ref: 'Address',
+  //     required: true
+  // }],
+  // reviews: [{
+  //     type: Schema.Types.ObjectId,
+  //     ref: 'UserReview',
+  //     required: true
+  // }],
 })
 
 const User = mongoose.model<UserDocument>('User', UserSchema)
