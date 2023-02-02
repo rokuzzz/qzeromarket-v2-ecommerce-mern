@@ -1,5 +1,7 @@
 import mongoose, { Document, ObjectId, Schema } from 'mongoose'
 
+export type UserRole = "guest" | "admin";
+
 export interface UserDocument extends Document {
   _doc?: any
   firstname: string
@@ -7,6 +9,7 @@ export interface UserDocument extends Document {
   username: string
   email: string
   password: string
+  role: UserRole
   // address: ObjectId[]
   // reviews: ObjectId[]
 }
@@ -34,6 +37,11 @@ const UserSchema = new Schema<UserDocument>({
     type: String,
     required: true
   },
+  role: {
+    type: String,
+    enum: ['guest', 'admin'],
+    required: true
+  }
   // address: [{
   //     type: Schema.Types.ObjectId,
   //     ref: 'Address',
