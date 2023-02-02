@@ -1,6 +1,7 @@
 import mongoose, { Document, ObjectId, Schema } from 'mongoose'
 
 export interface UserDocument extends Document {
+  _doc?: any
   firstname: string
   lastname: string
   username: string
