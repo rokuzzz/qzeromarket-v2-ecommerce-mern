@@ -8,6 +8,16 @@ const getAllUsers = (req: Request, res: Response) => {
   res.send('Get from userRoute')
 }
 
+const getUser = async (req: Request, res: Response) => {
+  try {
+    const user = await User.findById(req.params.id)
+    const {password, ...others} = user?._doc
+    res.status(200).json(others)
+  } catch (err) {
+    res.status(500).json(err)
+  }
+}
+
 const updateUser = async (req: Request, res: Response) => {
   if(req.body.password){
     req.body.password = CryptoJS.AES.encrypt(
@@ -36,6 +46,7 @@ const deleteUser = async (req: Request, res: Response) => {
 
 export default {
   getAllUsers,
+  getUser,
   updateUser,
   deleteUser
 }
