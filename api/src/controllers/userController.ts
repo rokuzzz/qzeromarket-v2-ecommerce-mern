@@ -4,15 +4,20 @@ import CryptoJS from 'crypto-js'
 import User from "../models/User";
 import { CRYPTO_SECRET } from "../util/secrets";
 
-const getAllUsers = (req: Request, res: Response) => {
-  res.send('Get from userRoute')
-}
-
 const getUser = async (req: Request, res: Response) => {
   try {
     const user = await User.findById(req.params.id)
     const {password, ...others} = user?._doc
     res.status(200).json(others)
+  } catch (err) {
+    res.status(500).json(err)
+  }
+}
+
+const getAllUsers = async (req: Request, res: Response) => {
+  try {
+    const users = await User.find()
+    res.status(200).json(users)
   } catch (err) {
     res.status(500).json(err)
   }
