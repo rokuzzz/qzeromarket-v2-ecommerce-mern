@@ -1,8 +1,8 @@
 import { NotFoundError } from '../helpers/apiError'
 import User, { UserDocument } from '../models/User'
 
-const createOne = async (productReview: UserDocument) => {
-  return await productReview.save()
+const createOne = async (user: UserDocument) => {
+  return await user.save()
 }
 
 const findAll = async () => {

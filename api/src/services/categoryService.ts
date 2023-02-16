@@ -1,8 +1,8 @@
 import { NotFoundError } from '../helpers/apiError'
 import Category, { CategoryDocument } from '../models/Category'
 
-const createOne = async (productReview: CategoryDocument) => {
-  return await productReview.save()
+const createOne = async (category: CategoryDocument) => {
+  return await category.save()
 }
 
 const findAll = async () => {
