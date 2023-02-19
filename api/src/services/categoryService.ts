@@ -11,11 +11,8 @@ const findAll = async () => {
 
 const findById = async (id: string) => {
   const foundOne = await Category.findById(id)
-  if (foundOne) {
-    return foundOne
-  } else {
-    throw new NotFoundError()
-  }
+  if (!foundOne) throw new NotFoundError('Category does not exist.')
+  return foundOne
 }
 
 const updateOne = async (id: string, update: Partial<CategoryDocument>) => {
