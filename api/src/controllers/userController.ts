@@ -1,7 +1,6 @@
 import { Request, Response } from "express";
 import CryptoJS from 'crypto-js'
 
-import User from "../models/User";
 import { CRYPTO_SECRET } from "../util/secrets";
 import userService from "../services/userService";
 

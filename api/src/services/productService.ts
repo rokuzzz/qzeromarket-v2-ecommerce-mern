@@ -1,8 +1,8 @@
 import { NotFoundError } from '../helpers/apiError'
 import Product, { ProductDocument } from '../models/Product'
 
-const createOne = async (productReview: ProductDocument) => {
-  return await productReview.save()
+const createOne = async (product: ProductDocument) => {
+  return await product.save()
 }
 
 const findAll = async (page: number, limit: number, sort: string) => {
