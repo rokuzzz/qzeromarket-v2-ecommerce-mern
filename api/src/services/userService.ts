@@ -1,3 +1,4 @@
+import { QueryOptions, UpdateQuery, UpdateWithAggregationPipeline } from 'mongoose'
 import { NotFoundError } from '../helpers/apiError'
 import User, { UserDocument } from '../models/User'
 
@@ -18,8 +19,12 @@ const findById = async (id: string) => {
   }
 }
 
-const updateOne = async (id: string, update: Partial<UserDocument>) => {
-  const foundOne = await User.findByIdAndUpdate(id, update)
+const updateOne = async (
+  id: string, 
+  update?: UpdateWithAggregationPipeline | UpdateQuery<UserDocument> | undefined, 
+  options?: QueryOptions | null | undefined
+) => {
+  const foundOne = await User.findByIdAndUpdate(id, update, options)
   if (foundOne) {
     return foundOne
   } else {
@@ -28,9 +33,9 @@ const updateOne = async (id: string, update: Partial<UserDocument>) => {
 }
 
 const deleteOne = async (id: string) => {
-  const foundOne = await User.findByIdAndDelete(id)
-  if (foundOne) {
-    return foundOne
+  const foundUser = await User.findById(id)
+  if (foundUser) {
+    return await User.findByIdAndDelete(id)
   } else {
     throw new NotFoundError()
   }

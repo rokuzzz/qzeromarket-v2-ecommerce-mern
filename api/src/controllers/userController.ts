@@ -3,10 +3,11 @@ import CryptoJS from 'crypto-js'
 
 import User from "../models/User";
 import { CRYPTO_SECRET } from "../util/secrets";
+import userService from "../services/userService";
 
 const getUser = async (req: Request, res: Response) => {
   try {
-    const user = await User.findById(req.params.id)
+    const user = await userService.findById(req.params.id)
     const {password, ...others} = user?._doc
     res.status(200).json(others)
   } catch (err) {
@@ -16,7 +17,7 @@ const getUser = async (req: Request, res: Response) => {
 
 const getAllUsers = async (req: Request, res: Response) => {
   try {
-    const users = await User.find()
+    const users = await userService.findAll()
     res.status(200).json(users)
   } catch (err) {
     res.status(500).json(err)
@@ -31,9 +32,11 @@ const updateUser = async (req: Request, res: Response) => {
     ).toString()
   }
   try{
-    const updatedUser = await User.findByIdAndUpdate(req.params.id, {
-      $set: req.body
-    }, {new: true})
+    const updatedUser = await userService.updateOne(
+      req.params.id,
+      { $set: req.body }, 
+      { new: true }
+    )
     res.status(200).json(updatedUser)
   } catch (err) {
     res.status(500).json(err)
@@ -42,7 +45,7 @@ const updateUser = async (req: Request, res: Response) => {
 
 const deleteUser = async (req: Request, res: Response) => {
   try {
-    await User.findByIdAndDelete(req.params.id)
+    await userService.deleteOne(req.params.id)
     res.status(200).json('User has been deleted.')
   } catch (err) {
     res.status(500).json(err)
