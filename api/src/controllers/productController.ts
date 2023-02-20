@@ -1,15 +1,15 @@
-import { Request, Response } from "express";
+import { NextFunction, Request, Response } from "express";
 
 import productService from "../services/productService";
 import categoryService from '../services/categoryService';
 import Product from "../models/Product";
 
-const createProduct = async (req: Request, res: Response) => {
+const createProduct = async (req: Request, res: Response, next: NextFunction) => {
   const {title, description, price, categories, image} = req.body
   const categoryIds = await categoryService.getIdsByNames(categories)
 
   if(categoryIds.length == 0) {
-    res.status(404).json('The categories field is empty or were entered incorrectly')
+    next()
   } else {
     const newProduct = new Product({
       title: title,
