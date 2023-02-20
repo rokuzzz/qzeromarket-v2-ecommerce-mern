@@ -1,5 +1,5 @@
-import { QueryOptions, UpdateQuery, UpdateWithAggregationPipeline } from 'mongoose'
-import { NotFoundError } from '../helpers/apiError'
+import { QueryOptions, UpdateQuery, UpdateWithAggregationPipeline, ObjectId } from 'mongoose'
+import { BadRequestError, NotFoundError } from '../helpers/apiError'
 import Category, { CategoryDocument } from '../models/Category'
 
 const createOne = async (category: CategoryDocument) => {
@@ -14,6 +14,16 @@ const findById = async (id: string) => {
   const foundOne = await Category.findById(id)
   if (!foundOne) throw new NotFoundError('Category does not exist.')
   return foundOne
+}
+
+const getIdsByNames = async (names: string[]) => {
+  const categoryIds: ObjectId[] = []
+  const categories = await Category.find({name: {$in: names}}, '_id')
+  // if (categories.length == 0) {
+  //   throw new NotFoundError()
+  // }
+  categories.map(category => categoryIds.push(category._id))
+  return categoryIds
 }
 
 const updateOne = async ( 
@@ -42,6 +52,7 @@ export default {
   createOne,
   findAll,
   findById,
+  getIdsByNames,
   updateOne,
   deleteOne,
 }

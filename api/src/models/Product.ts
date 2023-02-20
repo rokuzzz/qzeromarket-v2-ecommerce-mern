@@ -5,7 +5,7 @@ export interface ProductDocument extends Document {
   description: string
   price: number
   // sellerId: ObjectId
-  categories: string[]
+  categories: ObjectId[]
   // reviews: ObjectId[]
   image: string
 }
@@ -24,18 +24,18 @@ const ProductSchema = new Schema<ProductDocument>(
       type: Number,
       required: true,
     },
-    categories: {
-      type: Array,
-      required: true
-    },
+    categories: [{
+      type: Schema.Types.ObjectId,
+      ref: 'Category'
+    }],
+    // categories: {
+    //   type: Array,
+    //   required: true
+    // },
     // sellerId: {
     //   type: Schema.Types.ObjectId,
     //   ref: 'User'
     // },
-    // categories: [{
-    //     type: Schema.Types.ObjectId,
-    //     ref: 'Category'
-    // }],
     image: {
       type: String
     }
