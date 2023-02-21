@@ -6,5 +6,6 @@ const productRoute = Router()
 
 productRoute.post('/', verifyAdmin, productController.createProduct)
 productRoute.put('/:id', verifyAdmin, productController.updateProduct)
+productRoute.delete('/:id', verifyAdmin, productController.deleteProduct)
 
 export default productRoute

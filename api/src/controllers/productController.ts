@@ -57,7 +57,17 @@ const updateProduct = async (req: Request, res: Response) => {
   }
 }
 
+const deleteProduct = async (req: Request, res: Response) => {
+  try {
+    await productService.deleteOne(req.params.id)
+    res.status(200).json('Product has been deleted.')
+  } catch (err) {
+    res.status(500).json(err)
+  }
+}
+
 export default {
   createProduct,
-  updateProduct
+  updateProduct,
+  deleteProduct
 }
