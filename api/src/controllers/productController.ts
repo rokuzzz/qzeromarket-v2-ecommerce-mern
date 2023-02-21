@@ -28,6 +28,36 @@ const createProduct = async (req: Request, res: Response, next: NextFunction) =>
   }
 }
 
+const updateProduct = async (req: Request, res: Response) => {
+  const {categories, ...others} = req.body
+  const categoryIds = await categoryService.getIdsByNames(categories)
+
+  if(categoryIds.length == 0) {
+    try {
+      const updatedProduct = await productService.updateOne(
+        req.params.id,
+        { $set: others },
+        { new: true }
+      )
+      res.status(200).json(updatedProduct)
+    } catch (err) {
+      res.status(500).json(err)
+    }
+  } else {  
+    try {
+      const updatedProduct = await productService.updateOne(
+        req.params.id,
+        { $set: {categories: categoryIds, others} },
+        { new: true }
+      )
+      res.status(200).json(updatedProduct)
+    } catch (err) {
+      res.status(500).json(err)
+    }
+  }
+}
+
 export default {
-  createProduct
+  createProduct,
+  updateProduct
 }

@@ -1,3 +1,4 @@
+import { QueryOptions, UpdateQuery, UpdateWithAggregationPipeline } from 'mongoose'
 import { NotFoundError } from '../helpers/apiError'
 import Product, { ProductDocument } from '../models/Product'
 
@@ -57,8 +58,12 @@ const findById = async (id: string) => {
   }
 }
 
-const updateOne = async (id: string, update: Partial<ProductDocument>) => {
-  const foundOne = await Product.findByIdAndUpdate(id, update)
+const updateOne = async ( 
+  id: string, 
+  update?: UpdateWithAggregationPipeline | UpdateQuery<ProductDocument> | undefined, 
+  options?: QueryOptions | null | undefined
+) => {
+  const foundOne = await Product.findByIdAndUpdate(id, update, options)
   if (foundOne) {
     return foundOne
   } else {
