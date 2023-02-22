@@ -28,6 +28,31 @@ const createProduct = async (req: Request, res: Response, next: NextFunction) =>
   }
 }
 
+const getFilteredProducts = async (req: Request, res: Response) => {
+  const skipPages = parseInt(req.query.page as string) || 0
+  const limitPages = parseInt(req.query.limit as string) || 10
+  const sortBy = req.query.sort?.toString() || "price"
+  const order = req.query.order?.toString() || 0
+  const qCategories = req.query.categories || []
+
+  try {
+    const products = await productService.findAll(skipPages, limitPages, sortBy, order)
+    res.status(200).json(products);
+    
+  } catch (err) {
+    res.status(500).json(err)
+  }
+}
+
+const getProductById = async (req: Request, res: Response) => {
+  try {
+    const product = await productService.findById(req.params.id)
+    res.status(200).json(product)
+  } catch (err) {
+    res.status(500).json(err)
+  }
+}
+
 const updateProduct = async (req: Request, res: Response) => {
   const {categories, ...others} = req.body
   const categoryIds = await categoryService.getIdsByNames(categories)
@@ -68,6 +93,8 @@ const deleteProduct = async (req: Request, res: Response) => {
 
 export default {
   createProduct,
+  getProductById,
+  getFilteredProducts,
   updateProduct,
   deleteProduct
 }

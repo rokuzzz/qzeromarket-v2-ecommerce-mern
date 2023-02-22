@@ -6,38 +6,38 @@ const createOne = async (product: ProductDocument) => {
   return await product.save()
 }
 
-const findAll = async (page: number, limit: number, sort: string) => {
+const findAll = async (page: number, limit: number, sort: string, order: string | number ) => {
   return await Product
     .find()
-    .sort({ [sort]: 1 })
+    .sort({ [sort]: order })
     .skip(page * limit)
     .limit(limit)
 }
 
 const findAllPipeline = async (
-  page: number,
-  limit: number,
-  sort: string,
-  categoryId: string[]
+  page?: any,
+  limit?: any,
+  sort?: string,
+  // categoryId?: string[]
 ) => {
   return await Product.aggregate()
-    .sort({ [sort]: 1 })
+    .sort({ [sort!]: 1 })
     .skip(page * limit)
     .limit(limit)
-    .lookup({
-      from: 'productreviews',
-      localField: '_id',
-      foreignField: 'productId',
-      as: 'reviews',
-    })
-    .addFields({
-      rate: {
-        $ifNull: [{ $avg: '$reviews.rate' }, 0],
-      },
-    })
-    .match({
-      categories: { $in: categoryId },
-    })
+    // .lookup({
+    //   from: 'productreviews',
+    //   localField: '_id',
+    //   foreignField: 'productId',
+    //   as: 'reviews',
+    // })
+    // .addFields({
+    //   rate: {
+    //     $ifNull: [{ $avg: '$reviews.rate' }, 0],
+    //   },
+    // })
+    // .match({
+    //   categories: { $in: categoryId },
+    // })
 }
 
 const findProductReviews = async (id: string) => {
