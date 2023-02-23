@@ -38,7 +38,11 @@ const getFilteredProducts = async (req: Request, res: Response) => {
   let categories = req.query.categories
 
   const convertedCategories: string[] = []
+
+  // check if categories value is an array
   if (Array.isArray(categories)) {
+    // converts each category in the categories to a string (if it's not already)
+    // push values to convertedCategories
     for (let category of categories) {
       if (typeof category !== 'string') {
         convertedCategories.push(category.toString())
@@ -53,12 +57,20 @@ const getFilteredProducts = async (req: Request, res: Response) => {
     } catch (err) {
       res.status(500).json(err)
     }
-  } else if (typeof categories == "string") {
+    // if category value is string and it is not empty - convert it to string array type 
+  } else if (typeof categories == "string" && categories !== "") {
     convertedCategories.push(categories)
     try {
       const categoryIds = await categoryService.getIdsByNames(convertedCategories)
-      const products = await productService.findAllPipeline(skipPages, limitPages, sortBy, order, categoryIds)
-      res.status(200).json(products)
+      if (categoryIds.length == 0) {
+        categories = ["All"]
+        const categoryIds = await categoryService.getIdsByNames(categories);
+        const products = await productService.findAllPipeline(skipPages, limitPages, sortBy, order, categoryIds)
+        res.status(200).json(products) 
+      } else {
+        const products = await productService.findAllPipeline(skipPages, limitPages, sortBy, order, categoryIds)
+        res.status(200).json(products)
+      }
     } catch (err) {
       res.status(500).json(err)
     }
