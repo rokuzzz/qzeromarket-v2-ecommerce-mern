@@ -19,9 +19,6 @@ const findById = async (id: string) => {
 const getIdsByNames = async (names: string[]) => {
   const categoryIds: ObjectId[] = []
   const categories = await Category.find({name: {$in: names}}, '_id')
-  // if (categories.length == 0) {
-  //   throw new NotFoundError()
-  // }
   categories.map(category => categoryIds.push(category._id))
   return categoryIds
 }

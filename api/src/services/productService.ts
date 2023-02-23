@@ -1,4 +1,4 @@
-import { QueryOptions, UpdateQuery, UpdateWithAggregationPipeline } from 'mongoose'
+import { ObjectId, QueryOptions, UpdateQuery, UpdateWithAggregationPipeline } from 'mongoose'
 import { NotFoundError } from '../helpers/apiError'
 import Product, { ProductDocument } from '../models/Product'
 
@@ -15,13 +15,15 @@ const findAll = async (page: number, limit: number, sort: string, order: string 
 }
 
 const findAllPipeline = async (
-  page?: any,
-  limit?: any,
-  sort?: string,
-  // categoryId?: string[]
+  page: number,
+  limit: number,
+  sort: string,
+  order: string | number,
+  categoryId: ObjectId[]
 ) => {
-  return await Product.aggregate()
-    .sort({ [sort!]: 1 })
+  return await Product
+    .aggregate()
+    .sort({ [sort]: order })
     .skip(page * limit)
     .limit(limit)
     // .lookup({
@@ -35,9 +37,9 @@ const findAllPipeline = async (
     //     $ifNull: [{ $avg: '$reviews.rate' }, 0],
     //   },
     // })
-    // .match({
-    //   categories: { $in: categoryId },
-    // })
+    .match({
+      categories: { $in: categoryId },
+    })
 }
 
 const findProductReviews = async (id: string) => {

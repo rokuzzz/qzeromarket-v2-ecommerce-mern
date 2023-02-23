@@ -1,8 +1,10 @@
+import { forEach } from 'lodash';
 import { NextFunction, Request, Response } from "express";
 
 import productService from "../services/productService";
 import categoryService from '../services/categoryService';
 import Product from "../models/Product";
+import { BadRequestError } from "../helpers/apiError";
 
 const createProduct = async (req: Request, res: Response, next: NextFunction) => {
   const {title, description, price, categories, image} = req.body
@@ -31,16 +33,44 @@ const createProduct = async (req: Request, res: Response, next: NextFunction) =>
 const getFilteredProducts = async (req: Request, res: Response) => {
   const skipPages = parseInt(req.query.page as string) || 0
   const limitPages = parseInt(req.query.limit as string) || 10
-  const sortBy = req.query.sort?.toString() || "price"
+  const sortBy = req.query.sort?.toString() || "random"
   const order = req.query.order?.toString() || 0
-  const qCategories = req.query.categories || []
+  let categories = req.query.categories
 
-  try {
-    const products = await productService.findAll(skipPages, limitPages, sortBy, order)
-    res.status(200).json(products);
-    
-  } catch (err) {
-    res.status(500).json(err)
+  const convertedCategories: string[] = []
+  if (Array.isArray(categories)) {
+    for (let category of categories) {
+      if (typeof category !== 'string') {
+        convertedCategories.push(category.toString())
+      } else {
+        convertedCategories.push(category)
+      }
+    }
+    try {
+      const categoryIds = await categoryService.getIdsByNames(convertedCategories)
+      const products = await productService.findAllPipeline(skipPages, limitPages, sortBy, order, categoryIds)
+      res.status(200).json(products)
+    } catch (err) {
+      res.status(500).json(err)
+    }
+  } else if (typeof categories == "string") {
+    convertedCategories.push(categories)
+    try {
+      const categoryIds = await categoryService.getIdsByNames(convertedCategories)
+      const products = await productService.findAllPipeline(skipPages, limitPages, sortBy, order, categoryIds)
+      res.status(200).json(products)
+    } catch (err) {
+      res.status(500).json(err)
+    }
+  } else {
+    categories = ["All"]
+    try {
+      const categoryIds = await categoryService.getIdsByNames(categories);
+      const products = await productService.findAllPipeline(skipPages, limitPages, sortBy, order, categoryIds)
+      res.status(200).json(products)
+    } catch (err) {
+      res.status(500).json(err)
+    }
   }
 }
 
