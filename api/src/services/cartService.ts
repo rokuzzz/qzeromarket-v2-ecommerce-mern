@@ -1,6 +1,6 @@
 import { NotFoundError } from '../helpers/apiError'
 import Cart, { CartDocument } from '../models/Cart'
-import paymentService from './paymentService'
+// import paymentService from './paymentService'
 
 const createOne = async (productReview: CartDocument) => {
   return await productReview.save()
@@ -37,13 +37,13 @@ const deleteOne = async (id: string) => {
   }
 }
 
-const checkoutCart = async (cartId: string) => {
-  const cart = await Cart.findById(cartId)
+// const checkoutCart = async (cartId: string) => {
+//   const cart = await Cart.findById(cartId)
 
-  if(cart) {
-    const checkoutSession = await paymentService.session(cart)
-  }
-}
+//   if(cart) {
+//     const checkoutSession = await paymentService.session(cart)
+//   }
+// }
 
 export default {
   createOne,

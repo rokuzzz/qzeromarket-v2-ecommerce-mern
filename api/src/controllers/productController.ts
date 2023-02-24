@@ -4,7 +4,6 @@ import { NextFunction, Request, Response } from "express";
 import productService from "../services/productService";
 import categoryService from '../services/categoryService';
 import Product from "../models/Product";
-import { BadRequestError } from "../helpers/apiError";
 
 const createProduct = async (req: Request, res: Response, next: NextFunction) => {
   const {title, description, price, categories, image} = req.body
@@ -62,6 +61,7 @@ const getFilteredProducts = async (req: Request, res: Response) => {
     convertedCategories.push(categories)
     try {
       const categoryIds = await categoryService.getIdsByNames(convertedCategories)
+      // if the categoryIds value is an empty array - show all products
       if (categoryIds.length == 0) {
         categories = ["All"]
         const categoryIds = await categoryService.getIdsByNames(categories);
