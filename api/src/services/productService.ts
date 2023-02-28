@@ -60,6 +60,15 @@ const findById = async (id: string) => {
   }
 }
 
+const findByName = async (title: string) => {
+  const foundOne = await Product.findOne({title})
+  if (foundOne) {
+    return foundOne
+  } else {
+    throw new NotFoundError()
+  }
+}
+
 const updateOne = async ( 
   id: string, 
   update?: UpdateWithAggregationPipeline | UpdateQuery<ProductDocument> | undefined, 
@@ -86,6 +95,7 @@ export default {
   createOne,
   findAll,
   findById,
+  findByName,
   updateOne,
   deleteOne,
   findProductReviews,

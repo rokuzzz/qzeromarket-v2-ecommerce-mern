@@ -1,6 +1,7 @@
-import { verifyAdmin } from './../middlewares/tokenVerificator';
 import { Router } from "express";
+
 import productController from '../controllers/productController';
+import { verifyAdmin } from './../middlewares/tokenVerificator';
 
 const productRoute = Router()
 
