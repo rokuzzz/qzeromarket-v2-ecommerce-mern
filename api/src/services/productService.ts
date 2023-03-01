@@ -65,7 +65,7 @@ const findByName = async (title: string) => {
   if (foundOne) {
     return foundOne
   } else {
-    throw new NotFoundError()
+    throw new NotFoundError('This product does not exist')
   }
 }
 
