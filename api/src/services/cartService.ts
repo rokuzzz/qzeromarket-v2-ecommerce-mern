@@ -4,65 +4,6 @@ import { NotFoundError } from '../helpers/apiError'
 import Cart, { CartDocument, ProductInCart } from '../models/Cart'
 // import paymentService from './paymentService'
 
-const createCart = async (cartItem: ProductInCart, userId: ObjectId) => {
-  const {productId, quantity} = cartItem
-
-  // check if cart matches any cart in database collection
-  const existingCart = await Cart.findOne({userId: userId})
-  if (existingCart) {
-    const { products } = existingCart
-    const listOfProducts: ProductInCart[] = products
-
-    // check if product already exists in cart
-    const existedProduct = listOfProducts.find(
-      (product: ProductInCart | undefined) => {
-        return product?.productId.toString() === productId.toString()
-      }
-    )
-
-    if (existedProduct) {
-      existedProduct.quantity = quantity
-      const updatedListOfProducts = listOfProducts.map(
-        (product: ProductInCart | undefined) => {
-          if (product?.productId.toString() === productId.toString()) {
-            return existedProduct
-          } else {
-            return product
-          }
-        } 
-      )
-      return await Cart.findByIdAndUpdate(
-        existingCart._id,
-        {
-          userId: userId,
-          $set: {products: updatedListOfProducts}
-        },
-        { new: true }
-      )
-      .populate({ path: 'products.productId', select: 'title _id' })
-      .populate({ path: 'user', select: 'username _id' })
-    } else {
-      return await Cart.findByIdAndUpdate(
-        existingCart._id,
-        {
-          userId: userId,
-        },
-        { new: true }
-      )
-      .populate({ path: 'products.productId', select: 'title _id' })
-      .populate({ path: 'user', select: 'username _id' })
-    }
-  }
-  const newCart = new Cart({
-    userId: userId,
-    products: cartItem
-  })
-  await newCart.save()
-  return Cart.findById(newCart._id)
-  .populate({ path: 'products.productId', select: 'title _id' })
-  .populate({ path: 'user', select: 'username _id' })
-}
-
 const addToCart = async (cartItem: ProductInCart, userId: ObjectId) => {
 
   const {productId, quantity} = cartItem
@@ -142,7 +83,6 @@ const deleteOne = async (id: string) => {
 // }
 
 export default {
-  createCart,
   addToCart,
   findAll,
   findById,
