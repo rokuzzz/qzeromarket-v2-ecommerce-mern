@@ -23,7 +23,7 @@ const createCart = async (req: Request, res: Response, next: NextFunction) => {
         const productId = product._id
         const cartItem = {productId, quantity}
 
-        const newItem = await cartService.createCart(cartItem, userId)
+        const newItem = await cartService.addToCart(cartItem, userId)
         res.status(200).json(newItem)
 
       } catch (err) {
