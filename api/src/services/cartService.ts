@@ -1,6 +1,6 @@
 import e from 'express'
 import { ObjectId } from 'mongoose'
-import { NotFoundError } from '../helpers/apiError'
+import { BadRequestError, NotFoundError } from '../helpers/apiError'
 import Cart, { CartDocument, ProductInCart } from '../models/Cart'
 // import paymentService from './paymentService'
 
@@ -30,8 +30,16 @@ const addToCart = async (cartItem: ProductInCart, userId: ObjectId) => {
     // if such a product is already in the cart - update its quantity
     // otherwise just add this product to products array
     if (existingProductIndex >= 0) {
+      // if the user reduces the quantity of the product to 0 (or less than zero) - remove the product from the cart
+      if (quantity <= 0) {
+        existingCart.products.splice(existingProductIndex, 1)
+        await existingCart.save()
+        return existingCart
+      }
       existingCart.products[existingProductIndex].quantity = quantity
     } else {
+      // check that the quantity of the item is greater than zero
+      if (quantity <= 0) throw new BadRequestError('You are trying to add a product with zero or negative quantity')
       existingCart.products.push({productId: productId, quantity: quantity})
     }
     await existingCart.save()
