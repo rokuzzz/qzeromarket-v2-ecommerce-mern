@@ -43,6 +43,15 @@ const getUserCart = async (req: Request, res: Response, next: NextFunction) => {
   }
 }
 
+const getAllCarts = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const carts = await cartService.findAll()
+    res.status(200).send(carts)
+  } catch (err) {
+    next(err)
+  }
+}
+
 const deleteCart = async (req: Request, res: Response, next: NextFunction) => {
   try {
     await cartService.deleteOne(req.params.id)
@@ -54,6 +63,7 @@ const deleteCart = async (req: Request, res: Response, next: NextFunction) => {
 
 export default {
   createOrUpdateCart,
+  getAllCarts,
   getUserCart,
   deleteCart
 }

@@ -1,10 +1,11 @@
-import { verifyUserOrAdmin } from './../middlewares/tokenVerificator';
+import { verifyUserOrAdmin, verifyAdmin } from './../middlewares/tokenVerificator';
 import { Router } from 'express';
 
 import cartController from '../controllers/cartController';
 
 const cartRoute = Router()
 cartRoute.post('/', cartController.createOrUpdateCart)
+cartRoute.get('/', verifyAdmin, cartController.getAllCarts)
 cartRoute.get('/:id', verifyUserOrAdmin, cartController.getUserCart)
 cartRoute.delete('/:id', verifyUserOrAdmin, cartController.deleteCart)
 
