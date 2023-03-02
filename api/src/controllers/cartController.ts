@@ -33,16 +33,27 @@ const createOrUpdateCart = async (req: Request, res: Response, next: NextFunctio
   })
 }
 
-const deleteCart = async (req: Request, res: Response) => {
+const getUserCart = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const cart = await cartService.findByCondition(req.params.id)
+    console.log(cart)
+    res.status(200).send(cart)
+  } catch (err) {
+    next(err)
+  }
+}
+
+const deleteCart = async (req: Request, res: Response, next: NextFunction) => {
   try {
     await cartService.deleteOne(req.params.id)
     res.status(200).json('Cart has been deleted...')
-  } catch {
-
+  } catch (err) {
+    next(err)
   }
 }
 
 export default {
   createOrUpdateCart,
+  getUserCart,
   deleteCart
 }

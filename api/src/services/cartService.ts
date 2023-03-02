@@ -58,8 +58,8 @@ const findAll = async () => {
   return await Cart.find()
 }
 
-const findById = async (id: string) => {
-  const foundOne = await Cart.findById(id)
+const findByCondition = async (id: string) => {
+  const foundOne = await Cart.findOne({userId: id})
   if (foundOne) {
     return foundOne
   } else {
@@ -96,7 +96,7 @@ const deleteOne = async (id: string) => {
 export default {
   addToCart,
   findAll,
-  findById,
+  findByCondition,
   updateOne,
   deleteOne,
 }
