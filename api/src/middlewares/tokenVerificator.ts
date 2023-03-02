@@ -29,7 +29,7 @@ export const verifyUserOrAdmin = (req: Request, res: Response, next: NextFunctio
         req.user = decoded
         if(decoded.role == 'admin' || decoded.id == req.params.id) next()
         else {
-          throw new ForbiddenError('Access is denied! You must be an administrator to change user data.')
+          throw new ForbiddenError('Access is denied! You must be an administrator to access this data.')
         }
       }
     })
