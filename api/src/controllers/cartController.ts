@@ -6,7 +6,7 @@ import { ForbiddenError, UnauthorizedError, NotFoundError } from "../helpers/api
 import cartService from "../services/cartService";
 import productService from "../services/productService";
 
-const createCart = async (req: Request, res: Response, next: NextFunction) => {
+const createOrUpdateCart = async (req: Request, res: Response, next: NextFunction) => {
   const authHeader = req.headers.authorization
   const {title, quantity} = req.body
 
@@ -30,9 +30,19 @@ const createCart = async (req: Request, res: Response, next: NextFunction) => {
         next(err)
       }
     }
-  })  
+  })
+}
+
+const deleteCart = async (req: Request, res: Response) => {
+  try {
+    await cartService.deleteOne(req.params.id)
+    res.status(200).json('Cart has been deleted...')
+  } catch {
+
+  }
 }
 
 export default {
-  createCart
+  createOrUpdateCart,
+  deleteCart
 }

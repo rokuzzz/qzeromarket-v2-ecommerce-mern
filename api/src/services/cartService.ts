@@ -4,6 +4,7 @@ import { BadRequestError, NotFoundError } from '../helpers/apiError'
 import Cart, { CartDocument, ProductInCart } from '../models/Cart'
 // import paymentService from './paymentService'
 
+// a function that CREATES a cart, ADDS new products to the cart (if the cart already exists), and additionally UPDATES existing products in the cart
 const addToCart = async (cartItem: ProductInCart, userId: ObjectId) => {
 
   const {productId, quantity} = cartItem
@@ -24,7 +25,7 @@ const addToCart = async (cartItem: ProductInCart, userId: ObjectId) => {
 
   if (existingCart) {
 
-    // check if product already exists in the cart
+    // returns -1 if the product is new and the product index if it already exists
     const existingProductIndex = getProductIndex(existingCart.products, productId)
 
     // if such a product is already in the cart - update its quantity
@@ -36,10 +37,12 @@ const addToCart = async (cartItem: ProductInCart, userId: ObjectId) => {
         await existingCart.save()
         return existingCart
       }
+
       existingCart.products[existingProductIndex].quantity = quantity
     } else {
-      // check that the quantity of the item is greater than zero
+      // prevent adding product with zero or negative quantity
       if (quantity <= 0) throw new BadRequestError('You are trying to add a product with zero or negative quantity')
+
       existingCart.products.push({productId: productId, quantity: quantity})
     }
     await existingCart.save()
