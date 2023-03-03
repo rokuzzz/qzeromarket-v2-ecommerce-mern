@@ -25,7 +25,7 @@ app.use('/api/users', userRoute)
 app.use('/api/auth', authRoute)
 app.use('/api/products', productRoute)
 app.use('/api/categories', categoryRoute)
-app.use('/api/cart', cartRoute)
+app.use('/api/carts', cartRoute)
 
 // Custom API error handler
 app.use(apiErrorHandler)

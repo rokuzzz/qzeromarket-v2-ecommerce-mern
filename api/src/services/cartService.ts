@@ -34,8 +34,16 @@ const addToCart = async (cartItem: ProductInCart, userId: ObjectId) => {
       // if the user reduces the quantity of the product to 0 (or less than zero) - remove the product from the cart
       if (quantity <= 0) {
         existingCart.products.splice(existingProductIndex, 1)
-        await existingCart.save()
-        return existingCart
+        
+        return await Cart.findByIdAndUpdate(
+          existingCart._id,
+          {
+            $set: {products: existingCart.products}
+          },
+          {new: true}
+        )
+        .populate({ path: 'userId', select: '_id username' })
+        .populate({path: 'products.productId', select: '_id title description price' })
       }
 
       existingCart.products[existingProductIndex].quantity = quantity
@@ -45,12 +53,21 @@ const addToCart = async (cartItem: ProductInCart, userId: ObjectId) => {
 
       existingCart.products.push({productId: productId, quantity: quantity})
     }
-    await existingCart.save()
-    return existingCart
+    return await Cart.findByIdAndUpdate(
+      existingCart._id,
+      {
+        $set: {products: existingCart.products}
+      },
+      {new: true}
+    )
+    .populate({ path: 'userId', select: '_id username' })
+    .populate({path: 'products.productId', select: '_id title description price' })
   } else {
     const newCart = new Cart({userId: userId, products: cartItem})
     await newCart.save()
-    return newCart
+    return Cart.findById(newCart._id)
+    .populate({ path: 'userId', select: '_id username' })
+    .populate({path: 'products.productId', select: '_id title description price' })
   }
 }
 
