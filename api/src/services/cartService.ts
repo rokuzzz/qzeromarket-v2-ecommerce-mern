@@ -73,10 +73,15 @@ const addToCart = async (cartItem: ProductInCart, userId: ObjectId) => {
 
 const findAll = async () => {
   return await Cart.find()
+  .populate({ path: 'userId', select: '_id username' })
+  .populate({path: 'products.productId', select: '_id title description price' })
 }
 
 const findByCondition = async (id: string) => {
   const foundOne = await Cart.findOne({userId: id})
+  .populate({ path: 'userId', select: '_id username' })
+  .populate({path: 'products.productId', select: '_id title description price' })
+
   if (foundOne) {
     return foundOne
   } else {
