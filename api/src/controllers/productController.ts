@@ -1,4 +1,3 @@
-import { forEach } from 'lodash';
 import { NextFunction, Request, Response } from "express";
 
 import productService from "../services/productService";
