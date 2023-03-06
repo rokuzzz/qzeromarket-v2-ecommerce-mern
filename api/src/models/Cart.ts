@@ -6,7 +6,7 @@ export interface ProductInCart {
 }
 
 export interface CartDocument extends Document {
-  userId: ObjectId
+  userId: ObjectId | string
   products: [{
       productId: ObjectId
       quantity: number

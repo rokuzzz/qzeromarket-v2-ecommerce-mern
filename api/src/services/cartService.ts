@@ -1,9 +1,10 @@
 import e from 'express'
 import { ObjectId } from 'mongoose'
-import { NotFoundError } from '../helpers/apiError'
+import { BadRequestError, NotFoundError } from '../helpers/apiError'
 import Cart, { CartDocument, ProductInCart } from '../models/Cart'
 // import paymentService from './paymentService'
 
+// a function that CREATES a cart, ADDS new products to the cart (if the cart already exists), and additionally UPDATES existing products in the cart
 const addToCart = async (cartItem: ProductInCart, userId: ObjectId) => {
 
   const {productId, quantity} = cartItem
@@ -24,31 +25,63 @@ const addToCart = async (cartItem: ProductInCart, userId: ObjectId) => {
 
   if (existingCart) {
 
-    // check if product already exists in the cart
+    // returns -1 if the product is new and the product index if it already exists
     const existingProductIndex = getProductIndex(existingCart.products, productId)
 
     // if such a product is already in the cart - update its quantity
     // otherwise just add this product to products array
     if (existingProductIndex >= 0) {
+      // if the user reduces the quantity of the product to 0 (or less than zero) - remove the product from the cart
+      if (quantity <= 0) {
+        existingCart.products.splice(existingProductIndex, 1)
+        
+        return await Cart.findByIdAndUpdate(
+          existingCart._id,
+          {
+            $set: {products: existingCart.products}
+          },
+          {new: true}
+        )
+        .populate({ path: 'userId', select: '_id username' })
+        .populate({path: 'products.productId', select: '_id title description price' })
+      }
+
       existingCart.products[existingProductIndex].quantity = quantity
     } else {
+      // prevent adding product with zero or negative quantity
+      if (quantity <= 0) throw new BadRequestError('You are trying to add a product with zero or negative quantity')
+
       existingCart.products.push({productId: productId, quantity: quantity})
     }
-    await existingCart.save()
-    return existingCart
+    return await Cart.findByIdAndUpdate(
+      existingCart._id,
+      {
+        $set: {products: existingCart.products}
+      },
+      {new: true}
+    )
+    .populate({ path: 'userId', select: '_id username' })
+    .populate({path: 'products.productId', select: '_id title description price' })
   } else {
     const newCart = new Cart({userId: userId, products: cartItem})
     await newCart.save()
-    return newCart
+    return Cart.findById(newCart._id)
+    .populate({ path: 'userId', select: '_id username' })
+    .populate({path: 'products.productId', select: '_id title description price' })
   }
 }
 
 const findAll = async () => {
   return await Cart.find()
+  .populate({ path: 'userId', select: '_id username' })
+  .populate({path: 'products.productId', select: '_id title description price' })
 }
 
-const findById = async (id: string) => {
-  const foundOne = await Cart.findById(id)
+const findByCondition = async (id: string) => {
+  const foundOne = await Cart.findOne({userId: id})
+  .populate({ path: 'userId', select: '_id username' })
+  .populate({path: 'products.productId', select: '_id title description price' })
+
   if (foundOne) {
     return foundOne
   } else {
@@ -85,7 +118,7 @@ const deleteOne = async (id: string) => {
 export default {
   addToCart,
   findAll,
-  findById,
+  findByCondition,
   updateOne,
   deleteOne,
 }

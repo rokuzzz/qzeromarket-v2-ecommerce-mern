@@ -17,15 +17,17 @@ const app = express()
 app.set('port', process.env.PORT || 3000)
 
 // Global middleware
-app.use(apiContentType)
+// app.use(apiContentType)
 app.use(express.json())
+app.use(express.urlencoded({extended: true})); 
+app.use(express.text());
 
 // Set up routes
 app.use('/api/users', userRoute)
 app.use('/api/auth', authRoute)
 app.use('/api/products', productRoute)
 app.use('/api/categories', categoryRoute)
-app.use('/api/cart', cartRoute)
+app.use('/api/carts', cartRoute)
 
 // Custom API error handler
 app.use(apiErrorHandler)
