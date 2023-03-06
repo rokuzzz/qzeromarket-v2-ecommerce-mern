@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from "express";
-import { S3Client, PutObjectCommand, GetObjectCommand } from "@aws-sdk/client-s3";
+import { S3Client, PutObjectCommand, GetObjectCommand, DeleteObjectCommand } from "@aws-sdk/client-s3";
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 import crypto from 'crypto';
 import sharp from 'sharp';
@@ -118,7 +118,7 @@ const getFilteredProducts = async (req: Request, res: Response) => {
               Bucket: BUCKET_NAME,
               Key: product.imageName
             }),
-            { expiresIn: 3600 }
+            { expiresIn: 60 }
           )
         }
 
@@ -213,6 +213,13 @@ const updateProduct = async (req: Request, res: Response) => {
 
 const deleteProduct = async (req: Request, res: Response) => {
   try {
+    const product = await productService.findById(req.params.id)
+    const deleteParams = {
+      Bucket: BUCKET_NAME,
+      Key: product.imageName
+    }
+    await s3.send(new DeleteObjectCommand(deleteParams))
+
     await productService.deleteOne(req.params.id)
     res.status(200).json('Product has been deleted.')
   } catch (err) {
