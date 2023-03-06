@@ -23,6 +23,6 @@ const fileUploader = multer({
   fileFilter: (req, file, cb) => {
     checkFileType(file, cb)
   }
-}).single("productImage");
+}).single("image");
 
 export default fileUploader;

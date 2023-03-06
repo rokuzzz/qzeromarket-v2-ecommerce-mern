@@ -3,6 +3,7 @@ import fileUploader from "../middlewares/multerMiddleware";
 
 import productController from '../controllers/productController';
 import { verifyAdmin } from './../middlewares/tokenVerificator';
+import multerMiddleware from "../middlewares/multerMiddleware";
 
 const productRoute = Router()
 

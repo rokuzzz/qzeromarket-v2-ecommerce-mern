@@ -7,7 +7,8 @@ export interface ProductDocument extends Document {
   // sellerId: ObjectId
   categories: ObjectId[]
   // reviews: ObjectId[]
-  image: string
+  imageName: string
+  imageUrl?: string
 }
 
 const ProductSchema = new Schema<ProductDocument>(
@@ -36,7 +37,11 @@ const ProductSchema = new Schema<ProductDocument>(
     //   type: Schema.Types.ObjectId,
     //   ref: 'User'
     // },
-    image: {
+    imageName: {
+      type: String,
+      required: true
+    },
+    imageUrl: {
       type: String
     }
   },
