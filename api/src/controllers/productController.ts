@@ -8,7 +8,6 @@ import productService from "../services/productService";
 import categoryService from '../services/categoryService';
 import Product from "../models/Product";
 import { ACCESS_KEY, SECRET_ACCESS_KEY, BUCKET_REGION, BUCKET_NAME } from './../util/secrets';
-import { post } from "fbgraph";
 
 const s3 = new S3Client({
   credentials: {
@@ -21,6 +20,9 @@ const s3 = new S3Client({
 const createProduct = async (req: Request, res: Response, next: NextFunction) => {
   const {title, description, price, categories} = req.body
   const categoryIds = await categoryService.getIdsByNames(categories)
+
+  // if there is no file - throw error
+  if (!req.file?.buffer) return next()
 
   // set a unique name
   const randomImageName = (bytes = 32) => crypto.randomBytes(bytes).toString('hex') 
