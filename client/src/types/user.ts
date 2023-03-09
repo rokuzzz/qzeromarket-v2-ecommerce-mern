@@ -6,11 +6,17 @@ export interface User {
   lastname: string,
   username: string,
   email: string,
-  password: string,
-  role: UserRole
+  password?: string,
+  role: UserRole,
+  accessToken?: string
 }
 
 export interface UserSliceState {
   listOfUsers: User[],
   currentUser: User | undefined
+}
+
+export interface LoginCredentials {
+  username: string,
+  password: string
 }
