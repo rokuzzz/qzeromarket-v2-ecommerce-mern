@@ -1,6 +1,7 @@
 import express from 'express'
 // import lusca from 'lusca' will be used later
 import dotenv from 'dotenv'
+import cors from 'cors'
 
 import apiErrorHandler from './middlewares/apiErrorHandler'
 import apiContentType from './middlewares/apiContentType'
@@ -21,6 +22,9 @@ app.set('port', process.env.PORT || 3000)
 app.use(express.json())
 app.use(express.urlencoded({extended: true})); 
 app.use(express.text());
+
+// Enable All CORS Requests
+app.use(cors())
 
 // Set up routes
 app.use('/api/users', userRoute)
