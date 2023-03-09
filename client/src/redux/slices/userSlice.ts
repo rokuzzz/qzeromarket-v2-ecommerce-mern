@@ -12,7 +12,7 @@ export const login = createAsyncThunk(
   'login',
   async ( { username, password }: LoginCredentials ) => {
     try {
-      const user = await axios.post('http://localhost:5000/api/auth/login', {
+      const user = await axios.post('https://qzero-market-backend.herokuapp.com/api/auth/login', {
         username,
         password
       })
