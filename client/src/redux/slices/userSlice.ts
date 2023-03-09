@@ -1,6 +1,6 @@
 import { LoginCredentials } from './../../types/user';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
-import { User, UserSliceState } from '../../types/user'
+import { UserSliceState } from '../../types/user'
 import axios from 'axios';
 
 const initialState: UserSliceState = {
@@ -10,9 +10,9 @@ const initialState: UserSliceState = {
 
 export const login = createAsyncThunk(
   'login',
-  async( { username, password }: LoginCredentials ) => {
+  async ( { username, password }: LoginCredentials ) => {
     try {
-      const user = await axios.post('https://qzero-market-backend.herokuapp.com/api/auth/login', {
+      const user = await axios.post('http://localhost:5000/api/auth/login', {
         username,
         password
       })
