@@ -1,9 +1,8 @@
-export interface product {
+export interface Product {
   id: string,
   title: string,
   description: string,
   price: number,
-  imageName: string,
   imageUrl: string | undefined
 }
 
