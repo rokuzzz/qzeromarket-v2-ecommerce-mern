@@ -17,6 +17,7 @@ export const login = createAsyncThunk(
         password
       })
       if (user.data) {
+        localStorage.setItem("access_token", user.data.accessToken)
         const {password, accessToken, ...userInfo} = user.data
         return userInfo
       }
