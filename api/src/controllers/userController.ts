@@ -1,8 +1,10 @@
-import { Request, Response } from "express";
+import jwt from 'jsonwebtoken';
+import { NextFunction, Request, Response } from "express";
 import CryptoJS from 'crypto-js'
 
-import { CRYPTO_SECRET } from "../util/secrets";
+import { CRYPTO_SECRET, JWT_SECRET } from "../util/secrets";
 import userService from "../services/userService";
+import { ForbiddenError, UnauthorizedError } from "../helpers/apiError";
 
 const getUser = async (req: Request, res: Response) => {
   try {
@@ -21,6 +23,25 @@ const getAllUsers = async (req: Request, res: Response) => {
   } catch (err) {
     res.status(500).json(err)
   }
+}
+
+const getUserByJWT = async (req: Request, res: Response, next: NextFunction) => {
+  const authHeader = req.headers.authorization
+  if (typeof authHeader == 'undefined') throw new UnauthorizedError('You are not authorized!')
+  const token = (<string>authHeader).split(" ")[1]
+  jwt.verify(token, JWT_SECRET, async (err: any, decoded: any) => {
+    if (err) throw new ForbiddenError(err)
+    else {
+      try{
+        req.user = decoded
+        const user = await userService.findById(decoded.id)
+        const {password, ...others} = user?._doc
+        res.status(200).send(others)
+      } catch (err) {
+        next(err)
+      }
+    }
+  }) 
 }
 
 const updateUser = async (req: Request, res: Response) => {
@@ -54,6 +75,7 @@ const deleteUser = async (req: Request, res: Response) => {
 export default {
   getAllUsers,
   getUser,
+  getUserByJWT,
   updateUser,
   deleteUser
 }
