@@ -18,10 +18,27 @@ export const login = createAsyncThunk(
       })
       if (user.data) {
         localStorage.setItem("access_token", user.data.accessToken)
-        const {password, accessToken, ...userInfo} = user.data
+        const {password, ...userInfo} = user.data
         return userInfo
       }
       return undefined
+    } catch (err) {
+      console.log(err)
+    }
+  }
+)
+
+export const loginByToken = createAsyncThunk(
+  'loginByToken',
+  async (token: string) => {
+    try {
+      const user = await axios.get('https://qzero-market-backend.herokuapp.com/api/users/profile',
+      {
+        headers: {
+          authorization: `Bearer ${token}`
+        }
+      })
+      return (user.data ? user.data : undefined)
     } catch (err) {
       console.log(err)
     }
@@ -34,6 +51,9 @@ const userSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder.addCase(login.fulfilled, (state, action) => {
+      state.currentUser = action.payload
+    })
+    .addCase(loginByToken.fulfilled, (state, action) => {
       state.currentUser = action.payload
     })
   }
