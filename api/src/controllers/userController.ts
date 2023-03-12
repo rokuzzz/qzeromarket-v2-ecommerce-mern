@@ -30,7 +30,7 @@ const getUserByJWT = async (req: Request, res: Response, next: NextFunction) => 
   if (typeof authHeader == 'undefined') throw new UnauthorizedError('You are not authorized!')
   const token = (<string>authHeader).split(" ")[1]
   jwt.verify(token, JWT_SECRET, async (err: any, decoded: any) => {
-    if (err) throw new ForbiddenError(err)
+    if (err) next(err)
     else {
       try{
         req.user = decoded
