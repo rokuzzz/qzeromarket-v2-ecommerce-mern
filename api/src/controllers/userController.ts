@@ -4,7 +4,7 @@ import CryptoJS from 'crypto-js'
 
 import { CRYPTO_SECRET, JWT_SECRET } from "../util/secrets";
 import userService from "../services/userService";
-import { ForbiddenError, UnauthorizedError } from "../helpers/apiError";
+import { UnauthorizedError } from "../helpers/apiError";
 
 const getUser = async (req: Request, res: Response) => {
   try {
