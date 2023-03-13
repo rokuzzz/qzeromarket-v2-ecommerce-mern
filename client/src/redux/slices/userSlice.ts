@@ -1,4 +1,4 @@
-import { LoginCredentials } from './../../types/user';
+import { LoginCredentials, RegisterCredentials } from './../../types/user';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { UserSliceState } from '../../types/user'
 import axios from 'axios';
@@ -18,7 +18,7 @@ export const login = createAsyncThunk(
       })
       if (user.data) {
         localStorage.setItem("access_token", user.data.accessToken)
-        const {password, ...userInfo} = user.data
+        const {password, accessToken, ...userInfo} = user.data
         return userInfo
       }
       return undefined
@@ -45,6 +45,24 @@ export const loginByToken = createAsyncThunk(
   }
 )
 
+export const register = createAsyncThunk(
+  'register',
+  async ( {firstname, lastname, username, email, password}: RegisterCredentials ) => {
+    try {
+      const user = await axios.post('https://qzero-market-backend.herokuapp.com/api/auth/register', {
+        firstname, 
+        lastname, 
+        username, 
+        email, 
+        password
+      })
+      return (user.data? user.data : undefined)
+    } catch (err) {
+      console.log(err)
+    }
+  }
+)
+
 const userSlice = createSlice({
   name: 'user slice',
   initialState: initialState,
@@ -59,6 +77,9 @@ const userSlice = createSlice({
       state.currentUser = action.payload
     })
     .addCase(loginByToken.fulfilled, (state, action) => {
+      state.currentUser = action.payload
+    })
+    .addCase(register.fulfilled, (state, action) => {
       state.currentUser = action.payload
     })
   }

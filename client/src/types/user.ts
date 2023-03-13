@@ -20,3 +20,11 @@ export interface LoginCredentials {
   username: string,
   password: string
 }
+
+export interface RegisterCredentials {
+  firstname: string,
+  lastname: string,
+  username: string,
+  email: string,
+  password: string
+}
