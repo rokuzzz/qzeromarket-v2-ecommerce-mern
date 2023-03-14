@@ -51,10 +51,11 @@ const updateUser = async (req: Request, res: Response) => {
       CRYPTO_SECRET
     ).toString()
   }
+  const {_id, role, ...others} = req.body
   try{
     const updatedUser = await userService.updateOne(
       req.params.id,
-      { $set: req.body }, 
+      { $set: {...others} }, 
       { new: true }
     )
     res.status(200).json(updatedUser)

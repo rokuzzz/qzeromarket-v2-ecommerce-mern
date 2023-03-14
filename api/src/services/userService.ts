@@ -26,7 +26,15 @@ const updateOne = async (
 ) => {
   const foundOne = await User.findByIdAndUpdate(id, update, options)
   if (foundOne) {
-    return foundOne
+    const updatedUserData = {
+      _id: foundOne._id,
+      fistname: foundOne.firstname,
+      lastname: foundOne.lastname,
+      username: foundOne.username,
+      email: foundOne.email,
+      role: foundOne.role
+    }
+    return updatedUserData
   } else {
     throw new NotFoundError()
   }
