@@ -1,4 +1,4 @@
-import { LoginCredentials, RegisterCredentials } from './../../types/user';
+import { GetUserByIDProps, LoginCredentials, RegisterCredentials, UpdateUserProps } from './../../types/user';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { UserSliceState } from '../../types/user'
 import axios from 'axios';
@@ -79,6 +79,40 @@ export const getAllUsers = createAsyncThunk(
   }
 )
 
+export const getUserByID = createAsyncThunk(
+  'getUserByID',
+  async ( {id, token}: GetUserByIDProps ) => {
+    try {
+    const response = await axios.get(`https://qzero-market-backend.herokuapp.com/api/users/find/${id}`, {
+      headers: {
+        authorization: `Bearer ${token}`
+      }
+    })
+    return (response.data ? response.data : undefined)
+  } catch (err) {
+    console.log(err)
+  }
+  }
+)
+
+export const updateCurrentUser = createAsyncThunk(
+  'getUserByID',
+  async ({id, updatedUserData, token}: UpdateUserProps) => {
+    try {
+      const response = await axios.put(`https://qzero-market-backend.herokuapp.com/api/users/${id}`, 
+      updatedUserData,
+      {
+        headers: {
+          authorization: `Bearer ${token}`
+        }
+      })
+      return response.data
+    } catch (err) {
+      console.log(err)
+    } 
+  }
+)
+
 const userSlice = createSlice({
   name: 'user slice',
   initialState: initialState,
@@ -100,6 +134,9 @@ const userSlice = createSlice({
     })
     .addCase(getAllUsers.fulfilled, (state, action) => {
       state.listOfUsers = action.payload
+    })
+    .addCase(updateCurrentUser.fulfilled, (state, action) => {
+      state.currentUser = action.payload
     })
   }
 })

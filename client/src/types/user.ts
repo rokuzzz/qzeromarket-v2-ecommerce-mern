@@ -28,3 +28,22 @@ export interface RegisterCredentials {
   email: string,
   password: string
 }
+
+export interface GetUserByIDProps {
+  id: string,
+  token: string
+}
+
+export interface DataToUpdate {
+  firstname?: string,
+  lastname?: string,
+  username?: string,
+  email?: string,
+  password?: string
+}
+
+export interface UpdateUserProps {
+  id: string,
+  updatedUserData: DataToUpdate,
+  token: string
+}
