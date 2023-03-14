@@ -1,3 +1,4 @@
+import { getAllUsers } from './../../redux/slices/userSlice';
 import { login, loginByToken, register } from "../../redux/slices/userSlice";
 import createTestStore from "../utils/testStore";
 
@@ -27,20 +28,26 @@ describe('test user reducers', () => {
   
   test('login with JWT token', async () => {
     // token expires in 3 days
-    await store.dispatch(loginByToken('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzZGJiZDEyZTkzNjQ2NTJlNGRlMDM3ZiIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTY3ODYyODYyNywiZXhwIjoxNjc4ODg3ODI3fQ.0xZFxjqtplErWLlpZv4VMDrUj4ttMma433Dy5djVyeE'))
+    await store.dispatch(loginByToken('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzZGJiZDEyZTkzNjQ2NTJlNGRlMDM3ZiIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTY3ODc4NzczNCwiZXhwIjoxNjc5MDQ2OTM0fQ.QAbE59pMINrMPZsyQMD06DdHuXWCWRXrG2BQlbDviC8'))
     // console.log(store.getState().userReducer.currentUser)
     expect(store.getState().userReducer.currentUser).toBeDefined()
   })
 
-  test('register a new user', async () => {
-    await store.dispatch(register({
-      firstname: 'test',
-      lastname: 'test',
-      username: 'test',
-      email: 'test@email.com',
-      password: 'test'
-    }))
-    // console.log(store.getState().userReducer.currentUser)
-    expect(store.getState().userReducer.currentUser).toBeDefined()
+  // // commented out because it creates the actual user in the database
+  // test('register a new user', async () => {
+  //   await store.dispatch(register({
+  //     firstname: 'test',
+  //     lastname: 'test',
+  //     username: 'test',
+  //     email: 'test@email.com',
+  //     password: 'test'
+  //   }))
+  //   // console.log(store.getState().userReducer.currentUser)
+  //   expect(store.getState().userReducer.currentUser).toBeDefined()
+  // })
+
+  test('get all users', async () => {
+    await store.dispatch(getAllUsers('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzZGJiZDEyZTkzNjQ2NTJlNGRlMDM3ZiIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTY3ODc4NzczNCwiZXhwIjoxNjc5MDQ2OTM0fQ.QAbE59pMINrMPZsyQMD06DdHuXWCWRXrG2BQlbDviC8'))
+    expect(store.getState().userReducer.listOfUsers.length).toBeGreaterThan(1)
   })
 })
