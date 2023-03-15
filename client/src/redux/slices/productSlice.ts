@@ -4,7 +4,8 @@ import axios from 'axios'
 import { Product } from '../../types/products'
 
 const initialState: ProductSliceState = {
-  products: []
+  allProducts: [],
+  currentProduct: undefined
 }
 
 export const fetchAllProducts = createAsyncThunk(
@@ -19,13 +20,27 @@ export const fetchAllProducts = createAsyncThunk(
   }
 )
 
+export const getProductByID = createAsyncThunk(
+  'getProductByID',
+  async (id: string) => {
+    try {
+      const response = await axios.get(`https://qzero-market-backend.herokuapp.com/api/products/${id}`)
+      return (response.data ? response.data : undefined)
+    } catch (err) {
+      console.log(err)
+    }
+  }
+)
 const productSlice = createSlice({
   name: 'product slice',
   initialState: initialState,
   reducers: {},
   extraReducers: (builder) => {
     builder.addCase(fetchAllProducts.fulfilled, (state, action) => {
-      state.products = action.payload
+      state.allProducts = action.payload
+    })
+    .addCase(getProductByID.fulfilled, (state, action) => {
+      state.currentProduct = action.payload
     })
   }
 })

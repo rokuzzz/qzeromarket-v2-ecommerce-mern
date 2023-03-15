@@ -7,7 +7,8 @@ export interface Product {
 }
 
 export interface ProductSliceState {
-  products: Product[]
+  allProducts: Product[],
+  currentProduct: Product | undefined
 }
 
 export interface QueryParams {
