@@ -61,10 +61,10 @@ describe('test user reducers', () => {
   test('update current user', async () => {
     await store.dispatch(updateCurrentUser({
       updatedUserData: {
-        firstname: 'Paul'
+        firstname: 'Pavlik'
       },
-      id: '63e657b74689b444842f672e',
-      token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzZTY1N2I3NDY4OWI0NDQ4NDJmNjcyZSIsInJvbGUiOiJndWVzdCIsImlhdCI6MTY3ODc5MDE2MywiZXhwIjoxNjc5MDQ5MzYzfQ.4jb80u1HVkge1bpBu1sti2t357vH2UQiTeynZ1zaWkA'
+      id: '64106300bab52b00145b1383',
+      token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzZGJiZDEyZTkzNjQ2NTJlNGRlMDM3ZiIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTY3ODk2NTc0OSwiZXhwIjoxNjc5MjI0OTQ5fQ.Qfn3iyDnkQlI1S6S7stgRqvzKNyVRLbcUY309DQI07Y'
     }))
     // console.log('updated user: ', store.getState().userReducer.currentUser)
     expect(store.getState().userReducer.currentUser).toBeDefined()

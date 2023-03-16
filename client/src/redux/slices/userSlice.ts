@@ -103,7 +103,7 @@ export const updateCurrentUser = createAsyncThunk(
       updatedUserData,
       {
         headers: {
-          authorization: `Bearer ${token}`
+          Authorization: `Bearer ${token}`
         }
       })
       return response.data

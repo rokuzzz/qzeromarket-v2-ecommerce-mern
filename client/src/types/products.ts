@@ -18,3 +18,16 @@ export interface QueryParams {
   limit?: string,
   categories?: string
 }
+
+export interface NewProductData {
+  title: string,
+  description: string,
+  price: number,
+  categories: string[],
+  image: File | HTMLImageElement | HTMLElement
+}
+
+export interface CreateProductProps {
+  newProduct: NewProductData,
+  token: string
+}
