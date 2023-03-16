@@ -31,3 +31,8 @@ export interface CreateProductProps {
   newProduct: NewProductData,
   token: string
 }
+
+export interface DeleteProductProps {
+  id: string,
+  token: string
+}

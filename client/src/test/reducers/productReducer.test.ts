@@ -1,4 +1,4 @@
-import { getProductByID, createProduct } from './../../redux/slices/productSlice';
+import { getProductByID, createProduct, deleteProduct } from './../../redux/slices/productSlice';
 import { fetchAllProducts } from "../../redux/slices/productSlice"
 import createTestStore from "../utils/testStore"
 import { NewProductData } from '../../types/products';
@@ -28,6 +28,8 @@ describe('test product reducer', () => {
     expect(store.getState().productReducer.currentProduct).toBeDefined()
   })
 
+  // does not work yet
+
   // test('should create a new product', async () => {
   //   await store.dispatch(fetchAllProducts({}))
   //   const previousState = store.getState().productReducer.allProducts
@@ -53,4 +55,16 @@ describe('test product reducer', () => {
   //   console.log('curr state: ', store.getState().productReducer.allProducts)
   //   expect(store.getState().productReducer.allProducts.length - previousState.length).toBeGreaterThanOrEqual(1)
   // })
+
+  test('should delete the product and return updated product list', async () => {
+    await store.dispatch(fetchAllProducts({}))
+    const prevState = store.getState().productReducer.allProducts
+
+    await store.dispatch(deleteProduct({
+      id: '64109a5f17481300140bb28f',
+      token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzZGJiZDEyZTkzNjQ2NTJlNGRlMDM3ZiIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTY3ODk3NDE5OCwiZXhwIjoxNjc5MjMzMzk4fQ._QRx4F3aZrQSSn-nxSJ4_SG3mJso3wzLGFlvKfFS7lQ'
+    }))
+
+    expect(prevState.length - store.getState().productReducer.allProducts.length).toBe(1)
+  })
 })

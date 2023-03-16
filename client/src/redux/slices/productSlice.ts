@@ -1,4 +1,4 @@
-import { QueryParams, ProductSliceState, CreateProductProps } from './../../types/products';
+import { QueryParams, ProductSliceState, CreateProductProps, DeleteProductProps } from './../../types/products';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import axios from 'axios'
 import { Product } from '../../types/products'
@@ -36,7 +36,7 @@ export const createProduct = createAsyncThunk(
   'createProduct',
   async ({newProduct, token}: CreateProductProps) => {
     try {
-      const newestProduct = await axios.post('https://qzero-market-backend.herokuapp.com/api/products',
+      await axios.post('https://qzero-market-backend.herokuapp.com/api/products',
       newProduct,
       {
         headers: {
@@ -45,9 +45,25 @@ export const createProduct = createAsyncThunk(
         }
       })
 
-      console.log('ANYONE HERE!? ', newestProduct)
-
       const response = await axios.get('https://qzero-market-backend.herokuapp.com/api/products?')
+      return response.data
+    } catch (err) {
+      console.log(err)
+    }
+  }
+)
+
+export const deleteProduct = createAsyncThunk(
+  'updateProduct', 
+  async ({id, token}: DeleteProductProps) => {
+    try {
+      await axios.delete(`https://qzero-market-backend.herokuapp.com/api/products/${id}`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      })
+      const response = await axios.get('https://qzero-market-backend.herokuapp.com/api/products')
       return response.data
     } catch (err) {
       console.log(err)
@@ -67,6 +83,9 @@ const productSlice = createSlice({
       state.currentProduct = action.payload
     })
     .addCase(createProduct.fulfilled, (state, action) => {
+      state.allProducts = action.payload
+    })
+    .addCase(deleteProduct.fulfilled, (state, action) => {
       state.allProducts = action.payload
     })
   }
