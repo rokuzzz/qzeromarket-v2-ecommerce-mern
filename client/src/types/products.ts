@@ -24,11 +24,24 @@ export interface NewProductData {
   description: string,
   price: number,
   categories: string[],
-  image: File | HTMLImageElement | HTMLElement
+  image: File | HTMLImageElement | HTMLElement | null
 }
 
 export interface CreateProductProps {
   newProduct: NewProductData,
+  token: string
+}
+
+export interface UpdatedProduct {
+  categories?: string[],
+  title?: string,
+  description?: string,
+  price?: number
+}
+
+export interface UpdateProductParams {
+  id: string,
+  updatedProductData: UpdatedProduct,
   token: string
 }
 

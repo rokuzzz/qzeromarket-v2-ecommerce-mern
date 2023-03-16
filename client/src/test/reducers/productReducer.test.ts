@@ -1,4 +1,5 @@
-import { getProductByID, createProduct, deleteProduct } from './../../redux/slices/productSlice';
+import { UpdatedProduct } from './../../types/products';
+import { getProductByID, createProduct, deleteProduct, updateProduct } from './../../redux/slices/productSlice';
 import { fetchAllProducts } from "../../redux/slices/productSlice"
 import createTestStore from "../utils/testStore"
 import { NewProductData } from '../../types/products';
@@ -28,15 +29,14 @@ describe('test product reducer', () => {
     expect(store.getState().productReducer.currentProduct).toBeDefined()
   })
 
-  // does not work yet
-
+  // // does not work yet
   // test('should create a new product', async () => {
   //   await store.dispatch(fetchAllProducts({}))
   //   const previousState = store.getState().productReducer.allProducts
   //   console.log('prev state: ', previousState.length)
 
   //   const image = new File(['test'], 'test.jpg', { type: 'image/jpg' })
-  //   const testImage = new Image(1000, 1000)
+  //   const testImage = null
   //   console.log('IMAGE IS THIS: ', testImage)
 
   //   const product: NewProductData = {
@@ -55,6 +55,25 @@ describe('test product reducer', () => {
   //   console.log('curr state: ', store.getState().productReducer.allProducts)
   //   expect(store.getState().productReducer.allProducts.length - previousState.length).toBeGreaterThanOrEqual(1)
   // })
+
+  test('should update the product by id', async () => {
+    await store.dispatch(getProductByID('641332460308e700143c46f2'))
+    const productTitle = store.getState().productReducer.currentProduct?.title
+
+    const updatedProduct: UpdatedProduct = {
+      title: 'Striped Wool Socks (2-Pack)'
+    }
+    await store.dispatch(updateProduct({
+      id: '641332460308e700143c46f2',
+      updatedProductData: updatedProduct,
+      token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzZGJiZDEyZTkzNjQ2NTJlNGRlMDM3ZiIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTY3ODk3NDE5OCwiZXhwIjoxNjc5MjMzMzk4fQ._QRx4F3aZrQSSn-nxSJ4_SG3mJso3wzLGFlvKfFS7lQ'
+    }))
+
+    await store.dispatch(getProductByID('641332460308e700143c46f2'))
+    const updatedProductTitle = store.getState().productReducer.currentProduct?.title
+
+    expect(productTitle == updatedProductTitle).toBeFalsy()
+  })
 
   test('should delete the product and return updated product list', async () => {
     await store.dispatch(fetchAllProducts({}))

@@ -1,4 +1,4 @@
-import { QueryParams, ProductSliceState, CreateProductProps, DeleteProductProps } from './../../types/products';
+import { QueryParams, ProductSliceState, CreateProductProps, DeleteProductProps, UpdateProductParams } from './../../types/products';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import axios from 'axios'
 import { Product } from '../../types/products'
@@ -53,8 +53,28 @@ export const createProduct = createAsyncThunk(
   }
 )
 
+export const updateProduct = createAsyncThunk(
+  'updateProduct',
+  async ({id, updatedProductData, token}: UpdateProductParams) => {
+    try {
+      await axios.put(`https://qzero-market-backend.herokuapp.com/api/products/${id}`,
+      updatedProductData,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      })
+
+      const response = await axios.get('https://qzero-market-backend.herokuapp.com/api/products?')
+      return response.data
+    } catch (err) {
+      console.log(err)
+    }
+  }
+)
+
 export const deleteProduct = createAsyncThunk(
-  'updateProduct', 
+  'deleteProduct', 
   async ({id, token}: DeleteProductProps) => {
     try {
       await axios.delete(`https://qzero-market-backend.herokuapp.com/api/products/${id}`,
