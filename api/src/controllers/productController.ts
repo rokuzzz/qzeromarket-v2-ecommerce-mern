@@ -61,7 +61,7 @@ const createProduct = async (req: Request, res: Response, next: NextFunction) =>
   }
 }
 
-const getFilteredProducts = async (req: Request, res: Response) => {
+const getFilteredProducts = async (req: Request, res: Response, next: NextFunction) => {
   const skipPages = parseInt(req.query.page as string) || 0
   const limitPages = parseInt(req.query.limit as string) || 10
   const sortBy = req.query.sort?.toString() || "random"
@@ -98,7 +98,7 @@ const getFilteredProducts = async (req: Request, res: Response) => {
 
       res.status(200).json(products)
     } catch (err) {
-      res.status(500).json(err)
+      next(err)
     }
     // if category value is string and it is not empty - convert it to string array type 
   } else if (typeof categories == "string" && categories !== "") {
@@ -139,7 +139,7 @@ const getFilteredProducts = async (req: Request, res: Response) => {
         res.status(200).json(products)
       }
     } catch (err) {
-      res.status(500).json(err)
+      next(err)
     }
   } else {
     categories = ["All"]
@@ -159,12 +159,12 @@ const getFilteredProducts = async (req: Request, res: Response) => {
 
       res.status(200).json(products)
     } catch (err) {
-      res.status(500).json(err)
+      next(err)
     }
   }
 }
 
-const getProductById = async (req: Request, res: Response) => {
+const getProductById = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const product = await productService.findById(req.params.id)
     product.imageUrl = await getSignedUrl(
@@ -178,11 +178,11 @@ const getProductById = async (req: Request, res: Response) => {
 
     res.status(200).json(product)
   } catch (err) {
-    res.status(500).json(err)
+    next(err)
   }
 }
 
-const updateProduct = async (req: Request, res: Response) => {
+const updateProduct = async (req: Request, res: Response, next: NextFunction) => {
   const {categories, ...others} = req.body
   const categoryIds = await categoryService.getIdsByNames(categories)
 
@@ -195,7 +195,7 @@ const updateProduct = async (req: Request, res: Response) => {
       )
       res.status(200).json(updatedProduct)
     } catch (err) {
-      res.status(500).json(err)
+      next(err)
     }
   } else {  
     try {
@@ -206,12 +206,12 @@ const updateProduct = async (req: Request, res: Response) => {
       )
       res.status(200).json(updatedProduct)
     } catch (err) {
-      res.status(500).json(err)
+      next(err)
     }
   }
 }
 
-const deleteProduct = async (req: Request, res: Response) => {
+const deleteProduct = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const product = await productService.findById(req.params.id)
     const deleteParams = {
@@ -223,7 +223,7 @@ const deleteProduct = async (req: Request, res: Response) => {
     await productService.deleteOne(req.params.id)
     res.status(200).json('Product has been deleted.')
   } catch (err) {
-    res.status(500).json(err)
+    next(err)
   }
 }
 
