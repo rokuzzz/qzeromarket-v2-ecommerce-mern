@@ -1,47 +1,62 @@
-import { NextFunction, Request, Response } from "express";
-import { S3Client, PutObjectCommand, GetObjectCommand, DeleteObjectCommand } from "@aws-sdk/client-s3";
-import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
-import crypto from 'crypto';
-import sharp from 'sharp';
+import { NextFunction, Request, Response } from 'express'
+import {
+  S3Client,
+  PutObjectCommand,
+  GetObjectCommand,
+  DeleteObjectCommand,
+} from '@aws-sdk/client-s3'
+import { getSignedUrl } from '@aws-sdk/s3-request-presigner'
+import crypto from 'crypto'
+import sharp from 'sharp'
 
-import productService from "../services/productService";
-import categoryService from '../services/categoryService';
-import Product from "../models/Product";
-import { ACCESS_KEY, SECRET_ACCESS_KEY, BUCKET_REGION, BUCKET_NAME } from './../util/secrets';
+import productService from '../services/productService'
+import categoryService from '../services/categoryService'
+import Product from '../models/Product'
+import {
+  ACCESS_KEY,
+  SECRET_ACCESS_KEY,
+  BUCKET_REGION,
+  BUCKET_NAME,
+} from './../util/secrets'
 
 const s3 = new S3Client({
   credentials: {
     accessKeyId: ACCESS_KEY,
-    secretAccessKey: SECRET_ACCESS_KEY
+    secretAccessKey: SECRET_ACCESS_KEY,
   },
-  region: BUCKET_REGION
+  region: BUCKET_REGION,
 })
 
-const createProduct = async (req: Request, res: Response, next: NextFunction) => {
-  const {title, description, price, categories} = req.body
+const createProduct = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  const { title, description, price, categories } = req.body
   const categoryIds = await categoryService.getIdsByNames(categories)
 
   // if there is no file - throw error
   if (!req.file?.buffer) return next()
 
   // set a unique name
-  const randomImageName = (bytes = 32) => crypto.randomBytes(bytes).toString('hex') 
+  const randomImageName = (bytes = 32) =>
+    crypto.randomBytes(bytes).toString('hex')
   const imageName = randomImageName()
   // resize image
   const buffer = await sharp(req.file?.buffer)
-    .resize({height: 800, width: 800, fit: 'contain'})
+    .resize({ height: 800, width: 800, fit: 'contain' })
     .toBuffer()
-    
+
   const params = {
     Bucket: BUCKET_NAME,
     Key: imageName,
     Body: buffer,
-    ContentType: req.file?.mimetype
+    ContentType: req.file?.mimetype,
   }
   const command = new PutObjectCommand(params)
   await s3.send(command)
 
-  if(categoryIds.length == 0) {
+  if (categoryIds.length == 0) {
     next()
   } else {
     const newProduct = new Product({
@@ -49,22 +64,26 @@ const createProduct = async (req: Request, res: Response, next: NextFunction) =>
       description: description,
       price: price,
       categories: categoryIds,
-      imageName: imageName
+      imageName: imageName,
     })
-    
+
     try {
       const savedProduct = await productService.createOne(newProduct)
       res.status(200).json(savedProduct)
     } catch (err) {
-      res.status(500).json(err)
+      next(err)
     }
   }
 }
 
-const getFilteredProducts = async (req: Request, res: Response, next: NextFunction) => {
+const getFilteredProducts = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
   const skipPages = parseInt(req.query.page as string) || 0
   const limitPages = parseInt(req.query.limit as string) || 10
-  const sortBy = req.query.sort?.toString() || "random"
+  const sortBy = req.query.sort?.toString() || 'random'
   const order = req.query.order?.toString() || 0
   let categories = req.query.categories
 
@@ -74,7 +93,7 @@ const getFilteredProducts = async (req: Request, res: Response, next: NextFuncti
   if (Array.isArray(categories)) {
     // converts each category in the categories to a string (if it's not already)
     // push values to convertedCategories
-    for (let category of categories) {
+    for (const category of categories) {
       if (typeof category !== 'string') {
         convertedCategories.push(category.toString())
       } else {
@@ -82,15 +101,23 @@ const getFilteredProducts = async (req: Request, res: Response, next: NextFuncti
       }
     }
     try {
-      const categoryIds = await categoryService.getIdsByNames(convertedCategories)
-      const products = await productService.findAllPipeline(skipPages, limitPages, sortBy, order, categoryIds)
+      const categoryIds = await categoryService.getIdsByNames(
+        convertedCategories
+      )
+      const products = await productService.findAllPipeline(
+        skipPages,
+        limitPages,
+        sortBy,
+        order,
+        categoryIds
+      )
 
       for (const product of products) {
         product.imageUrl = await getSignedUrl(
           s3,
           new GetObjectCommand({
             Bucket: BUCKET_NAME,
-            Key: product.imageName
+            Key: product.imageName,
           }),
           { expiresIn: 3600 }
         )
@@ -100,37 +127,51 @@ const getFilteredProducts = async (req: Request, res: Response, next: NextFuncti
     } catch (err) {
       next(err)
     }
-    // if category value is string and it is not empty - convert it to string array type 
-  } else if (typeof categories == "string" && categories !== "") {
+    // if category value is string and it is not empty - convert it to string array type
+  } else if (typeof categories == 'string' && categories !== '') {
     convertedCategories.push(categories)
     try {
-      const categoryIds = await categoryService.getIdsByNames(convertedCategories)
+      const categoryIds = await categoryService.getIdsByNames(
+        convertedCategories
+      )
       // if the categoryIds value is an empty array - show all products
       if (categoryIds.length == 0) {
-        categories = ["All"]
-        const categoryIds = await categoryService.getIdsByNames(categories);
-        const products = await productService.findAllPipeline(skipPages, limitPages, sortBy, order, categoryIds)
+        categories = ['All']
+        const categoryIds = await categoryService.getIdsByNames(categories)
+        const products = await productService.findAllPipeline(
+          skipPages,
+          limitPages,
+          sortBy,
+          order,
+          categoryIds
+        )
 
         for (const product of products) {
           product.imageUrl = await getSignedUrl(
             s3,
             new GetObjectCommand({
               Bucket: BUCKET_NAME,
-              Key: product.imageName
+              Key: product.imageName,
             }),
             { expiresIn: 60 }
           )
         }
 
-        res.status(200).json(products) 
+        res.status(200).json(products)
       } else {
-        const products = await productService.findAllPipeline(skipPages, limitPages, sortBy, order, categoryIds)
+        const products = await productService.findAllPipeline(
+          skipPages,
+          limitPages,
+          sortBy,
+          order,
+          categoryIds
+        )
         for (const product of products) {
           product.imageUrl = await getSignedUrl(
             s3,
             new GetObjectCommand({
               Bucket: BUCKET_NAME,
-              Key: product.imageName
+              Key: product.imageName,
             }),
             { expiresIn: 3600 }
           )
@@ -142,16 +183,22 @@ const getFilteredProducts = async (req: Request, res: Response, next: NextFuncti
       next(err)
     }
   } else {
-    categories = ["All"]
+    categories = ['All']
     try {
-      const categoryIds = await categoryService.getIdsByNames(categories);
-      const products = await productService.findAllPipeline(skipPages, limitPages, sortBy, order, categoryIds)
+      const categoryIds = await categoryService.getIdsByNames(categories)
+      const products = await productService.findAllPipeline(
+        skipPages,
+        limitPages,
+        sortBy,
+        order,
+        categoryIds
+      )
       for (const product of products) {
         product.imageUrl = await getSignedUrl(
           s3,
           new GetObjectCommand({
             Bucket: BUCKET_NAME,
-            Key: product.imageName
+            Key: product.imageName,
           }),
           { expiresIn: 3600 }
         )
@@ -164,14 +211,18 @@ const getFilteredProducts = async (req: Request, res: Response, next: NextFuncti
   }
 }
 
-const getProductById = async (req: Request, res: Response, next: NextFunction) => {
+const getProductById = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
   try {
     const product = await productService.findById(req.params.id)
     product.imageUrl = await getSignedUrl(
       s3,
       new GetObjectCommand({
         Bucket: BUCKET_NAME,
-        Key: product.imageName
+        Key: product.imageName,
       }),
       { expiresIn: 3600 }
     )
@@ -182,11 +233,15 @@ const getProductById = async (req: Request, res: Response, next: NextFunction) =
   }
 }
 
-const updateProduct = async (req: Request, res: Response, next: NextFunction) => {
-  const {categories, ...others} = req.body
+const updateProduct = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  const { categories, ...others } = req.body
   const categoryIds = await categoryService.getIdsByNames(categories)
 
-  if(categoryIds.length == 0) {
+  if (categoryIds.length == 0) {
     try {
       const updatedProduct = await productService.updateOne(
         req.params.id,
@@ -197,11 +252,11 @@ const updateProduct = async (req: Request, res: Response, next: NextFunction) =>
     } catch (err) {
       next(err)
     }
-  } else {  
+  } else {
     try {
       const updatedProduct = await productService.updateOne(
         req.params.id,
-        { $set: {categories: categoryIds, others} },
+        { $set: { categories: categoryIds, others } },
         { new: true }
       )
       res.status(200).json(updatedProduct)
@@ -211,12 +266,16 @@ const updateProduct = async (req: Request, res: Response, next: NextFunction) =>
   }
 }
 
-const deleteProduct = async (req: Request, res: Response, next: NextFunction) => {
+const deleteProduct = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
   try {
     const product = await productService.findById(req.params.id)
     const deleteParams = {
       Bucket: BUCKET_NAME,
-      Key: product.imageName
+      Key: product.imageName,
     }
     await s3.send(new DeleteObjectCommand(deleteParams))
 
@@ -232,5 +291,5 @@ export default {
   getProductById,
   getFilteredProducts,
   updateProduct,
-  deleteProduct
+  deleteProduct,
 }
