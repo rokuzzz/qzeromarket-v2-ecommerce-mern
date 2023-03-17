@@ -6,22 +6,22 @@ import { CRYPTO_SECRET, JWT_SECRET } from "../util/secrets";
 import userService from "../services/userService";
 import { UnauthorizedError } from "../helpers/apiError";
 
-const getUser = async (req: Request, res: Response) => {
+const getUser = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const user = await userService.findById(req.params.id)
     const {password, ...others} = user?._doc
     res.status(200).json(others)
   } catch (err) {
-    res.status(500).json(err)
+    next(err)
   }
 }
 
-const getAllUsers = async (req: Request, res: Response) => {
+const getAllUsers = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const users = await userService.findAll()
     res.status(200).json(users)
   } catch (err) {
-    res.status(500).json(err)
+    next(err)
   }
 }
 
@@ -44,7 +44,7 @@ const getUserByJWT = async (req: Request, res: Response, next: NextFunction) => 
   }) 
 }
 
-const updateUser = async (req: Request, res: Response) => {
+const updateUser = async (req: Request, res: Response, next: NextFunction) => {
   if(req.body.password){
     req.body.password = CryptoJS.AES.encrypt(
       req.body.password,
@@ -60,16 +60,16 @@ const updateUser = async (req: Request, res: Response) => {
     )
     res.status(200).json(updatedUser)
   } catch (err) {
-    res.status(500).json(err)
+    next(err)
   }
 }
 
-const deleteUser = async (req: Request, res: Response) => {
+const deleteUser = async (req: Request, res: Response, next: NextFunction) => {
   try {
     await userService.deleteOne(req.params.id)
     res.status(200).json('User has been deleted.')
   } catch (err) {
-    res.status(500).json(err)
+    next(err)
   }
 }
 
