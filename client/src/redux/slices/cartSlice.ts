@@ -1,9 +1,12 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { Cart } from '../../types/cart'
+import { CartSliceState } from '../../types/cart'
 
-const initialState: Cart = {
-  id: '',
-  products: []
+const initialState: CartSliceState = {
+  usersShoppingCart: {
+    id: '',
+    products: []
+  },
+  allCarts: []
 }
 
 const cartSlice = createSlice({

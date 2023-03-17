@@ -15,3 +15,8 @@ export interface Cart {
   id: string,
   products: ProductInCart[]
 }
+
+export interface CartSliceState {
+  usersShoppingCart: Cart
+  allCarts: Cart[]
+}
