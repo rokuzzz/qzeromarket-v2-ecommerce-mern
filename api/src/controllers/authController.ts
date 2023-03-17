@@ -1,4 +1,4 @@
-import { Response, Request } from "express";
+import { Response, Request, NextFunction } from "express";
 import CryptoJS from 'crypto-js'
 import jwt from "jsonwebtoken";
 
@@ -7,7 +7,7 @@ import User, { UserRole } from "../models/User";
 import { UnauthorizedError } from "../helpers/apiError";
 import authService from "../services/authService";
 
-const register = async (req: Request, res: Response) => {
+const register = async (req: Request, res: Response, next: NextFunction) => {
   const {firstname, lastname, username, email } = req.body
   const password = CryptoJS.AES.encrypt(req.body.password, CRYPTO_SECRET).toString()
   const role: UserRole = 'guest'
@@ -24,18 +24,18 @@ const register = async (req: Request, res: Response) => {
     const savedUser = await authService.createUser(newUser)
     res.status(201).json(savedUser)
   } catch (err) {
-    res.status(500).json(err)
+    next(err)
   }
 }
 
-const login = async (req: Request, res: Response) => {
+const login = async (req: Request, res: Response, next: NextFunction) => {
   try{
     const {username, password} = req.body
     const loginData = {username, password}
     const user = await authService.authenticateUser(loginData)
     res.status(200).json(user)
   } catch (err) {
-    res.status(500).json(err)
+    next(err)
   }
 }
 
