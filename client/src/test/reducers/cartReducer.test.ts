@@ -1,4 +1,4 @@
-import { getUsersShoppingCart } from './../../redux/slices/cartSlice';
+import { getUsersShoppingCart, addToCart } from './../../redux/slices/cartSlice';
 import createTestStore from "../utils/testStore"
 
 let store = createTestStore()
@@ -15,5 +15,15 @@ describe('test cart reducer', () => {
     }))
     // console.log(store.getState().cartReducer.usersShoppingCart.products[0].productId.title)
     expect(store.getState().cartReducer.usersShoppingCart.products[0].productId.title).toBe('Designer Shoes')
+  })
+  
+  test('should create/update shopping cart', async () => {
+    await store.dispatch(addToCart({
+      title: 'Black T-Shirt',
+      quantity: 4,
+      token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzZGJiZDEyZTkzNjQ2NTJlNGRlMDM3ZiIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTY3OTQxODkzMywiZXhwIjoxNjc5Njc4MTMzfQ.FP_RbciK-xcJ8kXXPSAj6Nq01ultU8bp8b93MMGDB88'
+    }))
+
+    expect(store.getState().cartReducer.usersShoppingCart.products[1].quantity).toBe(4)
   })
 })
