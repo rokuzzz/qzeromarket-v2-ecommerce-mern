@@ -20,3 +20,8 @@ export interface CartSliceState {
   usersShoppingCart: Cart
   allCarts: Cart[]
 }
+
+export interface GetUsersShoppingCartProps {
+  userId: string,
+  token: string
+}
