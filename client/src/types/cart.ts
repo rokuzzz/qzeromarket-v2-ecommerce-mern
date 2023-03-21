@@ -26,7 +26,7 @@ export interface GetUsersShoppingCartProps {
   token: string
 }
 
-export interface addToCartProps {
+export interface AddToCartProps {
   title: string,
   quantity: number,
   token: string

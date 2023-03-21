@@ -1,3 +1,4 @@
+import { AddToCartProps } from './../../types/cart';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import axios from 'axios'
 import { CartSliceState, GetUsersShoppingCartProps } from '../../types/cart'
@@ -29,8 +30,14 @@ export const getUsersShoppingCart = createAsyncThunk(
 
 export const addToCart = createAsyncThunk(
   'addToCart', 
-  async () => {
-    
+  async ({title, quantity, token}: AddToCartProps) => {
+    const response = await axios.post('https://qzero-market-backend.herokuapp.com/api/carts',
+  {title, quantity},
+  {
+    headers: {
+      Authorization: `Bearer ${token}`
+    }})
+    return response.data
   }
 )
 
@@ -40,6 +47,9 @@ const cartSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder.addCase(getUsersShoppingCart.fulfilled, (state, action) => {
+      state.usersShoppingCart = action.payload
+    })
+    .addCase(addToCart.fulfilled, (state, action) => {
       state.usersShoppingCart = action.payload
     })
   }
