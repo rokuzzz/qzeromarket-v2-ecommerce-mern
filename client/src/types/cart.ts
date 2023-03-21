@@ -25,3 +25,9 @@ export interface GetUsersShoppingCartProps {
   userId: string,
   token: string
 }
+
+export interface addToCartProps {
+  title: string,
+  quantity: number,
+  token: string
+}
