@@ -1,7 +1,6 @@
 import { QueryParams, ProductSliceState, CreateProductProps, DeleteProductProps, UpdateProductParams } from './../../types/products';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import axios from 'axios'
-import { Product } from '../../types/products'
 
 const initialState: ProductSliceState = {
   allProducts: [],

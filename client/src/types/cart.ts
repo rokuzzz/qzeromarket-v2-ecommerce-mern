@@ -31,3 +31,8 @@ export interface AddToCartProps {
   quantity: number,
   token: string
 }
+
+export interface DeleteCartProps {
+  id: string,
+  token: string
+}

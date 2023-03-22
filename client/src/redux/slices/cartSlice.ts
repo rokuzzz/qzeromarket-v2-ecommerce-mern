@@ -1,4 +1,4 @@
-import { AddToCartProps } from './../../types/cart';
+import { AddToCartProps, DeleteCartProps } from './../../types/cart';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import axios from 'axios'
 import { CartSliceState, GetUsersShoppingCartProps } from '../../types/cart'
@@ -41,6 +41,18 @@ export const addToCart = createAsyncThunk(
   }
 )
 
+export const deleteCart = createAsyncThunk(
+  'addToCart',
+  async ({id, token}: DeleteCartProps) => {
+    await axios.post(`http://localhost:5000/api/carts/${id}`,
+    {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }})
+    return {id: '', products: []}
+  }
+)
+
 const cartSlice = createSlice({
   name: 'cart slice',
   initialState: initialState,
@@ -50,6 +62,9 @@ const cartSlice = createSlice({
       state.usersShoppingCart = action.payload
     })
     .addCase(addToCart.fulfilled, (state, action) => {
+      state.usersShoppingCart = action.payload
+    })
+    .addCase(deleteCart.fulfilled, (state, action) => {
       state.usersShoppingCart = action.payload
     })
   }
