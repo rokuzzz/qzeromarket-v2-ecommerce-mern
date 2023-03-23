@@ -38,7 +38,7 @@ export const addToCart = createAsyncThunk(
 )
 
 export const deleteCart = createAsyncThunk(
-  'addToCart',
+  'deleteCart',
   async ({id, token}: DeleteCartProps) => {
     await axios.post(`http://localhost:5000/api/carts/${id}`,
     {
@@ -75,3 +75,7 @@ const cartSlice = createSlice({
 })
 
 export const cartReducer = cartSlice.reducer
+
+export const {
+  countTotalPrice
+} = cartSlice.actions
