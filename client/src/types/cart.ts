@@ -14,11 +14,11 @@ export interface ProductInCart {
 export interface Cart {
   id: string,
   products: ProductInCart[]
+  totalPrice?: number
 }
 
 export interface CartSliceState {
   usersShoppingCart: Cart
-  allCarts: Cart[]
 }
 
 export interface GetUsersShoppingCartProps {

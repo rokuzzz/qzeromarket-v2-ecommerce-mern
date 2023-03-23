@@ -4,11 +4,7 @@ import axios from 'axios'
 import { CartSliceState, GetUsersShoppingCartProps } from '../../types/cart'
 
 const initialState: CartSliceState = {
-  usersShoppingCart: {
-    id: '',
-    products: []
-  },
-  allCarts: []
+  usersShoppingCart: { id: '', products: [], totalPrice: 0 }
 }
 
 export const getUsersShoppingCart = createAsyncThunk(
@@ -56,7 +52,15 @@ export const deleteCart = createAsyncThunk(
 const cartSlice = createSlice({
   name: 'cart slice',
   initialState: initialState,
-  reducers: {},
+  reducers: {
+    countTotalPrice: (state) => {
+      let totalPrice = 0
+      for (let i = 0; i < state.usersShoppingCart.products.length; i++) {
+        totalPrice += state.usersShoppingCart.products[i].quantity * state.usersShoppingCart.products[i].productId.price
+      }
+      state.usersShoppingCart.totalPrice = totalPrice
+    }
+  },
   extraReducers: (builder) => {
     builder.addCase(getUsersShoppingCart.fulfilled, (state, action) => {
       state.usersShoppingCart = action.payload
