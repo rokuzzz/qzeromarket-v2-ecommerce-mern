@@ -30,7 +30,7 @@ export const login = createAsyncThunk(
 
 export const loginByToken = createAsyncThunk(
   'loginByToken',
-  async (token: string) => {
+  async (token: string | null) => {
     try {
       const response = await axios.get('https://qzero-market-backend.herokuapp.com/api/users/profile',
       {

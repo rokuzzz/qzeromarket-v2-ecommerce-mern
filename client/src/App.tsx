@@ -1,23 +1,26 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { Routes, Route} from 'react-router-dom';
 import './App.css';
+import { useAppDispatch, useAppSelector } from './hooks/appHooks';
+import Home from './pages/Home';
+import Login from './pages/Login';
+import { loginByToken } from './redux/slices/userSlice';
 
 function App() {
+  const {currentUser} = useAppSelector((state) => state.userReducer) // get curr user 
+  const dispatch = useAppDispatch()
+
+  // get user data via login with access token (if token exists in local storage)
+  useEffect(() => {
+    dispatch(loginByToken(localStorage.getItem('access_token')))
+  }, [])
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Routes>
+      {currentUser 
+      ? <Route path='/' element={<Home />} />
+      : <Route path='/login' element={<Login />} />}
+    </Routes>
   );
 }
 
