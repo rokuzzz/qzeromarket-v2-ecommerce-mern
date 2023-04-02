@@ -5,7 +5,8 @@ import axios from 'axios';
 
 const initialState: UserSliceState = {
   listOfUsers: [],
-  currentUser: undefined
+  currentUser: undefined,
+  isAuthenticated: false
 }
 
 export const login = createAsyncThunk(
@@ -120,17 +121,27 @@ const userSlice = createSlice({
     logout: (state) => {
       localStorage.removeItem('access_token')
       state.currentUser = undefined
+      state.isAuthenticated = false
     }
   },
   extraReducers: (builder) => {
     builder.addCase(login.fulfilled, (state, action) => {
       state.currentUser = action.payload
+      typeof state.currentUser == undefined // if currentUser is undefined
+        ? state.isAuthenticated = false     // isAuthenticated equals to false
+        : state.isAuthenticated = true      // else isAuthenticated equals to true
     })
     .addCase(loginByToken.fulfilled, (state, action) => {
       state.currentUser = action.payload
+      typeof state.currentUser == undefined // if currentUser is undefined
+        ? state.isAuthenticated = false     // isAuthenticated equals to false
+        : state.isAuthenticated = true      // else isAuthenticated equals to true
     })
     .addCase(register.fulfilled, (state, action) => {
       state.currentUser = action.payload
+      typeof state.currentUser == undefined // if currentUser is undefined
+        ? state.isAuthenticated = false     // isAuthenticated equals to false
+        : state.isAuthenticated = true      // else isAuthenticated equals to true
     })
     .addCase(getAllUsers.fulfilled, (state, action) => {
       state.listOfUsers = action.payload

@@ -13,7 +13,8 @@ export interface User {
 
 export interface UserSliceState {
   listOfUsers: User[],
-  currentUser: User | undefined
+  currentUser: User | undefined,
+  isAuthenticated: boolean
 }
 
 export interface LoginCredentials {
