@@ -1,14 +1,16 @@
-import React from 'react';
 import { Button, Grid, Typography } from '@mui/material';
 
 import { LoginBox, LoginWrapper } from '../../styles/login';
 import FormInput from './FormInput';
+import { Link } from 'react-router-dom';
+import ParticlesBackground from '../particles/ParticlesBackground';
 
 const SignIn = () => {
   return (
     <LoginWrapper container justifyContent='center' alignItems='center'>
+      <ParticlesBackground />
       <Grid item xs={10} sm={8} md={4}>
-        <LoginBox>
+        <LoginBox sx={{ position: 'relative', zIndex: 3 }}>
           <Typography
             variant='h4'
             sx={{
@@ -16,12 +18,11 @@ const SignIn = () => {
               color: 'black',
             }}
           >
-            Login
+            qzeromarket.
           </Typography>
           <Typography
             variant='subtitle1'
             sx={{
-              opacity: '90%',
               lineHeight: 1.2,
               mt: 1,
             }}
@@ -31,7 +32,6 @@ const SignIn = () => {
           <Typography
             variant='subtitle1'
             sx={{
-              opacity: '90%',
               lineHeight: 1.2,
             }}
             gutterBottom
@@ -46,6 +46,7 @@ const SignIn = () => {
             >
               <Grid item xs={12}>
                 <FormInput
+                  id='username-textfield'
                   label='username'
                   placeholder='Enter your username'
                   isRequired={true}
@@ -53,16 +54,29 @@ const SignIn = () => {
               </Grid>
               <Grid item xs={12}>
                 <FormInput
+                  id='password-textfield'
                   label='password'
                   placeholder='********'
                   isRequired={true}
                   type='password'
                 />
               </Grid>
-              <Grid item xs={12} sx={{ mt: 3 }}>
-                <Button type='submit' fullWidth variant='outlined'>
+              <Grid item xs={12} sx={{ mt: 2 }}>
+                <Button
+                  type='submit'
+                  fullWidth
+                  color='primary'
+                  variant='outlined'
+                  sx={{ mb: 1 }}
+                >
                   Sign in
                 </Button>
+                <Typography>
+                  Don't have an account?&nbsp;{' '}
+                  <Link to='/register' style={{ color: 'black' }}>
+                    Sign up
+                  </Link>
+                </Typography>
               </Grid>
             </Grid>
           </form>

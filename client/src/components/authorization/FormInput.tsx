@@ -1,6 +1,7 @@
 import { TextField } from '@mui/material';
 
 interface FormInputProps {
+  id: string,
   label: string,
   placeholder: string,
   isRequired: boolean,
@@ -8,10 +9,10 @@ interface FormInputProps {
 }
 
 const FormInput = (props: FormInputProps) => {
-  const {label, placeholder, isRequired, type} = props
+  const {id, label, placeholder, isRequired, type} = props
   return (
     <TextField 
-      id='outlined-basic' 
+      id={id}
       fullWidth 
       size='medium'
       variant='outlined' 
