@@ -1,4 +1,4 @@
-const particlesConfig = {
+const particlesOptions = {
   background: {
     color: '#ffffff',
   },
@@ -35,7 +35,7 @@ const particlesConfig = {
       value: '#454545',
     },
     links: {
-      color: '#ffffff',
+      color: '#454545',
       distance: 150,
       enable: true,
       opacity: 0.5,
@@ -71,4 +71,4 @@ const particlesConfig = {
   },
 }
 
-export default particlesConfig
+export default particlesOptions

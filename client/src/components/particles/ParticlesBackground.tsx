@@ -1,5 +1,5 @@
 import Particles from 'react-tsparticles';
-import particlesConfig from './particles-config';
+import particlesOptions from './particlesOptions';
 import { useCallback } from 'react';
 import { Engine, ISourceOptions } from 'tsparticles-engine';
 import { loadFull } from 'tsparticles';
@@ -16,13 +16,13 @@ const ParticlesBackground = () => {
         left: 0,
         width: '100%',
         height: '100%',
-        zIndex: 2
+        zIndex: 2,
       }}
     >
       <Particles
         id='tsparticles'
         init={particlesInit}
-        options={particlesConfig as ISourceOptions}
+        options={particlesOptions as ISourceOptions}
       />
     </div>
   );

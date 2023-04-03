@@ -13,15 +13,16 @@ const SignIn = () => {
         <LoginBox sx={{ position: 'relative', zIndex: 3 }}>
           <Typography
             variant='h4'
+            color={'text.primary'}
             sx={{
-              fontWeight: 'bold',
-              color: 'black',
+              fontWeight: 'bold'
             }}
           >
             qzeromarket.
           </Typography>
           <Typography
             variant='subtitle1'
+            color={'text.secondary'}
             sx={{
               lineHeight: 1.2,
               mt: 1,
@@ -31,6 +32,7 @@ const SignIn = () => {
           </Typography>
           <Typography
             variant='subtitle1'
+            color={'text.secondary'}
             sx={{
               lineHeight: 1.2,
             }}
@@ -71,9 +73,9 @@ const SignIn = () => {
                 >
                   Sign in
                 </Button>
-                <Typography>
+                <Typography color={'text.secondary'}>
                   Don't have an account?&nbsp;{' '}
-                  <Link to='/register' style={{ color: 'black' }}>
+                  <Link to='/register' style={{ color: 'text.primary' }}>
                     Sign up
                   </Link>
                 </Typography>
