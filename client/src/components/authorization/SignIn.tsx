@@ -1,41 +1,68 @@
-import { Button, Grid, Typography } from '@mui/material';
+import {
+  Button,
+  Grid,
+  Typography,
+  useMediaQuery,
+  useTheme,
+} from '@mui/material';
+import { Link } from 'react-router-dom';
 
 import { LoginBox, LoginWrapper } from '../../styles/login';
 import FormInput from './FormInput';
-import { Link } from 'react-router-dom';
 import ParticlesBackground from '../particles/ParticlesBackground';
 
 const SignIn = () => {
+  const theme = useTheme();
+  const isDownSmall = useMediaQuery(theme.breakpoints.down('sm'));
+
   return (
     <LoginWrapper container justifyContent='center' alignItems='center'>
       <ParticlesBackground />
       <Grid item xs={10} sm={8} md={4}>
-        <LoginBox sx={{ position: 'relative', zIndex: 3 }}>
+        <LoginBox sx={isDownSmall ? {} : { position: 'relative', zIndex: 3 }}>
           <Typography
             variant='h4'
             color={'text.primary'}
-            sx={{
-              fontWeight: 'bold'
-            }}
+            sx={
+              isDownSmall
+                ? {
+                    fontWeight: 'bold',
+                    position: 'relative',
+                    zIndex: 3,
+                  }
+                : { fontWeight: 'bold' }
+            }
           >
             qzeromarket.
           </Typography>
           <Typography
             variant='subtitle1'
             color={'text.secondary'}
-            sx={{
-              lineHeight: 1.2,
-              mt: 1,
-            }}
+            sx={
+              isDownSmall
+                ? {
+                    lineHeight: 1.2,
+                    mt: 1,
+                    position: 'relative',
+                    zIndex: 3,
+                  }
+                : { lineHeight: 1.2, mt: 1 }
+            }
           >
             Hey! Enter your details to get
           </Typography>
           <Typography
             variant='subtitle1'
             color={'text.secondary'}
-            sx={{
-              lineHeight: 1.2,
-            }}
+            sx={
+              isDownSmall
+                ? {
+                    lineHeight: 1.2,
+                    position: 'relative',
+                    zIndex: 3,
+                  }
+                : { lineHeight: 1.2 }
+            }
             gutterBottom
           >
             sign in to your account :D
@@ -43,7 +70,7 @@ const SignIn = () => {
           <form>
             <Grid
               container
-              rowSpacing={1.5}
+              rowSpacing={1.1}
               sx={{ maxWidth: '280px', margin: '25px auto' }}
             >
               <Grid item xs={12}>
@@ -73,7 +100,10 @@ const SignIn = () => {
                 >
                   Sign in
                 </Button>
-                <Typography color={'text.secondary'}>
+                <Typography
+                  color={'text.secondary'}
+                  sx={isDownSmall ? { position: 'relative', zIndex: 3 } : {}}
+                >
                   Don't have an account?&nbsp;{' '}
                   <Link to='/register' style={{ color: 'text.primary' }}>
                     Sign up

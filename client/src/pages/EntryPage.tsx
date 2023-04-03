@@ -5,7 +5,6 @@ import ParticlesBackground from '../components/particles/ParticlesBackground';
 const EntryPage = () => {
   return (
     <>
-      
       <SignIn />
     </>
   );
