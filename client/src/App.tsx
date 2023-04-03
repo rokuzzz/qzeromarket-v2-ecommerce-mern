@@ -1,8 +1,9 @@
 import { Routes, Route } from 'react-router-dom';
+
 import './App.css';
-import Home from './pages/Home';
-import Login from './pages/Login';
 import PrivateRoute from './utils/router/PrivateRoute';
+import Home from './pages/Home';
+import EntryPage from './pages/EntryPage';
 
 
 function App() {
@@ -12,7 +13,7 @@ function App() {
       <Route path='/' element={<PrivateRoute />}>
         <Route path='/' element={<Home />}/>
       </Route>
-      <Route path='/login' element={<Login />} />
+      <Route path='/login' element={<EntryPage />} />
     </Routes>
   );
 }
