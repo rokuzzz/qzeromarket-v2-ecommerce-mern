@@ -5,15 +5,32 @@ import {
   useMediaQuery,
   useTheme,
 } from '@mui/material';
-import { Link } from 'react-router-dom';
+import { Link, useResolvedPath } from 'react-router-dom';
 
 import { LoginBox, LoginWrapper } from '../../styles/login';
 import FormInput from './FormInput';
 import ParticlesBackground from '../particles/ParticlesBackground';
+import { useState } from 'react';
+import { useAppDispatch } from '../../hooks/appHooks';
+import { login } from '../../redux/slices/userSlice';
 
 const SignIn = () => {
   const theme = useTheme();
   const isDownSmall = useMediaQuery(theme.breakpoints.down('sm'));
+
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+
+  const dispatch = useAppDispatch()
+
+  const handleSubmit = (e: any) => {
+    e.preventDefault()
+
+    dispatch(login({
+      username: username,
+      password: password
+    }))
+  }
 
   return (
     <LoginWrapper container justifyContent='center' alignItems='center'>
@@ -67,7 +84,7 @@ const SignIn = () => {
           >
             sign in to your account :D
           </Typography>
-          <form>
+          <form onSubmit={(e) => handleSubmit(e)}>
             <Grid
               container
               rowSpacing={1.1}
@@ -78,16 +95,24 @@ const SignIn = () => {
                   id='username-textfield'
                   label='username'
                   placeholder='Enter your username'
+                  value={username}
                   isRequired={true}
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                    setUsername(e.target.value)
+                  }
                 />
               </Grid>
               <Grid item xs={12}>
                 <FormInput
                   id='password-textfield'
+                  value={password}
                   label='password'
                   placeholder='********'
                   isRequired={true}
                   type='password'
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                    setPassword(e.target.value)
+                  }
                 />
               </Grid>
               <Grid item xs={12} sx={{ mt: 2 }}>
