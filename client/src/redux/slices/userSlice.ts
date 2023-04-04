@@ -130,6 +130,8 @@ const userSlice = createSlice({
       typeof state.currentUser == undefined // if currentUser is undefined
         ? state.isAuthenticated = false     // isAuthenticated equals to false
         : state.isAuthenticated = true      // else isAuthenticated equals to true
+
+        return state
     })
     .addCase(loginByToken.fulfilled, (state, action) => {
       state.currentUser = action.payload

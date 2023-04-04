@@ -5,32 +5,42 @@ import {
   useMediaQuery,
   useTheme,
 } from '@mui/material';
-import { Link, useResolvedPath } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 import { LoginBox, LoginWrapper } from '../../styles/login';
 import FormInput from './FormInput';
 import ParticlesBackground from '../particles/ParticlesBackground';
-import { useState } from 'react';
-import { useAppDispatch } from '../../hooks/appHooks';
-import { login } from '../../redux/slices/userSlice';
+import { useEffect, useState } from 'react';
+import { useAppDispatch, useAppSelector } from '../../hooks/appHooks';
+import { login, loginByToken } from '../../redux/slices/userSlice';
 
 const SignIn = () => {
+  const { isAuthenticated } = useAppSelector((state) => state.userReducer);
+  const dispatch = useAppDispatch();
+
   const theme = useTheme();
   const isDownSmall = useMediaQuery(theme.breakpoints.down('sm'));
 
+  const navigate = useNavigate();
+  const token = localStorage.getItem('access_token');
+  useEffect(() => {
+    isAuthenticated                    // check if user is already authenticated -
+      ? navigate('/')                  // go to home page
+      : dispatch(loginByToken(token)); // otherwise try to login by token
+  }, [isAuthenticated]);
+
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-
-  const dispatch = useAppDispatch()
-
   const handleSubmit = (e: any) => {
-    e.preventDefault()
+    e.preventDefault();
 
-    dispatch(login({
-      username: username,
-      password: password
-    }))
-  }
+    dispatch(
+      login({
+        username: username,
+        password: password,
+      })
+    );
+  };
 
   return (
     <LoginWrapper container justifyContent='center' alignItems='center'>
