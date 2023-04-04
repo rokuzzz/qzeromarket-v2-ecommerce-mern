@@ -11,24 +11,17 @@ import { ThemeProvider, createTheme } from '@mui/material';
 const theme = createTheme({
   palette: {
     primary: {
-      main: '#000000', // black
+      main: '#14213d',
     },
     secondary: {
-      main: '#FFFFFF', // white
+      main: '#fca311',
     },
-    error: {
-      main: '#FF0000', // red
-    },
-    success: {
-      main: '#00FF00', // green
+    common: {
+      black: '#000000',
+      white: '#ffffff',
     },
     background: {
-      default: '#F5F5F5', // light gray
-      paper: '#FFFFFF', // white
-    },
-    text: {
-      primary: '#000000', // black
-      secondary: '#555555', // dark gray
+      default: '#e5e5e5',
     },
   },
 });

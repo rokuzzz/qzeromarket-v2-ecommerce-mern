@@ -94,8 +94,9 @@ const SignIn = () => {
                 <Button
                   type='submit'
                   fullWidth
+                  size='large'
                   color='primary'
-                  variant='outlined'
+                  variant='contained'
                   sx={{ mb: 1 }}
                 >
                   Sign in
@@ -105,7 +106,7 @@ const SignIn = () => {
                   sx={isDownSmall ? { position: 'relative', zIndex: 3 } : {}}
                 >
                   Don't have an account?&nbsp;{' '}
-                  <Link to='/register' style={{ color: 'text.primary' }}>
+                  <Link to='/register' style={{ color: 'black' }}>
                     Sign up
                   </Link>
                 </Typography>
