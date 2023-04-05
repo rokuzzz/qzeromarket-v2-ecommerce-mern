@@ -1,18 +1,25 @@
 import { useEffect } from 'react';
 
 import { useAppDispatch, useAppSelector } from '../hooks/appHooks';
-import { loginByToken } from '../redux/slices/userSlice';
+
+import { fetchAllProducts } from '../redux/slices/productSlice';
 
 const Home = () => {
-  const { currentUser } = useAppSelector((state) => state.userReducer); // get curr user
+  const { allProducts } = useAppSelector((state) => state.productReducer); // get curr user
   const dispatch = useAppDispatch();
 
   // get user data via login with access token (if token exists in local storage)
   useEffect(() => {
-    dispatch(loginByToken(localStorage.getItem('access_token')));
+    dispatch(fetchAllProducts({}));
   }, []);
 
-  return <>{currentUser ? <div>Home</div> : <div>Go to login</div>}</>;
+  return (
+    <>
+      {allProducts.map((product) => (
+        <div>{product.title}</div>
+      ))}
+    </>
+  );
 };
 
 export default Home;
