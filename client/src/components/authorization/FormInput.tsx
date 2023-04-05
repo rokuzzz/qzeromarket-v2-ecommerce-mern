@@ -1,7 +1,8 @@
 import { TextField } from '@mui/material';
 
 interface FormInputProps {
-  id: string,
+  id?: string,
+  name?: string,
   value: string,
   label: string,
   placeholder: string,
@@ -11,10 +12,11 @@ interface FormInputProps {
 }
 
 const FormInput = (props: FormInputProps) => {
-  const {id, value, label, placeholder, type, isRequired, onChange} = props
+  const {id, name, value, label, placeholder, type, isRequired, onChange} = props
   return (
     <TextField 
       id={id}
+      name={name}
       value={value}
       fullWidth 
       size='medium'

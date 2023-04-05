@@ -15,7 +15,7 @@ import { useAppDispatch, useAppSelector } from '../../hooks/appHooks';
 import { login, loginByToken } from '../../redux/slices/userSlice';
 
 const SignIn = () => {
-  const { isAuthenticated } = useAppSelector((state) => state.userReducer);
+  const { isAuthenticated, currentUser } = useAppSelector((state) => state.userReducer);
   const dispatch = useAppDispatch();
 
   const theme = useTheme();
@@ -24,14 +24,14 @@ const SignIn = () => {
   const navigate = useNavigate();
   const token = localStorage.getItem('access_token');
   useEffect(() => {
-    isAuthenticated                    // check if user is already authenticated -
+    isAuthenticated && currentUser     // check if user is already authenticated -
       ? navigate('/')                  // go to home page
       : dispatch(loginByToken(token)); // otherwise try to login by token
-  }, [isAuthenticated]);
+  }, [isAuthenticated, currentUser]);
 
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const handleSubmit = (e: any) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     dispatch(
