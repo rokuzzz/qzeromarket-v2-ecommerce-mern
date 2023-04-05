@@ -2,6 +2,7 @@ import { GetUserByIDProps, LoginCredentials, RegisterCredentials, UpdateUserProp
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { UserSliceState } from '../../types/user'
 import axios from 'axios';
+import { ToastOptions, toast } from 'react-toastify';
 
 const initialState: UserSliceState = {
   listOfUsers: [],
@@ -22,9 +23,12 @@ export const login = createAsyncThunk(
         const {password, accessToken, ...userInfo} = response.data
         return userInfo
       }
+
       return undefined
     } catch (err) {
       console.log(err)
+      
+      toast.error('Invalid credentials', {position: 'bottom-center'});
     }
   }
 )
@@ -60,6 +64,8 @@ export const register = createAsyncThunk(
       return (response.data? response.data : undefined)
     } catch (err) {
       console.log(err)
+
+      toast.error('Username or email already exists, please choose another', {position: 'bottom-center'});
     }
   }
 )

@@ -91,7 +91,7 @@ const SignUp = () => {
 
     if (currentUser) navigate('/login');
   };
-
+  
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
