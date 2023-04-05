@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import {
   Button,
   Grid,
@@ -10,11 +11,25 @@ import {
 import ParticlesBackground from '../particles/ParticlesBackground';
 import FormInput from './FormInput';
 import { RegisterBox, RegisterWrapper } from '../../styles/register';
-import { Link } from 'react-router-dom';
+import { useAppDispatch, useAppSelector } from '../../hooks/appHooks';
+import { loginByToken, register } from '../../redux/slices/userSlice';
 
 const SignUp = () => {
+  const { isAuthenticated, currentUser } = useAppSelector(
+    (state) => state.userReducer
+  );
+  const dispatch = useAppDispatch();
+
   const theme = useTheme();
   const isDownSmall = useMediaQuery(theme.breakpoints.down('sm'));
+
+  const navigate = useNavigate();
+  const token = localStorage.getItem('access_token');
+  useEffect(() => {
+    isAuthenticated && currentUser     // check if user is already authenticated -
+      ? navigate('/')                  // go to home page
+      : dispatch(loginByToken(token)); // otherwise try to login by token
+  }, [isAuthenticated, currentUser]);
 
   const [formData, setFormData] = useState({
     firstname: '',
@@ -69,6 +84,14 @@ const SignUp = () => {
     },
   ];
 
+  const handleRegister = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    dispatch(register(formData));
+
+    if (currentUser) navigate('/login');
+  };
+
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
@@ -111,7 +134,7 @@ const SignUp = () => {
           >
             Enter all text fields to complete registration
           </Typography>
-          <form>
+          <form onSubmit={(e) => handleRegister(e)}>
             <Grid
               container
               rowSpacing={1.1}

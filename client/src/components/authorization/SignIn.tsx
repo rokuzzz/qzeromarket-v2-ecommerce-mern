@@ -31,7 +31,7 @@ const SignIn = () => {
 
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleLogin = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     dispatch(
@@ -94,7 +94,7 @@ const SignIn = () => {
           >
             sign in to your account :D
           </Typography>
-          <form onSubmit={(e) => handleSubmit(e)}>
+          <form onSubmit={(e) => handleLogin(e)}>
             <Grid
               container
               rowSpacing={1.1}
