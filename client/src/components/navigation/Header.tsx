@@ -1,4 +1,11 @@
-import { AppBar, IconButton, Slide, Toolbar, Typography } from '@mui/material';
+import {
+  AppBar,
+  IconButton,
+  Slide,
+  Toolbar,
+  Typography,
+  Grid,
+} from '@mui/material';
 import useScrollTrigger from '@mui/material/useScrollTrigger';
 import MenuIcon from '@mui/icons-material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
@@ -28,7 +35,26 @@ const Header = () => {
       // }}
       >
         <StyledToolbar>
-          <IconButton
+          <Grid container>
+            <Grid item xs={12} height={'64px'}>
+              <IconButton
+                size='large'
+                edge='start'
+                color='inherit'
+                aria-label='open drawer'
+                sx={{ mr: 2 }}
+              >
+                <MenuIcon />
+              </IconButton>
+              <Typography>
+                Hi
+              </Typography>
+            </Grid>
+            <Grid item xs={12} height={'64px'}>
+              <Typography>Here</Typography>
+            </Grid>
+          </Grid>
+          {/* <IconButton
             size='large'
             edge='start'
             color='inherit'
@@ -55,7 +81,7 @@ const Header = () => {
             color='inherit'
           >
             <MoreIcon />
-          </IconButton>
+          </IconButton> */}
         </StyledToolbar>
       </AppBar>
     </HideOnScroll>
