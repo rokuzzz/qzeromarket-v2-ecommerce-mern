@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import {
   AppBar,
   IconButton,
@@ -15,9 +16,9 @@ import MenuIcon from '@mui/icons-material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
 import MoreIcon from '@mui/icons-material/MoreVert';
 
-import { StyledTab, StyledTabs, StyledToolbar } from '../../styles/navigation';
+import { StyledTab, StyledTabs } from '../../styles/navigation';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
-import { useState } from 'react';
+import { ReactComponent as AppLogo } from '../../assets/app-logo.svg';
 
 interface Props {
   children: React.ReactElement;
@@ -44,11 +45,18 @@ const Header = () => {
   return (
     <HideOnScroll>
       <AppBar>
-        <StyledToolbar>
-          <Typography variant='h6' component='div' sx={{ flexGrow: 1 }}>
-            qzeromarket
-          </Typography>
-        </StyledToolbar>
+        <Toolbar>
+          <IconButton
+            size='large'
+            edge='start'
+            color='inherit'
+            aria-label='menu'
+            sx={{ pr: 0 }}
+          >
+            <MenuIcon />
+          </IconButton>
+          <AppLogo style={{ border: '1px solid red;' }} />
+        </Toolbar>
         <StyledTabs
           value={selectedTab}
           onChange={handleChange}

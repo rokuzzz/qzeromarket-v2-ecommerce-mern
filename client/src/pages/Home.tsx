@@ -1,10 +1,9 @@
 import { useEffect } from 'react';
+import { Toolbar } from '@mui/material';
 
 import { useAppDispatch, useAppSelector } from '../hooks/appHooks';
-
 import { fetchAllProducts } from '../redux/slices/productSlice';
 import Header from '../components/navigation/Header';
-import { StyledToolbar } from '../styles/navigation';
 
 const Home = () => {
   const { allProducts } = useAppSelector((state) => state.productReducer); // get curr user
@@ -18,7 +17,7 @@ const Home = () => {
   return (
     <>
       <Header />
-      <StyledToolbar />
+      <Toolbar />
       {allProducts.map((product) => (
         <div>{product.title}</div>
       ))}
