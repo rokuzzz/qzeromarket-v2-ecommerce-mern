@@ -5,13 +5,19 @@ import {
   Toolbar,
   Typography,
   Grid,
+  Tabs,
+  Tab,
+  Badge,
+  useTheme,
 } from '@mui/material';
 import useScrollTrigger from '@mui/material/useScrollTrigger';
 import MenuIcon from '@mui/icons-material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
 import MoreIcon from '@mui/icons-material/MoreVert';
 
-import { StyledToolbar } from '../../styles/navigation';
+import { StyledTab, StyledTabs, StyledToolbar } from '../../styles/navigation';
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import { useState } from 'react';
 
 interface Props {
   children: React.ReactElement;
@@ -27,62 +33,38 @@ function HideOnScroll({ children }: Props) {
 }
 
 const Header = () => {
+  const theme = useTheme();
+
+  const [selectedTab, setSelectedTab] = useState(0);
+
+  const handleChange = (event: React.SyntheticEvent, newValue: number) => {
+    setSelectedTab(newValue);
+  };
+
   return (
     <HideOnScroll>
-      <AppBar
-      // sx={{
-      //   background: '#FFFFFF',
-      // }}
-      >
+      <AppBar>
         <StyledToolbar>
-          <Grid container>
-            <Grid item xs={12} height={'64px'}>
-              <IconButton
-                size='large'
-                edge='start'
-                color='inherit'
-                aria-label='open drawer'
-                sx={{ mr: 2 }}
-              >
-                <MenuIcon />
-              </IconButton>
-              <Typography>
-                Hi
-              </Typography>
-            </Grid>
-            <Grid item xs={12} height={'64px'}>
-              <Typography>Here</Typography>
-            </Grid>
-          </Grid>
-          {/* <IconButton
-            size='large'
-            edge='start'
-            color='inherit'
-            aria-label='open drawer'
-            sx={{ mr: 2 }}
-          >
-            <MenuIcon />
-          </IconButton>
-          <Typography
-            variant='h5'
-            noWrap
-            component='div'
-            sx={{ flexGrow: 1, alignSelf: 'flex-end' }}
-          >
+          <Typography variant='h6' component='div' sx={{ flexGrow: 1 }}>
             qzeromarket
           </Typography>
-          <IconButton size='large' aria-label='search' color='inherit'>
-            <SearchIcon />
-          </IconButton>
-          <IconButton
-            size='large'
-            aria-label='display more actions'
-            edge='end'
-            color='inherit'
-          >
-            <MoreIcon />
-          </IconButton> */}
         </StyledToolbar>
+        <StyledTabs
+          value={selectedTab}
+          onChange={handleChange}
+          textColor={'inherit'}
+          indicatorColor='secondary'
+          aria-label='main categories'
+          sx={{
+            margin: '0 auto',
+          }}
+        >
+          <StyledTab label='All' />
+          <StyledTab label='New in' />
+          <StyledTab label='Clothing' />
+          <StyledTab label='Shoes' />
+          <StyledTab label='Accessories' />
+        </StyledTabs>
       </AppBar>
     </HideOnScroll>
   );
