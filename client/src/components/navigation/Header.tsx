@@ -19,6 +19,9 @@ import MoreIcon from '@mui/icons-material/MoreVert';
 import { StyledTab, StyledTabs } from '../../styles/navigation';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import { ReactComponent as AppLogo } from '../../assets/app-logo.svg';
+import { ReactComponent as AppLogo2 } from '../../assets/qzm.svg';
+import { ReactComponent as AppLogo3 } from '../../assets/qzm2.svg';
+import { ReactComponent as AppLogo4 } from '../../assets/qzm3.svg';
 
 interface Props {
   children: React.ReactElement;
@@ -55,7 +58,7 @@ const Header = () => {
           >
             <MenuIcon />
           </IconButton>
-          <AppLogo style={{ border: '1px solid red;' }} />
+          <AppLogo4 />
         </Toolbar>
         <StyledTabs
           value={selectedTab}
