@@ -1,33 +1,10 @@
-import { useState } from 'react';
-import {
-  AppBar,
-  IconButton,
-  Slide,
-  Toolbar,
-  Typography,
-  Grid,
-  Tabs,
-  Tab,
-  Badge,
-  useTheme,
-} from '@mui/material';
+import { AppBar, Slide } from '@mui/material';
 import useScrollTrigger from '@mui/material/useScrollTrigger';
-import MenuIcon from '@mui/icons-material/Menu';
-import SearchIcon from '@mui/icons-material/Search';
-import MoreIcon from '@mui/icons-material/MoreVert';
 
-import { StyledTab, StyledTabs } from '../../styles/navigation';
-import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
-import { ReactComponent as AppLogo } from '../../assets/app-logo.svg';
-import { ReactComponent as AppLogo2 } from '../../assets/qzm.svg';
-import { ReactComponent as AppLogo3 } from '../../assets/qzm2.svg';
-import { ReactComponent as AppLogo4 } from '../../assets/qzm3.svg';
+import HeaderTabs from './HeaderTabs';
+import HeaderNavigation from './HeaderNavigation';
 
-interface Props {
-  children: React.ReactElement;
-}
-
-function HideOnScroll({ children }: Props) {
+function HideOnScroll({ children }: { children: React.ReactElement }) {
   const trigger = useScrollTrigger();
   return (
     <Slide appear={false} direction={'down'} in={!trigger}>
@@ -36,46 +13,20 @@ function HideOnScroll({ children }: Props) {
   );
 }
 
-const Header = () => {
-  const theme = useTheme();
+interface HeaderProps {
+  selectedTab?: number;
+  handleChange?: (event: React.SyntheticEvent, newValue: number) => void;
+}
 
-  const [selectedTab, setSelectedTab] = useState(0);
-
-  const handleChange = (event: React.SyntheticEvent, newValue: number) => {
-    setSelectedTab(newValue);
-  };
+const Header = ({ selectedTab, handleChange }: HeaderProps) => {
+  const hasTabs =
+    typeof selectedTab !== 'undefined' && typeof handleChange !== 'undefined';
 
   return (
     <HideOnScroll>
       <AppBar>
-        <Toolbar>
-          <IconButton
-            size='large'
-            edge='start'
-            color='inherit'
-            aria-label='menu'
-            sx={{ pr: 0 }}
-          >
-            <MenuIcon />
-          </IconButton>
-          <AppLogo4 />
-        </Toolbar>
-        <StyledTabs
-          value={selectedTab}
-          onChange={handleChange}
-          textColor={'inherit'}
-          indicatorColor='secondary'
-          aria-label='main categories'
-          sx={{
-            margin: '0 auto',
-          }}
-        >
-          <StyledTab label='All' />
-          <StyledTab label='New in' />
-          <StyledTab label='Clothing' />
-          <StyledTab label='Shoes' />
-          <StyledTab label='Accessories' />
-        </StyledTabs>
+        <HeaderNavigation />
+        {hasTabs && <HeaderTabs value={selectedTab} onChange={handleChange} />}
       </AppBar>
     </HideOnScroll>
   );

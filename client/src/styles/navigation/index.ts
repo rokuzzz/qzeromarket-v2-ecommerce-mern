@@ -8,9 +8,9 @@ import { Tab, Tabs, Toolbar, styled } from "@mui/material";
 //   minHeight: 128,
 // }));
 
-export const StyledTabs = styled(Tabs)(({ theme }) => ({
-  marginTop: theme.spacing(2),
-}));
+// export const StyledTabs = styled(Tabs)(({ theme }) => ({
+//   marginTop: theme.spacing(2),
+// }));
 
 export const StyledTab = styled(Tab)(({ theme }) => ({
   [theme.breakpoints.up('sm')]: {
