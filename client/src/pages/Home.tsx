@@ -4,9 +4,9 @@ import { Toolbar } from '@mui/material';
 import { useAppDispatch, useAppSelector } from '../hooks/appHooks';
 import { fetchAllProducts } from '../redux/slices/productSlice';
 import Header from '../components/navigation/Header';
+import ProductList from '../components/products/ProductList';
 
 const Home = () => {
-  const { allProducts } = useAppSelector((state) => state.productReducer); // get curr user
   const dispatch = useAppDispatch();
 
   // This state manages the selected tab index
@@ -17,18 +17,19 @@ const Home = () => {
     setSelectedTab(newValue);
   };
 
-  // get user data via login with access token (if token exists in local storage)
+  // Fetch all products on mount
   useEffect(() => {
     dispatch(fetchAllProducts({}));
   }, []);
+
+   // Get all products from state
+  const { allProducts } = useAppSelector((state) => state.productReducer);
 
   return (
     <>
       <Header selectedTab={selectedTab} handleChange={handleTabChange} />
       <Toolbar />
-      {allProducts.map((product) => (
-        <div>{product.title}</div>
-      ))}
+      <ProductList products={allProducts} />
     </>
   );
 };
