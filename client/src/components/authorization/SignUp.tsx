@@ -8,7 +8,7 @@ import {
   useTheme,
 } from '@mui/material';
 
-import ParticlesBackground from '../particles/ParticlesBackground';
+import ParticlesBackground from '../common/particles/ParticlesBackground';
 import FormInput from './FormInput';
 import { RegisterBox, RegisterWrapper } from '../../styles/register';
 import { useAppDispatch, useAppSelector } from '../../hooks/appHooks';
@@ -26,8 +26,8 @@ const SignUp = () => {
   const navigate = useNavigate();
   const token = localStorage.getItem('access_token');
   useEffect(() => {
-    isAuthenticated && currentUser     // check if user is already authenticated -
-      ? navigate('/')                  // go to home page
+    isAuthenticated && currentUser // check if user is already authenticated -
+      ? navigate('/') // go to home page
       : dispatch(loginByToken(token)); // otherwise try to login by token
   }, [isAuthenticated, currentUser]);
 
@@ -91,7 +91,7 @@ const SignUp = () => {
 
     if (currentUser) navigate('/login');
   };
-  
+
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };

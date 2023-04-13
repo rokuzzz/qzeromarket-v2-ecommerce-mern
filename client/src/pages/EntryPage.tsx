@@ -1,4 +1,4 @@
-import SignIn from '../components/authorization/SignIn';
+import SignIn from '../components/authorization/login/SignIn';
 
 const EntryPage = () => {
   return (
