@@ -3,16 +3,33 @@ import { Link, useNavigate } from 'react-router-dom';
 import {
   Button,
   Grid,
+  Paper,
   Typography,
   useMediaQuery,
   useTheme,
 } from '@mui/material';
+import { styled } from '@mui/material/styles';
 
 import ParticlesBackground from '../common/particles/ParticlesBackground';
 import FormInput from './FormInput';
-import { RegisterBox, RegisterWrapper } from '../../styles/register';
 import { useAppDispatch, useAppSelector } from '../../hooks/appHooks';
 import { loginByToken, register } from '../../redux/slices/userSlice';
+
+const RegisterWrapper = styled(Grid)(({ theme }) => ({
+  height: '100vh',
+  backgroundColor: theme.palette.background.default,
+}));
+
+const RegisterBox = styled(Paper)(({ theme }) => ({
+  boxSizing: 'border-box',
+  padding: theme.spacing(10, 0),
+  textAlign: 'center',
+  color: theme.palette.text.secondary,
+  boxShadow: 'rgb(38, 57, 77) 0px 20px 30px -10px',
+  [theme.breakpoints.down('sm')]: {
+    boxShadow: 'none',
+  },
+}));
 
 const SignUp = () => {
   const { isAuthenticated, currentUser } = useAppSelector(

@@ -1,4 +1,5 @@
-import { Tab, Tabs, styled } from '@mui/material';
+import { Tab, Tabs } from '@mui/material';
+import { styled } from '@mui/material/styles';
 
 interface HeaderTabsProps {
   value?: number;
