@@ -14,13 +14,12 @@ import { login, loginByToken } from '../../../redux/slices/userSlice';
 import LoginForm from './LoginForm';
 import SignInHeading from './SignInHeading';
 
-// Wrapper component for the entire login page
+// Styling the components with MUI styles
 const LoginWrapper = styled(Grid)(({ theme }) => ({
   height: '100vh',
   backgroundColor: theme.palette.background.default,
 }));
 
-// Styled component for the login form box
 const LoginBox = styled(Paper)(({ theme }) => ({
   boxSizing: 'border-box',
   padding: theme.spacing(10, 0),
