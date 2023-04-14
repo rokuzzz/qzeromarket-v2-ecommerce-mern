@@ -1,11 +1,15 @@
-import { Tabs } from '@mui/material';
-import React, { useState } from 'react';
-import { StyledTab } from '../../styles/navigation';
+import { Tab, Tabs, styled } from '@mui/material';
 
 interface HeaderTabsProps {
   value?: number;
   onChange?: (event: React.SyntheticEvent, newValue: number) => void;
 }
+
+const StyledTab = styled(Tab)(({ theme }) => ({
+  [theme.breakpoints.up('sm')]: {
+    width: '125px'
+  },
+}));
 
 const HeaderTabs = (Props: HeaderTabsProps) => {
   const { value, onChange } = Props;
