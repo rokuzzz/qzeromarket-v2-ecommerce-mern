@@ -17,13 +17,33 @@ const Home = () => {
     setSelectedTab(newValue);
   };
 
-  // Fetch all products on mount
-  useEffect(() => {
-    dispatch(fetchAllProducts({}));
-  }, []);
+  console.log(selectedTab);
 
-   // Get all products from state
+  // Get a list of products depending on the selected category
+  useEffect(() => {
+    switch (selectedTab) {
+      case 0:
+        dispatch(fetchAllProducts({ categories: '&categories=All' }));
+        break;
+      case 1:
+        dispatch(fetchAllProducts({ categories: '&categories=New' }));
+        break;
+      case 2:
+        dispatch(fetchAllProducts({ categories: '&categories=Clothing' }));
+        break;
+      case 3:
+        dispatch(fetchAllProducts({ categories: '&categories=Shoes' }));
+        break;
+      case 4:
+        dispatch(fetchAllProducts({ categories: '&categories=Accessories' }));
+        break;
+    }
+  }, [selectedTab, setSelectedTab]);
+
+  // Get all products from state
   const { allProducts } = useAppSelector((state) => state.productReducer);
+
+  console.log(allProducts);
 
   return (
     <>
