@@ -40,7 +40,7 @@ const Home = () => {
     }
   }, [selectedTab, setSelectedTab]);
 
-  // Get all products from state
+  // Get products list from productSlice initial state
   const { allProducts } = useAppSelector((state) => state.productReducer);
 
   console.log(allProducts);
@@ -48,7 +48,6 @@ const Home = () => {
   return (
     <>
       <Header selectedTab={selectedTab} handleChange={handleTabChange} />
-      <Toolbar />
       <ProductList products={allProducts} />
     </>
   );
