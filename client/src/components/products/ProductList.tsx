@@ -1,5 +1,6 @@
 import { makeStyles } from '@mui/styles';
-import { Grid, Theme, Toolbar, Typography } from '@mui/material';
+import { styled } from '@mui/material/styles';
+import { Grid, Theme, Toolbar } from '@mui/material';
 
 import { Product } from './../../types/products';
 import ProductCard from './ProductCard';
@@ -7,7 +8,12 @@ import ProductCard from './ProductCard';
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
     flexGrow: 1,
-    margin: '0 16px',
+    [theme.breakpoints.down('md')]: {
+      margin: '0 5px',
+    },
+    [theme.breakpoints.up('md')]: {
+      margin: '0 48px',
+    },
   },
   card: {
     height: '100%',
@@ -38,7 +44,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     paddingTop: '100%', // 1:1 aspect ratio
   },
   title: {
-    fontWeight: 600,
+    fontWeight: 100,
     fontSize: '1.125rem',
     lineHeight: 1.2,
     margin: theme.spacing(1, 0, 0.5),
@@ -52,6 +58,13 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
 }));
 
+const ProductsGrid = styled(Grid)(({ theme }) => ({
+  margin: '48px',
+  [theme.breakpoints.down('md')]: {
+    margin: '7px',
+  },
+}));
+
 interface ProductListProps {
   products: Product[];
 }
@@ -60,7 +73,7 @@ const ProductList = ({ products }: ProductListProps) => {
   const classes = useStyles();
 
   const renderProducts = products.map((product) => (
-    <Grid item xs={12} sm={6} md={4} key={product._id}>
+    <Grid item xs={6} sm={6} md={4} key={product._id}>
       <ProductCard product={product} useStyles={useStyles} />
     </Grid>
   ));
