@@ -66,7 +66,7 @@ const ProductList = ({ products }: ProductListProps) => {
   const classes = useStyles();
   
   // Create a new ProductCard component for each product in the list
-  const renderProducts = products.map((product) => (
+  const productCards = products.map((product) => (
     <Grid item xs={6} sm={6} md={4} key={product._id}>
       <ProductCard product={product} useStyles={useStyles} />
     </Grid>
@@ -76,7 +76,7 @@ const ProductList = ({ products }: ProductListProps) => {
     <div className={classes.root}>
       <Toolbar sx={{ height: '128px' }} />
       <Grid container spacing={2}>
-        {renderProducts}
+        {productCards}
       </Grid>
     </div>
   );
