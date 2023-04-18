@@ -1,10 +1,10 @@
 import { makeStyles } from '@mui/styles';
-import { styled } from '@mui/material/styles';
 import { Grid, Theme, Toolbar } from '@mui/material';
 
 import { Product } from './../../types/products';
 import ProductCard from './ProductCard';
 
+// Define styles for the component
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
     flexGrow: 1,
@@ -58,20 +58,14 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
 }));
 
-const ProductsGrid = styled(Grid)(({ theme }) => ({
-  margin: '48px',
-  [theme.breakpoints.down('md')]: {
-    margin: '7px',
-  },
-}));
-
 interface ProductListProps {
   products: Product[];
 }
 
 const ProductList = ({ products }: ProductListProps) => {
   const classes = useStyles();
-
+  
+  // Create a new ProductCard component for each product in the list
   const renderProducts = products.map((product) => (
     <Grid item xs={6} sm={6} md={4} key={product._id}>
       <ProductCard product={product} useStyles={useStyles} />
