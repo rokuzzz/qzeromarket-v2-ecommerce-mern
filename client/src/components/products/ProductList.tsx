@@ -1,5 +1,5 @@
 import { makeStyles } from '@mui/styles';
-import { Grid, Theme, Toolbar } from '@mui/material';
+import { Grid, Theme, Toolbar, useMediaQuery, useTheme } from '@mui/material';
 
 import { Product } from './../../types/products';
 import ProductCard from './ProductCard';
@@ -44,17 +44,17 @@ const useStyles = makeStyles((theme: Theme) => ({
     paddingTop: '100%', // 1:1 aspect ratio
   },
   title: {
-    fontWeight: 100,
-    fontSize: '1.125rem',
+    // fontSize: '1.125rem',
     lineHeight: 1.2,
     margin: theme.spacing(1, 0, 0.5),
-    textTransform: 'capitalize',
+    // textTransform: 'uppercase',
   },
   price: {
-    fontWeight: 600,
-    fontSize: '1rem',
+    fontWeight: 700,
+    fontSize: '1.1rem',
     lineHeight: 1.2,
-    margin: theme.spacing(0.5, 0, 1),
+    opacity: '75%',
+    margin: theme.spacing(0.5, 0, 2),
   },
 }));
 
@@ -64,17 +64,24 @@ interface ProductListProps {
 
 const ProductList = ({ products }: ProductListProps) => {
   const classes = useStyles();
-  
+
+  const theme = useTheme();
+  const isDownSmall = useMediaQuery(theme.breakpoints.down('sm'));
+
   // Create a new ProductCard component for each product in the list
   const productCards = products.map((product) => (
     <Grid item xs={6} sm={6} md={4} key={product._id}>
-      <ProductCard product={product} useStyles={useStyles} />
+      <ProductCard
+        product={product}
+        useStyles={useStyles}
+        isDownSmall={isDownSmall}
+      />
     </Grid>
   ));
 
   return (
     <div className={classes.root}>
-      <Toolbar sx={{ height: '128px' }} />
+      <Toolbar sx={isDownSmall ? { height: '112px' } : { height: '128px' }} />
       <Grid container spacing={2}>
         {productCards}
       </Grid>

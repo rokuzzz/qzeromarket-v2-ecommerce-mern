@@ -23,10 +23,17 @@ interface SingleProductProps {
     | 'title'
     | 'price'
   >;
+  isDownSmall: boolean;
 }
 
-const ProductCard = ({ product, useStyles }: SingleProductProps) => {
+const ProductCard = ({
+  product,
+  useStyles,
+  isDownSmall,
+}: SingleProductProps) => {
   const classes = useStyles();
+
+  console.log(product.title.length);
   return (
     <Card className={classes.card}>
       <CardActionArea className={classes.cardActionArea}>
@@ -36,19 +43,15 @@ const ProductCard = ({ product, useStyles }: SingleProductProps) => {
           title={product.title}
         />
         <CardContent className={classes.cardContent}>
-          <Typography
-            variant='subtitle1'
-            component='h2'
-            className={classes.title}
-          >
+          <Typography className={classes.title} variant='subtitle1'>
             {product.title}
           </Typography>
           <Typography
-            variant='subtitle2'
-            component='h3'
             className={classes.price}
+            sx={{ margin: '0.5 0 2' }}
+            variant='overline'
           >
-            €{product.price}
+            €{product.price}.99
           </Typography>
         </CardContent>
       </CardActionArea>
