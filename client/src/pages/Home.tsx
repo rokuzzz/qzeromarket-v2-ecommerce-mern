@@ -17,8 +17,6 @@ const Home = () => {
     setSelectedTab(newValue);
   };
 
-  console.log(selectedTab);
-
   // Get a list of products depending on the selected category
   useEffect(() => {
     switch (selectedTab) {
@@ -42,8 +40,6 @@ const Home = () => {
 
   // Get products list from productSlice initial state
   const { allProducts } = useAppSelector((state) => state.productReducer);
-
-  console.log(allProducts);
 
   return (
     <>

@@ -33,7 +33,6 @@ const ProductCard = ({
 }: SingleProductProps) => {
   const classes = useStyles();
 
-  console.log(product.title.length);
   return (
     <Card className={classes.card}>
       <CardActionArea className={classes.cardActionArea}>

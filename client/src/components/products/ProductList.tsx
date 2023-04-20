@@ -47,6 +47,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     // fontSize: '1.125rem',
     lineHeight: 1.2,
     margin: theme.spacing(1, 0, 0.5),
+    whiteSpace: 'nowrap',
     // textTransform: 'uppercase',
   },
   price: {
