@@ -6,6 +6,7 @@ import PrivateRoute from './utils/router/PrivateRoute';
 import Home from './pages/Home';
 import EntryPage from './pages/EntryPage';
 import SignUp from './components/authorization/register/SignUp';
+import ProductDetails from './pages/ProductDetails';
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
       <Routes>
         <Route path='/' element={<PrivateRoute />}>
           <Route path='/' element={<Home />} />
+          <Route path='/products/:id' element={<ProductDetails />} />
         </Route>
         <Route path='/login' element={<EntryPage />} />
         <Route path='/register' element={<SignUp />} />

@@ -72,11 +72,7 @@ const ProductList = ({ products }: ProductListProps) => {
   // Create a new ProductCard component for each product in the list
   const productCards = products.map((product) => (
     <Grid item xs={6} sm={6} md={4} key={product._id}>
-      <ProductCard
-        product={product}
-        useStyles={useStyles}
-        isDownSmall={isDownSmall}
-      />
+      <ProductCard product={product} useStyles={useStyles} />
     </Grid>
   ));
 
