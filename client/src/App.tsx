@@ -14,7 +14,7 @@ function App() {
       <Routes>
         <Route path='/' element={<PrivateRoute />}>
           <Route path='/' element={<Home />} />
-          <Route path='/products/:id' element={<ProductDetails />} />
+          <Route path='/products/:productId' element={<ProductDetails />} />
         </Route>
         <Route path='/login' element={<EntryPage />} />
         <Route path='/register' element={<SignUp />} />

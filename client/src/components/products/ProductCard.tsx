@@ -22,6 +22,7 @@ interface SingleProductProps {
     | 'media'
     | 'title'
     | 'price'
+    | 'link'
   >;
 }
 
@@ -30,10 +31,7 @@ const ProductCard = ({ product, useStyles }: SingleProductProps) => {
 
   return (
     <Card className={classes.card}>
-      <Link
-        style={{ textDecoration: 'none', outline: 'none', color: 'inherit' }}
-        to={`/products/${product._id}`}
-      >
+      <Link className={classes.link} to={`/products/${product._id}`}>
         <CardActionArea className={classes.cardActionArea}>
           <CardMedia
             className={classes.media}

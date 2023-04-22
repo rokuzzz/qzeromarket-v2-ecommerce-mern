@@ -22,6 +22,14 @@ const useStyles = makeStyles((theme: Theme) => ({
     borderRadius: 0,
     boxShadow: 'none',
   },
+  link: {
+    textDecoration: 'none',
+    outline: 'none',
+    color: 'inherit',
+    '&:focus, &:hover, &:visited, &:link, &:active': {
+      color: 'inherit',
+    },
+  },
   cardActionArea: {
     flexGrow: 1,
     display: 'flex',
