@@ -21,7 +21,7 @@ export const fetchAllProducts = createAsyncThunk(
 
 export const getProductByID = createAsyncThunk(
   'getProductByID',
-  async (id: string) => {
+  async (id: string | undefined) => {
     try {
       const response = await axios.get(`https://qzero-market-backend.herokuapp.com/api/products/${id}`)
       return (response.data ? response.data : undefined)
