@@ -32,10 +32,8 @@ const useStyles = makeStyles((theme: Theme) => ({
     backgroundPosition: 'center',
   },
   contentWrapper: {
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'space-between',
-    padding: theme.spacing(2),
+    height: '100%',
+    padding: theme.spacing(2, 2, 0),
   },
   title: {
     fontWeight: 700,
@@ -90,7 +88,11 @@ const ProductDetails = () => {
                 <Typography className={classes.title} variant='h3' gutterBottom>
                   {currentProduct?.title}
                 </Typography>
-                <Typography className={classes.description} variant='body1' gutterBottom>
+                <Typography
+                  className={classes.description}
+                  variant='body1'
+                  gutterBottom
+                >
                   {currentProduct?.description}
                 </Typography>
                 <Typography className={classes.price} variant='h5' gutterBottom>
