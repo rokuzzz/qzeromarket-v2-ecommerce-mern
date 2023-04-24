@@ -16,7 +16,7 @@ const HeaderTabs = (Props: HeaderTabsProps) => {
   const { value, onChange } = Props;
 
   return (
-    <Box sx={{ maxWidth: { xs: '95%', sm: 480 }, margin: '0 auto' }}>
+    <Box sx={{ maxWidth: { xs: '95%', sm: 480, md: '100%' }, margin: '0 auto' }}>
       <Tabs
         value={value}
         onChange={onChange}

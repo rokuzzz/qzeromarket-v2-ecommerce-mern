@@ -3,8 +3,16 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import axios from 'axios'
 
 const initialState: ProductSliceState = {
-  allProducts: [],
-  currentProduct: undefined
+  allProducts: {
+    data: [],
+    loading: false,
+    error: null
+  },
+  currentProduct: {
+    data: undefined,
+    loading: false,
+    error: null
+  }
 }
 
 export const fetchAllProducts = createAsyncThunk(

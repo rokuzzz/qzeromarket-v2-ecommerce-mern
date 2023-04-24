@@ -7,8 +7,16 @@ export interface Product {
 }
 
 export interface ProductSliceState {
-  allProducts: Product[],
-  currentProduct: Product | undefined
+  allProducts: {
+    data: Product[],
+    loading: boolean, 
+    error: string | null
+  },
+  currentProduct: {
+    data: Product | undefined, 
+    loading: boolean, 
+    error: string | null
+  } 
 }
 
 export interface QueryParams {

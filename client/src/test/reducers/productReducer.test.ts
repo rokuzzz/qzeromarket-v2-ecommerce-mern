@@ -58,7 +58,7 @@ describe('test product reducer', () => {
 
   test('should update the product by id', async () => {
     await store.dispatch(getProductByID('641332460308e700143c46f2'))
-    const productTitle = store.getState().productReducer.currentProduct?.title
+    const productTitle = store.getState().productReducer.currentProduct.data?.title
 
     const updatedProduct: UpdatedProduct = {
       title: 'Striped Wool Socks (2-Pack)'
@@ -70,7 +70,7 @@ describe('test product reducer', () => {
     }))
 
     await store.dispatch(getProductByID('641332460308e700143c46f2'))
-    const updatedProductTitle = store.getState().productReducer.currentProduct?.title
+    const updatedProductTitle = store.getState().productReducer.currentProduct.data?.title
 
     expect(productTitle == updatedProductTitle).toBeFalsy()
   })
@@ -84,6 +84,6 @@ describe('test product reducer', () => {
       token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzZGJiZDEyZTkzNjQ2NTJlNGRlMDM3ZiIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTY3ODk3NDE5OCwiZXhwIjoxNjc5MjMzMzk4fQ._QRx4F3aZrQSSn-nxSJ4_SG3mJso3wzLGFlvKfFS7lQ'
     }))
 
-    expect(prevState.length - store.getState().productReducer.allProducts.length).toBe(1)
+    expect(prevState.data.length - store.getState().productReducer.allProducts.data.length).toBe(1)
   })
 })

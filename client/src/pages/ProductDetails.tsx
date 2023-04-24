@@ -66,7 +66,7 @@ const ProductDetails = () => {
     dispatch(getProductByID(productId));
   }, [productId]);
 
-  const { currentProduct } = useAppSelector((state) => state.productReducer);
+  const { data } = useAppSelector((state) => state.productReducer.currentProduct);
   return (
     <>
       <Header />
@@ -77,8 +77,8 @@ const ProductDetails = () => {
             <Box className={classes.imageWrapper}>
               <img
                 className={classes.image}
-                src={currentProduct?.imageUrl}
-                alt={currentProduct?.title}
+                src={data?.imageUrl}
+                alt={data?.title}
               ></img>
             </Box>
           </Grid>
@@ -86,17 +86,17 @@ const ProductDetails = () => {
             <Box className={classes.contentWrapper}>
               <Box>
                 <Typography className={classes.title} variant='h3' gutterBottom>
-                  {currentProduct?.title}
+                  {data?.title}
                 </Typography>
                 <Typography
                   className={classes.description}
                   variant='body1'
                   gutterBottom
                 >
-                  {currentProduct?.description}
+                  {data?.description}
                 </Typography>
                 <Typography className={classes.price} variant='h5' gutterBottom>
-                  Product price: €{currentProduct?.price}.99
+                  Product price: €{data?.price}.99
                 </Typography>
               </Box>
               <Box className={classes.buttonsWrapper}>
