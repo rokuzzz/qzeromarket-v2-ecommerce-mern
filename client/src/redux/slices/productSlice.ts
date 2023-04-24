@@ -5,13 +5,13 @@ import axios from 'axios'
 const initialState: ProductSliceState = {
   allProducts: {
     data: [],
-    loading: false,
-    error: null
+    isLoading: false,
+    error: undefined
   },
   currentProduct: {
     data: undefined,
-    loading: false,
-    error: null
+    isLoading: false,
+    error: undefined
   }
 }
 
@@ -103,17 +103,57 @@ const productSlice = createSlice({
   initialState: initialState,
   reducers: {},
   extraReducers: (builder) => {
-    builder.addCase(fetchAllProducts.fulfilled, (state, action) => {
-      state.allProducts = action.payload
+    // fetchAllProducts
+    builder.addCase(fetchAllProducts.pending, (state) => {
+      state.allProducts = {
+        data: [],
+        isLoading: true,
+        error: undefined
+      }
+    })
+    .addCase(fetchAllProducts.fulfilled, (state, action) => {
+      state.allProducts = {
+        data: action.payload,
+        isLoading: false,
+        error: undefined
+      }
+    })
+    .addCase(fetchAllProducts.rejected, (state, action) => {
+      state.allProducts = {
+        data: [],
+        isLoading: false,
+        error: action.error.message
+      }
+    })
+    // getProductByID
+    .addCase(getProductByID.pending, (state) => {
+      state.currentProduct = {
+        data: undefined,
+        isLoading: true,
+        error: undefined
+      }
     })
     .addCase(getProductByID.fulfilled, (state, action) => {
-      state.currentProduct = action.payload
+      state.currentProduct = {
+        data: action.payload,
+        isLoading: false,
+        error: undefined
+      }
     })
+    .addCase(getProductByID.rejected, (state, action) => {
+      state.currentProduct = {
+        data: undefined,
+        isLoading: false,
+        error: action.error.message
+      }
+    })
+    // createProduct
     .addCase(createProduct.fulfilled, (state, action) => {
-      state.allProducts = action.payload
+      state.allProducts.data = action.payload
     })
+    // deleteProduct
     .addCase(deleteProduct.fulfilled, (state, action) => {
-      state.allProducts = action.payload
+      state.allProducts.data = action.payload
     })
   }
 })

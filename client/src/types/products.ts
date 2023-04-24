@@ -9,13 +9,13 @@ export interface Product {
 export interface ProductSliceState {
   allProducts: {
     data: Product[],
-    loading: boolean, 
-    error: string | null
+    isLoading: boolean, 
+    error: string | undefined
   },
   currentProduct: {
     data: Product | undefined, 
-    loading: boolean, 
-    error: string | null
+    isLoading: boolean, 
+    error: string | undefined
   } 
 }
 

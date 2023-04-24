@@ -66,7 +66,9 @@ const ProductDetails = () => {
     dispatch(getProductByID(productId));
   }, [productId]);
 
-  const { data } = useAppSelector((state) => state.productReducer.currentProduct);
+  const { data } = useAppSelector(
+    (state) => state.productReducer.currentProduct
+  );
   return (
     <>
       <Header />

@@ -69,9 +69,10 @@ const useStyles = makeStyles((theme: Theme) => ({
 
 interface ProductListProps {
   products: Product[];
+  isLoading: boolean;
 }
 
-const ProductList = ({ products }: ProductListProps) => {
+const ProductList = ({ products, isLoading }: ProductListProps) => {
   const classes = useStyles();
 
   const theme = useTheme();
