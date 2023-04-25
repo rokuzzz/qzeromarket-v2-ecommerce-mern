@@ -1,8 +1,16 @@
 import { makeStyles } from '@mui/styles';
-import { Grid, Theme, Toolbar, useMediaQuery, useTheme } from '@mui/material';
+import {
+  Grid,
+  Theme,
+  Toolbar,
+  Typography,
+  useMediaQuery,
+  useTheme,
+} from '@mui/material';
 
 import { Product } from './../../types/products';
 import ProductCard from './ProductCard';
+import ProductCardSkeleton from './ProductCardSkeleton';
 
 // Define styles for the component
 const useStyles = makeStyles((theme: Theme) => ({
@@ -14,6 +22,9 @@ const useStyles = makeStyles((theme: Theme) => ({
     [theme.breakpoints.up('md')]: {
       margin: '0 48px',
     },
+  },
+  container: {
+    padding: theme.spacing(2),
   },
   card: {
     height: '100%',
@@ -47,7 +58,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     justifyContent: 'center',
   },
   media: {
-    height: 0,
+    height: '100%',
     width: '100%',
     paddingTop: '100%', // 1:1 aspect ratio
   },
@@ -85,11 +96,22 @@ const ProductList = ({ products, isLoading }: ProductListProps) => {
     </Grid>
   ));
 
+  // If there are no products, render a grid of skeletons instead
+  const skeletonCards = (
+    <Grid container spacing={2}>
+      {[...Array(10)].map((_, index) => (
+        <Grid item xs={6} sm={6} md={4} key={index} sx={{ flexGrow: 1 }}>
+          <ProductCardSkeleton useStyles={useStyles} />
+        </Grid>
+      ))}
+    </Grid>
+  );
+
   return (
     <div className={classes.root}>
       <Toolbar sx={isDownSmall ? { height: '112px' } : { height: '128px' }} />
-      <Grid container spacing={2}>
-        {productCards}
+      <Grid container spacing={isLoading ? 0 : 2}>
+        {isLoading ? skeletonCards : productCards}
       </Grid>
     </div>
   );
