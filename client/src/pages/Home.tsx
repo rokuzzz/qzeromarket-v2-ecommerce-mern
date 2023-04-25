@@ -39,7 +39,7 @@ const Home = () => {
   }, [selectedTab, setSelectedTab]);
 
   // Get products list from productSlice initial state
-  const { data, isLoading, error } = useAppSelector(
+  const { data, isLoading } = useAppSelector(
     (state) => state.productReducer.allProducts
   );
 

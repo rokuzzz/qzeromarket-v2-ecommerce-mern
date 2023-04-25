@@ -4,11 +4,13 @@ import {
   CardActionArea,
   CardContent,
   CardMedia,
+  Skeleton,
   Typography,
 } from '@mui/material';
 
 import { Product } from '../../types/products';
 import { Link } from 'react-router-dom';
+import { useAppSelector } from '../../hooks/appHooks';
 
 interface SingleProductProps {
   product: Product;
