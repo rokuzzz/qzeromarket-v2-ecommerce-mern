@@ -1,20 +1,15 @@
-import { makeStyles } from '@mui/styles';
-import {
-  Theme,
-  Box,
-  Grid,
-  Paper,
-  Typography,
-  Button,
-  Toolbar,
-} from '@mui/material';
-import { useParams } from 'react-router-dom';
 import { useEffect } from 'react';
+import { useParams } from 'react-router-dom';
+import { Box, Grid, Theme, Toolbar } from '@mui/material';
+import { makeStyles } from '@mui/styles';
 
+import Header from '../components/navigation/Header';
+import ProductDetailsImage from '../components/products/ProductDetailsImage';
+import ProductDetailsContent from '../components/products/ProductDetailsContent';
 import { useAppDispatch, useAppSelector } from '../hooks/appHooks';
 import { getProductByID } from '../redux/slices/productSlice';
-import Header from '../components/navigation/Header';
 
+// Define the styles for the components using the MUI `makeStyles` hook
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
     margin: theme.spacing(2),
@@ -58,17 +53,22 @@ const useStyles = makeStyles((theme: Theme) => ({
 }));
 
 const ProductDetails = () => {
+  // Get the styles and dispatch function from the `useStyles` and `useAppDispatch` hooks
   const classes = useStyles();
   const dispatch = useAppDispatch();
 
+  // Get the `productId` from the URL params using the `useParams` hook
   const { productId } = useParams();
+  // Fetch the product data from the server when the productId changes using the getProductByID action from the productSlice via the app dispatch hook
   useEffect(() => {
     dispatch(getProductByID(productId));
   }, [productId]);
 
+  // Get the `data` from the `currentProduct` state slice using the `useAppSelector` hook
   const { data } = useAppSelector(
     (state) => state.productReducer.currentProduct
   );
+
   return (
     <>
       <Header />
@@ -76,50 +76,10 @@ const ProductDetails = () => {
       <Box className={classes.root}>
         <Grid container spacing={2}>
           <Grid item xs={12} md={6}>
-            <Box className={classes.imageWrapper}>
-              <img
-                className={classes.image}
-                src={data?.imageUrl}
-                alt={data?.title}
-              ></img>
-            </Box>
+            <ProductDetailsImage useStyles={useStyles} data={data} />
           </Grid>
           <Grid item xs={12} md={6}>
-            <Box className={classes.contentWrapper}>
-              <Box>
-                <Typography className={classes.title} variant='h3' gutterBottom>
-                  {data?.title}
-                </Typography>
-                <Typography
-                  className={classes.description}
-                  variant='body1'
-                  gutterBottom
-                >
-                  {data?.description}
-                </Typography>
-                <Typography className={classes.price} variant='h5' gutterBottom>
-                  Product price: €{data?.price}.99
-                </Typography>
-              </Box>
-              <Box className={classes.buttonsWrapper}>
-                <Button
-                  variant='contained'
-                  color='primary'
-                  size='large'
-                  fullWidth
-                >
-                  Add to Cart
-                </Button>
-                <Button
-                  variant='outlined'
-                  color='primary'
-                  size='large'
-                  fullWidth
-                >
-                  Add to Favorites
-                </Button>
-              </Box>
-            </Box>
+            <ProductDetailsContent useStyles={useStyles} data={data} />
           </Grid>
         </Grid>
       </Box>

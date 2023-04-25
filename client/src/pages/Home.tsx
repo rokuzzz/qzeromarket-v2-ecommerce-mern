@@ -17,7 +17,7 @@ const Home = () => {
     setSelectedTab(newValue);
   };
 
-  // Get a list of products depending on the selected category
+  // Fetch a list of products depending on the selected category
   useEffect(() => {
     switch (selectedTab) {
       case 0:
