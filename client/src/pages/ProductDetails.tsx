@@ -8,6 +8,7 @@ import ProductDetailsImage from '../components/products/ProductDetailsImage';
 import ProductDetailsContent from '../components/products/ProductDetailsContent';
 import { useAppDispatch, useAppSelector } from '../hooks/appHooks';
 import { getProductByID } from '../redux/slices/productSlice';
+import ProductDetailsSkeleton from '../components/products/ProductDetailsSkeleton';
 
 // Define the styles for the components using the MUI `makeStyles` hook
 const useStyles = makeStyles((theme: Theme) => ({
@@ -90,16 +91,20 @@ const ProductDetails = () => {
     <>
       <Header />
       <Toolbar />
-      <Box className={classes.root}>
-        <Grid container spacing={2}>
-          <Grid item xs={12} md={6}>
-            <ProductDetailsImage useStyles={useStyles} data={data} />
+      {isLoading ? (
+        <ProductDetailsSkeleton useStyles={useStyles} />
+      ) : (
+        <Box className={classes.root}>
+          <Grid container spacing={2}>
+            <Grid item xs={12} md={6}>
+              <ProductDetailsImage useStyles={useStyles} data={data} />
+            </Grid>
+            <Grid item xs={12} md={6}>
+              <ProductDetailsContent useStyles={useStyles} data={data} />
+            </Grid>
           </Grid>
-          <Grid item xs={12} md={6}>
-            <ProductDetailsContent useStyles={useStyles} data={data} />
-          </Grid>
-        </Grid>
-      </Box>
+        </Box>
+      )}
     </>
   );
 };
