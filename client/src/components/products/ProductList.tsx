@@ -1,12 +1,5 @@
 import { makeStyles } from '@mui/styles';
-import {
-  Grid,
-  Theme,
-  Toolbar,
-  Typography,
-  useMediaQuery,
-  useTheme,
-} from '@mui/material';
+import { Grid, Theme, Toolbar, useMediaQuery, useTheme } from '@mui/material';
 
 import { Product } from './../../types/products';
 import ProductCard from './ProductCard';

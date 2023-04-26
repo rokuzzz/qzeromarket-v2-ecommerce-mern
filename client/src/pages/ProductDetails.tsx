@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { Box, Grid, Theme, Toolbar } from '@mui/material';
+import { Box, Grid, Skeleton, Theme, Toolbar } from '@mui/material';
 import { makeStyles } from '@mui/styles';
 
 import Header from '../components/navigation/Header';
@@ -65,8 +65,25 @@ const ProductDetails = () => {
   }, [productId]);
 
   // Get the `data` from the `currentProduct` state slice using the `useAppSelector` hook
-  const { data } = useAppSelector(
+  const { data, isLoading } = useAppSelector(
     (state) => state.productReducer.currentProduct
+  );
+
+  const productDetails = (
+    <>
+      <Grid item xs={12} md={6}>
+        <ProductDetailsImage useStyles={useStyles} data={data} />
+      </Grid>
+      <Grid item xs={12} md={6}>
+        <ProductDetailsContent useStyles={useStyles} data={data} />
+      </Grid>
+    </>
+  );
+
+  const productDetailsSkeleton = (
+    <Grid item>
+      <Skeleton variant='rectangular' animation='wave' />
+    </Grid>
   );
 
   return (
