@@ -28,8 +28,11 @@ const RegisterBox = styled(Paper)(({ theme }) => ({
 
 const SignUp = () => {
   // Define appHooks
-  const { isAuthenticated, currentUser } = useAppSelector((state) => state.userReducer);
+  const { currentUser } = useAppSelector((state) => state.userReducer);
   const dispatch = useAppDispatch();
+
+  // Destructure the `data` object from the `currentUser` object obtained from the Redux store
+  const { data } = currentUser; // `data` contains the user data fetched from the API
 
   // Get theme and screen size information from MUI
   const theme = useTheme();
@@ -42,14 +45,14 @@ const SignUp = () => {
   const token = localStorage.getItem('access_token');
   // Check if user is already authenticated or try to login by token
   useEffect(() => {
-    if (isAuthenticated && currentUser) {
+    if (data) {
       // User is authenticated, go to home page
       navigate('/');
     } else {
       // Try to log in by token
       dispatch(loginByToken(token));
     }
-  }, [isAuthenticated, currentUser]);
+  }, [data]);
 
   // Define state for form data and functions to handle form input and submission
   const [formData, setFormData] = useState({
@@ -65,7 +68,7 @@ const SignUp = () => {
 
     dispatch(register(formData));
 
-    if (currentUser) navigate('/login');
+    if (data) navigate('/login');
   };
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {

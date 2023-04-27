@@ -2,12 +2,19 @@ import { GetUserByIDProps, LoginCredentials, RegisterCredentials, UpdateUserProp
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { UserSliceState } from '../../types/user'
 import axios from 'axios';
-import { ToastOptions, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 
 const initialState: UserSliceState = {
-  listOfUsers: [],
-  currentUser: undefined,
-  isAuthenticated: false
+  listOfUsers: {
+    data: [],
+    isLoading: false,
+    error: undefined
+  },
+  currentUser: {
+    data: undefined,
+    isLoading: false,
+    error: undefined
+  },
 }
 
 export const login = createAsyncThunk(
@@ -126,34 +133,75 @@ const userSlice = createSlice({
   reducers: {
     logout: (state) => {
       localStorage.removeItem('access_token')
-      state.currentUser = undefined
-      state.isAuthenticated = false
+      state.currentUser.data = undefined
     }
   },
   extraReducers: (builder) => {
-    builder.addCase(login.fulfilled, (state, action) => {
-      state.currentUser = action.payload
-      typeof state.currentUser == undefined // if currentUser is undefined
-        ? state.isAuthenticated = false     // isAuthenticated equals to false
-        : state.isAuthenticated = true      // else isAuthenticated equals to true
-
-        return state
+    //  login
+    builder.addCase(login.pending, (state) => {
+      state.currentUser = {
+        data: undefined,
+        isLoading: true,
+        error: undefined
+      }
+    })
+    .addCase(login.fulfilled, (state, action) => {
+      state.currentUser = {
+        data: action.payload,
+        isLoading: false,
+        error: undefined
+      }
+    })
+    .addCase(login.rejected, (state, action) => {
+      state.currentUser = {
+        data: undefined,
+        isLoading: false,
+        error: action.error.message
+      }
+    })
+    // loginByToken
+    .addCase(loginByToken.pending, (state) => {
+      state.currentUser = {
+        data: undefined,
+        isLoading: true,
+        error: undefined
+      }
     })
     .addCase(loginByToken.fulfilled, (state, action) => {
-      state.currentUser = action.payload
-      typeof state.currentUser == undefined // if currentUser is undefined
-        ? state.isAuthenticated = false     // isAuthenticated equals to false
-        : state.isAuthenticated = true      // else isAuthenticated equals to true
-
-        return state
+      state.currentUser = {
+        data: action.payload,
+        isLoading: false,
+        error: undefined
+      }
+    })
+    .addCase(loginByToken.rejected, (state, action) => {
+      state.currentUser = {
+        data: undefined,
+        isLoading: false,
+        error: action.error.message
+      }
+    })
+    // register
+    .addCase(register.pending, (state) => {
+      state.currentUser = {
+        data: undefined,
+        isLoading: true,
+        error: undefined
+      }
     })
     .addCase(register.fulfilled, (state, action) => {
-      state.currentUser = action.payload
-      typeof state.currentUser == undefined // if currentUser is undefined
-        ? state.isAuthenticated = false     // isAuthenticated equals to false
-        : state.isAuthenticated = true      // else isAuthenticated equals to true
-
-        return state
+      state.currentUser = {
+        data: action.payload,
+        isLoading: false,
+        error: undefined
+      }
+    })
+    .addCase(register.rejected, (state, action) => {
+      state.currentUser = {
+        data: undefined,
+        isLoading: false,
+        error: action.error.message
+      }
     })
     .addCase(getAllUsers.fulfilled, (state, action) => {
       state.listOfUsers = action.payload

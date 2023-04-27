@@ -49,7 +49,7 @@ describe('test user reducers', () => {
   test('get all users', async () => {
     await store.dispatch(getAllUsers('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzZGJiZDEyZTkzNjQ2NTJlNGRlMDM3ZiIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTY3ODc5MjYzNiwiZXhwIjoxNjc5MDUxODM2fQ.9krmMDnpAPvREmuXksfL2cNd-VVwMq3Sy9zPnZAiSrU'))
     // console.log(store.getState().userReducer.listOfUsers)
-    expect(store.getState().userReducer.listOfUsers.length).toBeGreaterThan(1)
+    expect(store.getState().userReducer.listOfUsers.data.length).toBeGreaterThan(1)
   })
 
   // test('get all users with wrong JWT token', async () => {

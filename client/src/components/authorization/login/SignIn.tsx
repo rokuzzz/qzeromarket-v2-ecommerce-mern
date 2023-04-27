@@ -1,9 +1,4 @@
-import {
-  Grid,
-  Paper,
-  useMediaQuery,
-  useTheme,
-} from '@mui/material';
+import { Grid, Paper, useMediaQuery, useTheme } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { styled } from '@mui/material/styles';
 
@@ -33,10 +28,13 @@ const LoginBox = styled(Paper)(({ theme }) => ({
 
 const SignIn = () => {
   // Hooks
-  const { isAuthenticated, currentUser } = useAppSelector((state) => state.userReducer);
+  const { currentUser } = useAppSelector((state) => state.userReducer);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const theme = useTheme();
+
+  // Destructure the `data` object from the `currentUser` object obtained from the Redux store
+  const { data } = currentUser; // `data` contains the user data fetched from the API
 
   // Get the current screen size
   const isDownSmall = useMediaQuery(theme.breakpoints.down('sm'));
@@ -44,14 +42,14 @@ const SignIn = () => {
   const token = localStorage.getItem('access_token');
   // Check if user is already authenticated or try to login by token
   useEffect(() => {
-    if (isAuthenticated && currentUser) {
+    if (data) {
       // User is authenticated, go to home page
       navigate('/');
     } else {
       // Try to log in by token
       dispatch(loginByToken(token));
     }
-  }, [isAuthenticated, currentUser]);
+  }, [data]);
 
   // State variables for the username and password fields
   const [username, setUsername] = useState('');
