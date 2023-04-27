@@ -31,8 +31,8 @@ const SignUp = () => {
   const { currentUser } = useAppSelector((state) => state.userReducer);
   const dispatch = useAppDispatch();
 
-  // Destructure the `data` object from the `currentUser` object obtained from the Redux store
-  const { data } = currentUser; // `data` contains the user data fetched from the API
+  // Destructure the `data` object and `isLoading` value from the `currentUser` object obtained from the Redux store
+  const { data, isLoading } = currentUser; // `data` contains the user data fetched from the API
 
   // Get theme and screen size information from MUI
   const theme = useTheme();
@@ -88,6 +88,7 @@ const SignUp = () => {
             formData={formData}
             onChange={onChange}
             isDownSmall={isDownSmall}
+            isLoading={isLoading}
           />
         </RegisterBox>
       </Grid>

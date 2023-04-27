@@ -10,6 +10,7 @@ interface LoginFormProps {
   password: string;
   setPassword: (value: React.SetStateAction<string>) => void;
   isDownSmall: boolean;
+  isLoading: boolean
 }
 
 const LoginForm = ({
@@ -19,6 +20,7 @@ const LoginForm = ({
   password,
   setPassword,
   isDownSmall,
+  isLoading
 }: LoginFormProps) => {
   return (
     <form onSubmit={onSubmit}>
@@ -59,6 +61,7 @@ const LoginForm = ({
             size='large'
             color='primary'
             variant='contained'
+            disabled={isLoading ? true : false}
             sx={{ mb: 1 }}
           >
             Sign in

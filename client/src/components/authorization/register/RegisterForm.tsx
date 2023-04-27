@@ -16,6 +16,7 @@ interface RegisterFormProps {
   formData: FormData;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   isDownSmall: boolean;
+  isLoading: boolean
 }
 
 const RegisterForm = ({
@@ -23,6 +24,7 @@ const RegisterForm = ({
   formData,
   onChange,
   isDownSmall,
+  isLoading
 }: RegisterFormProps) => {
   const formInputValues = [
     {
@@ -93,6 +95,7 @@ const RegisterForm = ({
             size='large'
             color='primary'
             variant='contained'
+            disabled={isLoading ? true : false}
             sx={{ mb: 1 }}
           >
             Sign up

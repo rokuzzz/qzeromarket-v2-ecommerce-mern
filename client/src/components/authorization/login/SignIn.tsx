@@ -33,8 +33,8 @@ const SignIn = () => {
   const navigate = useNavigate();
   const theme = useTheme();
 
-  // Destructure the `data` object from the `currentUser` object obtained from the Redux store
-  const { data } = currentUser; // `data` contains the user data fetched from the API
+  // Destructure the `data` object and `isLoading` value from the `currentUser` object obtained from the Redux store
+  const { data, isLoading } = currentUser; // `data` contains the user data fetched from the API
 
   // Get the current screen size
   const isDownSmall = useMediaQuery(theme.breakpoints.down('sm'));
@@ -75,6 +75,7 @@ const SignIn = () => {
             password={password}
             setPassword={setPassword}
             isDownSmall={isDownSmall}
+            isLoading={isLoading}
           />
         </LoginBox>
       </Grid>
