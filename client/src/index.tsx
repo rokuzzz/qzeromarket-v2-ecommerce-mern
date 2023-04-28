@@ -1,6 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import store from './redux/store';
+import persistStore from 'redux-persist/es/persistStore';
+import { PersistGate } from 'redux-persist/integration/react';
 import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { ThemeProvider, createTheme } from '@mui/material';
@@ -27,13 +29,17 @@ const theme = createTheme({
   },
 });
 
+let persistor = persistStore(store);
+
 ReactDOM.render(
   <ThemeProvider theme={theme}>
     <React.StrictMode>
       <Provider store={store}>
-        <BrowserRouter>
-          <App />
-        </BrowserRouter>
+        <PersistGate persistor={persistor}>
+          <BrowserRouter>
+            <App />
+          </BrowserRouter>
+        </PersistGate>
       </Provider>
     </React.StrictMode>
   </ThemeProvider>,
