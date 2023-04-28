@@ -9,41 +9,19 @@ import {
 import { ClassNameMap } from '@mui/material/styles';
 
 interface ProductCardSkeletonProps {
-  useStyles: (
-    props?: any
-  ) => ClassNameMap<
-    | 'root'
-    | 'card'
-    | 'link'
-    | 'cardActionArea'
-    | 'cardContent'
-    | 'media'
-    | 'title'
-    | 'price'
-  >;
+  styles: any;
 }
 
-const ProductCardSkeleton = ({ useStyles }: ProductCardSkeletonProps) => {
-  const classes = useStyles();
-
+const ProductCardSkeleton = ({ styles }: ProductCardSkeletonProps) => {
   return (
-    <Card className={classes.card}>
-      <CardActionArea className={classes.cardActionArea}>
-        <Skeleton
-          className={classes.media}
-          variant='rectangular'
-          animation='wave'
-        />
-
-        <CardContent className={classes.cardContent}>
-          <Typography className={classes.title} variant='subtitle1'>
+    <Card sx={styles.card}>
+      <CardActionArea>
+        <Skeleton sx={styles.media} variant='rectangular' animation='wave' />
+        <CardContent sx={styles.cardContent}>
+          <Typography sx={styles.title} variant='subtitle1'>
             <Skeleton width={'150px'} variant='text' animation='wave' />
           </Typography>
-          <Typography
-            className={classes.price}
-            sx={{ margin: '0.5 0 2' }}
-            variant='overline'
-          >
+          <Typography sx={styles.price} variant='overline'>
             <Skeleton width={'80px'} variant='text' animation='wave' />
           </Typography>
         </CardContent>

@@ -9,44 +9,28 @@ import {
 
 import { Product } from '../../types/products';
 import { Link } from 'react-router-dom';
+import { motion } from 'framer-motion';
 
 interface SingleProductProps {
   product: Product;
-  useStyles: (
-    props?: any
-  ) => ClassNameMap<
-    | 'root'
-    | 'card'
-    | 'cardActionArea'
-    | 'cardContent'
-    | 'media'
-    | 'title'
-    | 'price'
-    | 'link'
-  >;
+  styles: any;
 }
 
-const ProductCard = ({ product, useStyles }: SingleProductProps) => {
-  const classes = useStyles();
-
+const ProductCard = ({ product, styles }: SingleProductProps) => {
   return (
-    <Card className={classes.card}>
-      <Link className={classes.link} to={`/products/${product._id}`}>
-        <CardActionArea className={classes.cardActionArea}>
+    <Card sx={styles.card}>
+      <Link style={styles.link} to={`/products/${product._id}`}>
+        <CardActionArea>
           <CardMedia
-            className={classes.media}
+            sx={styles.media}
             image={product.imageUrl}
             title={product.title}
           />
-          <CardContent className={classes.cardContent}>
-            <Typography className={classes.title} variant='subtitle1'>
+          <CardContent sx={styles.cardContent}>
+            <Typography sx={styles.title} variant='subtitle1'>
               {product.title}
             </Typography>
-            <Typography
-              className={classes.price}
-              sx={{ margin: '0.5 0 2' }}
-              variant='overline'
-            >
+            <Typography sx={styles.price} variant='overline'>
               €{product.price}.99
             </Typography>
           </CardContent>
