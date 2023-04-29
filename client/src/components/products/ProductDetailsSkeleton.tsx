@@ -6,19 +6,15 @@ import {
   Typography,
   useMediaQuery,
 } from '@mui/material';
-import { ClassNameMap } from '@mui/material/styles';
 
 interface ProductDetailsSkeletonProps {
-  styles: any
+  styles: any;
 }
 
 const ProductDetailsSkeleton = ({ styles }: ProductDetailsSkeletonProps) => {
-   // Get the current screen size using the `useMediaQuery` hook
-  const isXXSScreen = useMediaQuery('(max-width:390px)');
+  const isXXSmallScreen = useMediaQuery('(max-width:390px)');
   const isSmallScreen = useMediaQuery('(max-width:900px)');
-  const isMediumScreen = useMediaQuery(
-    '(min-width:901px) and (max-width:1200px)'
-  );
+  const isMediumScreen = useMediaQuery('(min-width:901px) and (max-width:1200px)');
   const isLargeScreen = useMediaQuery('(min-width:1201px)');
 
   // Set the number of Skeleton components based on the screen size
@@ -66,7 +62,7 @@ const ProductDetailsSkeleton = ({ styles }: ProductDetailsSkeletonProps) => {
           <Box sx={styles.contentWrapper}>
             <Box>
               <Typography sx={styles.title} variant='h3' gutterBottom>
-                {isXXSScreen ? (
+                {isXXSmallScreen ? (
                   <>
                     <Skeleton variant='text' animation='wave' width={'90%'} />
                     <Skeleton variant='text' animation='wave' width={'60%'} />
@@ -75,11 +71,7 @@ const ProductDetailsSkeleton = ({ styles }: ProductDetailsSkeletonProps) => {
                   <Skeleton variant='text' animation='wave' width={'300px'} />
                 )}
               </Typography>
-              <Typography
-                sx={styles.description}
-                variant='body1'
-                gutterBottom
-              >
+              <Typography sx={styles.description} variant='body1' gutterBottom>
                 {typographyRowsSkeleton}
                 <Skeleton variant='text' animation='wave' width={'28%'} />
               </Typography>

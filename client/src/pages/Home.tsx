@@ -7,6 +7,7 @@ import Header from '../components/navigation/Header';
 import ProductList from '../components/products/ProductList';
 
 const Home = () => {
+  const { data, isLoading } = useAppSelector((state) => state.productReducer.allProducts);
   const dispatch = useAppDispatch();
 
   // This state manages the selected tab index
@@ -17,7 +18,6 @@ const Home = () => {
     setSelectedTab(newValue);
   };
 
-  // Fetch a list of products depending on the selected category
   useEffect(() => {
     switch (selectedTab) {
       case 0:
@@ -37,11 +37,6 @@ const Home = () => {
         break;
     }
   }, [selectedTab, setSelectedTab]);
-
-  // Get products list from productSlice initial state
-  const { data, isLoading } = useAppSelector(
-    (state) => state.productReducer.allProducts
-  );
 
   return (
     <>

@@ -9,7 +9,6 @@ import { login, loginByToken } from '../../../redux/slices/userSlice';
 import LoginForm from './LoginForm';
 import SignInHeading from './SignInHeading';
 
-// Styling the components with MUI styles
 const LoginWrapper = styled(Grid)(({ theme }) => ({
   height: '100vh',
   backgroundColor: theme.palette.background.default,
@@ -27,38 +26,30 @@ const LoginBox = styled(Paper)(({ theme }) => ({
 }));
 
 const SignIn = () => {
-  // Hooks
   const { currentUser } = useAppSelector((state) => state.userReducer);
+  const { data, isLoading } = currentUser;
+
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const theme = useTheme();
 
-  // Destructure the `data` object and `isLoading` value from the `currentUser` object obtained from the Redux store
-  const { data, isLoading } = currentUser; // `data` contains the user data fetched from the API
-
-  // Get the current screen size
   const isDownSmall = useMediaQuery(theme.breakpoints.down('sm'));
 
   const token = localStorage.getItem('access_token');
-  // Check if user is already authenticated or try to login by token
   useEffect(() => {
     if (data) {
-      // User is authenticated, go to home page
       navigate('/');
     } else {
-      // Try to log in by token
       dispatch(loginByToken(token));
     }
   }, [data]);
 
-  // State variables for the username and password fields
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  // Event handler for form submission
+
   const handleLogin = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    // Dispatch the login action with the entered username and password
     dispatch(login({ username, password }));
   };
 
