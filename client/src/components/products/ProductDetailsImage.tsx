@@ -4,33 +4,16 @@ import { Box } from '@mui/material';
 import { Product } from '../../types/products';
 
 interface ProductDetailsImageProps {
-  useStyles: (
-    props?: any
-  ) => ClassNameMap<
-    | 'title'
-    | 'image'
-    | 'root'
-    | 'imageWrapper'
-    | 'contentWrapper'
-    | 'description'
-    | 'price'
-    | 'buttonsWrapper'
-  >;
+  styles: any;
   data?: Product;
 }
 
-const ProductDetailsImage = ({ useStyles, data }: ProductDetailsImageProps) => {
-  const classes = useStyles();
-
-  const {imageUrl, title} = data || {}
+const ProductDetailsImage = ({ styles, data }: ProductDetailsImageProps) => {
+  const { imageUrl, title } = data || {};
 
   return (
-    <Box className={classes.imageWrapper}>
-      <img
-        className={classes.image}
-        src={imageUrl}
-        alt={title}
-      ></img>
+    <Box sx={styles.imageWrapper}>
+      <img style={styles.image} src={imageUrl} alt={title}></img>
     </Box>
   );
 };

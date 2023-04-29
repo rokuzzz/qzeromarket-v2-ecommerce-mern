@@ -10,10 +10,9 @@ import { useAppDispatch, useAppSelector } from '../hooks/appHooks';
 import { getProductByID } from '../redux/slices/productSlice';
 import ProductDetailsSkeleton from '../components/products/ProductDetailsSkeleton';
 
-// Define the styles for the components using the MUI `makeStyles` hook
-const useStyles = makeStyles((theme: Theme) => ({
+const styles = {
   root: {
-    margin: theme.spacing(2),
+    margin: '16px',
     height: '100%',
   },
   image: {
@@ -29,43 +28,38 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
   contentWrapper: {
     height: '100%',
-    padding: theme.spacing(2, 2, 0),
+    padding: '16px 16px 0',
   },
   title: {
     fontWeight: 700,
-    marginBottom: theme.spacing(5),
+    marginBottom: '40px',
   },
   description: {
-    marginBottom: theme.spacing(3),
+    marginBottom: '24px',
   },
   price: {
     fontSize: '1.5rem',
     fontWeight: 500,
-    marginBottom: theme.spacing(10),
+    marginBottom: '80px',
   },
   buttonsWrapper: {
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
     '& > button:first-of-type': {
-      marginBottom: theme.spacing(1),
+      marginBottom: '8px',
     },
   },
-}));
+};
 
 const ProductDetails = () => {
-  // Get the styles and dispatch function from the `useStyles` and `useAppDispatch` hooks
-  const classes = useStyles();
   const dispatch = useAppDispatch();
 
-  // Get the `productId` from the URL params using the `useParams` hook
   const { productId } = useParams();
-  // Fetch the product data from the server when the productId changes using the getProductByID action from the productSlice via the app dispatch hook
   useEffect(() => {
     dispatch(getProductByID(productId));
   }, [productId]);
 
-  // Get the `data` from the `currentProduct` state slice using the `useAppSelector` hook
   const { data, isLoading } = useAppSelector(
     (state) => state.productReducer.currentProduct
   );
@@ -75,15 +69,15 @@ const ProductDetails = () => {
       <Header />
       <Toolbar />
       {isLoading ? (
-        <ProductDetailsSkeleton useStyles={useStyles} />
+        <ProductDetailsSkeleton styles={styles} />
       ) : (
-        <Box className={classes.root}>
+        <Box sx={styles.root}>
           <Grid container spacing={2}>
             <Grid item xs={12} md={6}>
-              <ProductDetailsImage useStyles={useStyles} data={data} />
+              <ProductDetailsImage styles={styles} data={data} />
             </Grid>
             <Grid item xs={12} md={6}>
-              <ProductDetailsContent useStyles={useStyles} data={data} />
+              <ProductDetailsContent styles={styles} data={data} />
             </Grid>
           </Grid>
         </Box>

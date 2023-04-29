@@ -9,24 +9,11 @@ import {
 import { ClassNameMap } from '@mui/material/styles';
 
 interface ProductDetailsSkeletonProps {
-  useStyles: (
-    props?: any
-  ) => ClassNameMap<
-    | 'title'
-    | 'image'
-    | 'root'
-    | 'imageWrapper'
-    | 'contentWrapper'
-    | 'description'
-    | 'price'
-    | 'buttonsWrapper'
-  >;
+  styles: any
 }
 
-const ProductDetailsSkeleton = ({ useStyles }: ProductDetailsSkeletonProps) => {
-  const classes = useStyles();
-
-  // Get the current screen size using the `useMediaQuery` hook
+const ProductDetailsSkeleton = ({ styles }: ProductDetailsSkeletonProps) => {
+   // Get the current screen size using the `useMediaQuery` hook
   const isXXSScreen = useMediaQuery('(max-width:390px)');
   const isSmallScreen = useMediaQuery('(max-width:900px)');
   const isMediumScreen = useMediaQuery(
@@ -57,7 +44,7 @@ const ProductDetailsSkeleton = ({ useStyles }: ProductDetailsSkeletonProps) => {
   );
 
   return (
-    <Box className={classes.root}>
+    <Box sx={styles.root}>
       <Grid container spacing={2}>
         <Grid item xs={12} md={6}>
           <Box
@@ -76,9 +63,9 @@ const ProductDetailsSkeleton = ({ useStyles }: ProductDetailsSkeletonProps) => {
           </Box>
         </Grid>
         <Grid item xs={12} md={6}>
-          <Box className={classes.contentWrapper}>
+          <Box sx={styles.contentWrapper}>
             <Box>
-              <Typography className={classes.title} variant='h3' gutterBottom>
+              <Typography sx={styles.title} variant='h3' gutterBottom>
                 {isXXSScreen ? (
                   <>
                     <Skeleton variant='text' animation='wave' width={'90%'} />
@@ -89,18 +76,18 @@ const ProductDetailsSkeleton = ({ useStyles }: ProductDetailsSkeletonProps) => {
                 )}
               </Typography>
               <Typography
-                className={classes.description}
+                sx={styles.description}
                 variant='body1'
                 gutterBottom
               >
                 {typographyRowsSkeleton}
                 <Skeleton variant='text' animation='wave' width={'28%'} />
               </Typography>
-              <Typography className={classes.price} variant='h5' gutterBottom>
+              <Typography sx={styles.price} variant='h5' gutterBottom>
                 <Skeleton variant='text' animation='wave' width={'220px'} />
               </Typography>
             </Box>
-            <Box className={classes.buttonsWrapper}>
+            <Box sx={styles.buttonsWrapper}>
               <Button
                 variant='contained'
                 color='primary'

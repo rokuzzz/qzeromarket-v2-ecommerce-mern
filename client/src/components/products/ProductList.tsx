@@ -6,7 +6,6 @@ import { Product } from './../../types/products';
 import ProductCard from './ProductCard';
 import ProductCardSkeleton from './ProductCardSkeleton';
 
-// Define styles for the component
 const styles = {
   root: {
     flexGrow: 1,
