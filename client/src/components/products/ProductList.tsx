@@ -10,18 +10,12 @@ import ProductCardSkeleton from './ProductCardSkeleton';
 const styles = {
   root: {
     flexGrow: 1,
-    // [theme.breakpoints.down('md')]: {
-    //   margin: '0 5px',
-    // },
-    // [theme.breakpoints.up('md')]: {
-    //   margin: '0 48px',
-    // },
   },
   card: {
     height: '100%',
     display: 'flex',
     flexDirection: 'column',
-    borderRadius: 0,
+    borderRadius: '0px',
     boxShadow: 'none',
   },
   link: {
@@ -40,7 +34,6 @@ const styles = {
     justifyContent: 'center',
   },
   media: {
-    height: '100%',
     width: '100%',
     paddingTop: '100%', // 1:1 aspect ratio
   },
@@ -55,13 +48,13 @@ const styles = {
     fontWeight: 900,
     lineHeight: 1.2,
     opacity: '80%',
-    margin: '8px 0 8px',
+    margin: '4px 0 32px',
   },
 };
 
 const ProductListWrapper = styled(Box)(({ theme }) => ({
   [theme.breakpoints.down('md')]: {
-    margin: '0 5px',
+    margin: '0 16px',
   },
   [theme.breakpoints.up('md')]: {
     margin: '0 48px',
@@ -94,7 +87,7 @@ const ProductList = ({ products, isLoading }: ProductListProps) => {
   return (
     <ProductListWrapper style={styles.root}>
       <Toolbar sx={isDownSmall ? { height: '112px' } : { height: '128px' }} />
-      <Grid container spacing={2}>
+      <Grid container columnSpacing={2} rowSpacing={2}>
         {isLoading ? skeletonCards : productCards}
       </Grid>
     </ProductListWrapper>

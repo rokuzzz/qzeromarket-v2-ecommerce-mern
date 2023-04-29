@@ -2,11 +2,9 @@ import {
   Card,
   CardActionArea,
   CardContent,
-  CardMedia,
   Skeleton,
   Typography,
 } from '@mui/material';
-import { ClassNameMap } from '@mui/material/styles';
 
 interface ProductCardSkeletonProps {
   styles: any;

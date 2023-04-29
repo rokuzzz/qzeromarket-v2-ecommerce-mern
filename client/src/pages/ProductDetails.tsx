@@ -70,23 +70,6 @@ const ProductDetails = () => {
     (state) => state.productReducer.currentProduct
   );
 
-  const productDetails = (
-    <>
-      <Grid item xs={12} md={6}>
-        <ProductDetailsImage useStyles={useStyles} data={data} />
-      </Grid>
-      <Grid item xs={12} md={6}>
-        <ProductDetailsContent useStyles={useStyles} data={data} />
-      </Grid>
-    </>
-  );
-
-  const productDetailsSkeleton = (
-    <Grid item>
-      <Skeleton variant='rectangular' animation='wave' />
-    </Grid>
-  );
-
   return (
     <>
       <Header />
