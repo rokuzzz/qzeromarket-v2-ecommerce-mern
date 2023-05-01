@@ -33,6 +33,7 @@ const styles = {
     justifyContent: 'center',
   },
   media: {
+    height: 0,
     width: '100%',
     paddingTop: '100%', // 1:1 aspect ratio
   },
