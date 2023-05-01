@@ -23,7 +23,7 @@ export interface CartSliceState {
 
 export interface GetUsersShoppingCartProps {
   userId: string,
-  token: string
+  token: string | null
 }
 
 export interface AddToCartProps {

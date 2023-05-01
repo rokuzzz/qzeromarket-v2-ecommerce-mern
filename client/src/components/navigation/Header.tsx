@@ -1,4 +1,4 @@
-import { AppBar, Slide } from '@mui/material';
+import { AppBar, Box, Slide } from '@mui/material';
 import useScrollTrigger from '@mui/material/useScrollTrigger';
 
 import HeaderTabs from './HeaderTabs';
@@ -15,18 +15,18 @@ function HideOnScroll({ children }: { children: React.ReactElement }) {
 
 interface HeaderProps {
   selectedTab?: number;
-  handleChange?: (event: React.SyntheticEvent, newValue: number) => void;
+  handleTabChange?: (event: React.SyntheticEvent, newValue: number) => void;
 }
 
-const Header = ({ selectedTab, handleChange }: HeaderProps) => {
+const Header = ({ selectedTab, handleTabChange }: HeaderProps) => {
   const hasTabs =
-    typeof selectedTab !== 'undefined' && typeof handleChange !== 'undefined';
+    typeof selectedTab !== 'undefined' && typeof handleTabChange !== 'undefined';
 
   return (
     <HideOnScroll>
       <AppBar>
         <HeaderNavigation />
-        {hasTabs && <HeaderTabs value={selectedTab} onChange={handleChange} />}
+        {hasTabs && <HeaderTabs value={selectedTab} onChange={handleTabChange} />}
       </AppBar>
     </HideOnScroll>
   );

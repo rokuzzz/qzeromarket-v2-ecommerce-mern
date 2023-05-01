@@ -40,7 +40,7 @@ const Home = () => {
 
   return (
     <>
-      <Header selectedTab={selectedTab} handleChange={handleTabChange} />
+      <Header selectedTab={selectedTab} handleTabChange={handleTabChange} />
       <ProductList products={data} isLoading={isLoading} />
     </>
   );
