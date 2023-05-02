@@ -29,7 +29,9 @@ const CartDrawer = ({ cartIsOpen, setCartIsOpen }: CartDrawerProps) => {
 
   const dispatch = useAppDispatch();
 
-  dispatch(countTotalPrice());
+  useEffect(() => {
+    dispatch(countTotalPrice());
+  }, [products]);
 
   useEffect(() => {
     dispatch(

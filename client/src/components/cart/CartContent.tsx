@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import {
   Avatar,
   Box,
@@ -13,6 +14,8 @@ import {
 import { Theme, useTheme } from '@mui/material/styles';
 
 import { ProductInCart } from '../../types/cart';
+import { useAppDispatch, useAppSelector } from '../../hooks/appHooks';
+import { fetchAllProducts } from '../../redux/slices/productSlice';
 
 interface CartContentProps {
   products: ProductInCart[];
@@ -61,8 +64,12 @@ const CartContent = ({ products, totalPrice }: CartContentProps) => {
           </>
         }
       />
-      <ListItemAvatar>
-        {/* <Avatar alt={product.productId.title} src={product.productId} /> */}
+      <ListItemAvatar sx={{ width: '100px', height: '100px' }}>
+        {/* {data.find((p) => p._id == product.productId.id)?.imageUrl} */}
+        {/* <Avatar
+          alt={product.productId.title}
+          src={data.find((p) => p._id === product.productId.id)?.imageUrl}
+        /> */}
       </ListItemAvatar>
     </ListItem>
   ));
@@ -77,7 +84,7 @@ const CartContent = ({ products, totalPrice }: CartContentProps) => {
         sx={{ width: '100%', display: 'flex', justifyContent: 'space-between' }}
       >
         <Typography variant='button'>Checkout</Typography>
-        <Typography variant='h6'>€{totalPrice}</Typography>
+        <Typography variant='h6'>€{totalPrice}.00</Typography>
       </Button>
     </Box>
   );
