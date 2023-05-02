@@ -10,9 +10,10 @@ import {
   countTotalPrice,
   getUsersShoppingCart,
 } from '../../redux/slices/cartSlice';
+import CartContent from './CartContent';
 
 const CartWrapper = styled(Box)(({ theme }) => ({
-  padding: '12px 16px 8px 32px',
+  padding: '12px 32px 8px 32px',
 }));
 
 interface CartDrawerProps {
@@ -68,13 +69,8 @@ const CartDrawer = ({ cartIsOpen, setCartIsOpen }: CartDrawerProps) => {
             <CloseIcon sx={{ width: '32px', height: '32px' }} />
           </IconButton>
         </Box>
-        <Divider sx={{ mb: 3 }} />
-        {products.map((product) => (
-          <Typography key={product.productId.id}>
-            {product.productId.title}
-          </Typography>
-        ))}
-        <Typography>{totalPrice}</Typography>
+        <Divider />
+        <CartContent products={products} totalPrice={totalPrice} />
       </CartWrapper>
     </Drawer>
   );

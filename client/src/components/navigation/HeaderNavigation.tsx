@@ -8,7 +8,7 @@ import ShoppingBagIcon from '@mui/icons-material/ShoppingBag';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 
 import { ReactComponent as AppLogo } from '../../assets/qzeromarket-logo.svg';
-import CartDrawer from './CartDrawer';
+import CartDrawer from '../cart/CartDrawer';
 
 const HeaderNavigation = () => {
   const theme: Theme = useTheme();

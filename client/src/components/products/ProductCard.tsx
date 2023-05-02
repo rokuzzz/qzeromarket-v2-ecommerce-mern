@@ -31,7 +31,7 @@ const ProductCard = ({ product, styles }: SingleProductProps) => {
               {product.title}
             </Typography>
             <Typography sx={styles.price} variant='overline'>
-              €{product.price}.99
+              €{product.price}.00
             </Typography>
           </CardContent>
         </CardActionArea>

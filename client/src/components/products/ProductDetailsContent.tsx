@@ -4,7 +4,7 @@ import { Box, Button, Typography } from '@mui/material';
 import { Product } from '../../types/products';
 
 interface ProductDetailsContentProps {
-  styles: any,
+  styles: any;
   data?: Product;
 }
 
@@ -12,7 +12,7 @@ const ProductDetailsContent = ({
   styles,
   data,
 }: ProductDetailsContentProps) => {
-   const {title, description, price} = data || {}
+  const { title, description, price } = data || {};
 
   return (
     <Box sx={styles.contentWrapper}>
@@ -20,15 +20,11 @@ const ProductDetailsContent = ({
         <Typography sx={styles.title} variant='h3' gutterBottom>
           {title}
         </Typography>
-        <Typography
-          sx={styles.description}
-          variant='body1'
-          gutterBottom
-        >
+        <Typography sx={styles.description} variant='body1' gutterBottom>
           {description}
         </Typography>
         <Typography sx={styles.price} variant='h5' gutterBottom>
-          Product price: €{price}.99
+          Product price: €{price}.00
         </Typography>
       </Box>
       <Box sx={styles.buttonsWrapper}>
