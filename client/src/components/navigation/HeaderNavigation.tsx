@@ -14,9 +14,11 @@ const HeaderNavigation = () => {
   const theme: Theme = useTheme();
 
   const [isHovered, setIsHovered] = useState(false);
-
   const handleMouseEnter = () => setIsHovered(true);
   const handleMouseLeave = () => setIsHovered(false);
+
+  const [cartIsOpen, setCartIsOpen] = useState(false);
+  const toggleCartOpen = () => setCartIsOpen(!cartIsOpen);
 
   return (
     <Toolbar sx={{ m: 0, p: 0 }}>
@@ -40,10 +42,15 @@ const HeaderNavigation = () => {
         <IconButton size='large' color='inherit' aria-label='profile'>
           <FavoriteIcon />
         </IconButton>
-        <CartDrawer />
-        <IconButton size='large' color='inherit' aria-label='cart'>
+        <IconButton
+          size='large'
+          color='inherit'
+          aria-label='cart'
+          onClick={toggleCartOpen}
+        >
           <ShoppingBagIcon />
         </IconButton>
+        <CartDrawer cartIsOpen={cartIsOpen} setCartIsOpen={setCartIsOpen} />
         <IconButton size='large' color='inherit' aria-label='profile'>
           <AccountCircleIcon />
         </IconButton>
