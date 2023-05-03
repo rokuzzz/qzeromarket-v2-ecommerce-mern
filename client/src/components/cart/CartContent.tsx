@@ -18,14 +18,14 @@ import { useAppDispatch, useAppSelector } from '../../hooks/appHooks';
 import { fetchAllProducts } from '../../redux/slices/productSlice';
 
 interface CartContentProps {
-  products: ProductInCart[];
+  products: ProductInCart[] | undefined;
   totalPrice: number | undefined;
 }
 
 const CartContent = ({ products, totalPrice }: CartContentProps) => {
   const theme: Theme = useTheme();
 
-  const productsInCart = products.map((product, index) => (
+  const productsInCart = products?.map((product, index) => (
     <ListItem
       key={product.productId.id}
       divider={index !== products.length - 1}
@@ -84,7 +84,7 @@ const CartContent = ({ products, totalPrice }: CartContentProps) => {
         sx={{ width: '100%', display: 'flex', justifyContent: 'space-between' }}
       >
         <Typography variant='button'>Checkout</Typography>
-        <Typography variant='h6'>€{totalPrice}.00</Typography>
+        {/* <Typography variant='h6'>€{totalPrice}.00</Typography> */}
       </Button>
     </Box>
   );

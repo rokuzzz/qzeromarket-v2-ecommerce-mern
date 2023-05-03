@@ -1,7 +1,8 @@
-import { AddToCartProps, DeleteCartProps } from './../../types/cart';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import axios from 'axios'
-import { CartSliceState, GetUsersShoppingCartProps } from '../../types/cart'
+import { toast } from 'react-toastify';
+
+import { CartSliceState, GetUsersShoppingCartProps, AddToCartProps, DeleteCartProps } from '../../types/cart'
 
 const initialState: CartSliceState = {
   usersShoppingCart: { id: '', products: [], totalPrice: 0 }
@@ -27,13 +28,21 @@ export const getUsersShoppingCart = createAsyncThunk(
 export const addToCart = createAsyncThunk(
   'addToCart', 
   async ({title, quantity, token}: AddToCartProps) => {
-    const response = await axios.post('https://qzero-market-backend.herokuapp.com/api/carts',
-  {title, quantity},
-  {
-    headers: {
-      Authorization: `Bearer ${token}`
-    }})
-    return response.data
+    try {
+      const response = await axios.post('https://qzero-market-backend.herokuapp.com/api/carts',
+      {title, quantity},
+    {
+        headers: {
+          Authorization: `Bearer ${token}`
+      }})
+      toast.success(`${title} added to a cart`, {position: 'bottom-right'});
+
+      return response.data
+    } catch (err) {
+      console.log(err)
+
+      toast.error('Something went wrong', {position: 'bottom-right'});
+    }
   }
 )
 
@@ -55,10 +64,12 @@ const cartSlice = createSlice({
   reducers: {
     countTotalPrice: (state) => {
       let totalPrice = 0
-      for (let i = 0; i < state.usersShoppingCart.products.length; i++) {
-        totalPrice += state.usersShoppingCart.products[i].quantity * state.usersShoppingCart.products[i].productId.price
+      if (state.usersShoppingCart?.products) {
+        for (let i = 0; i < state.usersShoppingCart.products.length; i++) {
+          totalPrice += state.usersShoppingCart.products[i].quantity * state.usersShoppingCart.products[i].productId.price
+        }
+        state.usersShoppingCart.totalPrice = totalPrice
       }
-      state.usersShoppingCart.totalPrice = totalPrice
     }
   },
   extraReducers: (builder) => {

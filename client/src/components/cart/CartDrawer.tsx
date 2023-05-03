@@ -25,13 +25,13 @@ const CartDrawer = ({ cartIsOpen, setCartIsOpen }: CartDrawerProps) => {
   const { currentUser } = useAppSelector((state) => state.userReducer);
 
   const { usersShoppingCart } = useAppSelector((state) => state.cartReducer);
-  const { id, products, totalPrice } = usersShoppingCart;
+  const { id, products, totalPrice } = usersShoppingCart ?? {};
 
   const dispatch = useAppDispatch();
 
-  useEffect(() => {
-    dispatch(countTotalPrice());
-  }, [products]);
+  // useEffect(() => {
+  //   dispatch(countTotalPrice());
+  // }, [products]);
 
   useEffect(() => {
     dispatch(
@@ -57,7 +57,7 @@ const CartDrawer = ({ cartIsOpen, setCartIsOpen }: CartDrawerProps) => {
     >
       <CartWrapper>
         <Box sx={{ display: 'flex', alignItems: 'center', mb: 1 }}>
-          {products.length == 0 ? (
+          {typeof products == undefined ? (
             <ShoppingBagOutlinedIcon sx={{ width: '32px', height: '32px' }} />
           ) : (
             <ShoppingBagIcon sx={{ width: '32px', height: '32px' }} />

@@ -18,7 +18,7 @@ export interface Cart {
 }
 
 export interface CartSliceState {
-  usersShoppingCart: Cart
+  usersShoppingCart: Cart | undefined
 }
 
 export interface GetUsersShoppingCartProps {
