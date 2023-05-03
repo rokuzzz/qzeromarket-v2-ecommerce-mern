@@ -46,7 +46,7 @@ const styles = {
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
-    '& > button:first-of-type': {
+    '& > *:first-of-type': {
       marginBottom: '8px',
     },
   },

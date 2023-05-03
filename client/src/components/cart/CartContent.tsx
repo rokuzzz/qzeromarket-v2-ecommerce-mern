@@ -27,7 +27,7 @@ const CartContent = ({ products, totalPrice }: CartContentProps) => {
 
   const productsInCart = products?.map((product, index) => (
     <ListItem
-      key={product.productId.id}
+      key={product.productId._id}
       divider={index !== products.length - 1}
     >
       <ListItemText
