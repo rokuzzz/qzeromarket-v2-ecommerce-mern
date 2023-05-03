@@ -18,7 +18,7 @@ export const getUsersShoppingCart = createAsyncThunk(
           Authorization: `Bearer ${token}`
         }
       })
-      return (response.data ? response.data : {id: '', products: []})
+      return (response.data ? response.data : {id: '', products: [], totalPrice: 0})
     } catch (err) {
       console.log(err)
     }
