@@ -47,7 +47,7 @@ const CartContent = ({ products, totalPrice }: CartContentProps) => {
               color={theme.palette.common.black}
               sx={{ fontWeight: 700, mb: 1 }}
             >
-              €{product.productId.price}.00
+              €{product.productId.price * product.quantity}.00
             </Typography>
             <Typography
               variant='subtitle2'
