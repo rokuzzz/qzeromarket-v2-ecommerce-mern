@@ -42,6 +42,13 @@ const CartDrawer = ({ cartIsOpen, setCartIsOpen }: CartDrawerProps) => {
     );
   }, []);
 
+  let cartTotalQuantity = 0;
+  if (products) {
+    for (let i = 0; i < products?.length; i++) {
+      cartTotalQuantity += products[i].quantity;
+    }
+  }
+
   return (
     <Drawer
       open={cartIsOpen}
@@ -57,10 +64,18 @@ const CartDrawer = ({ cartIsOpen, setCartIsOpen }: CartDrawerProps) => {
     >
       <CartWrapper>
         <Box sx={{ display: 'flex', alignItems: 'center', mb: 1 }}>
-          {typeof products == undefined ? (
+          {products?.length === 0 ? (
             <ShoppingBagOutlinedIcon sx={{ width: '32px', height: '32px' }} />
           ) : (
-            <ShoppingBagIcon sx={{ width: '32px', height: '32px' }} />
+            <Box sx={{ display: 'flex', alignItems: 'center' }}>
+              <ShoppingBagIcon sx={{ width: '32px', height: '32px' }} />
+              <Typography
+                variant='h6'
+                sx={{ marginLeft: '8px', fontWeight: 700 }}
+              >
+                {cartTotalQuantity} {cartTotalQuantity === 1 ? 'Item' : 'Items'}
+              </Typography>
+            </Box>
           )}
           <Box sx={{ flexGrow: 1 }} />
           <IconButton
