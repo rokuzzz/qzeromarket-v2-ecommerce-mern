@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react';
-import { Box, Button, ButtonGroup, Typography } from '@mui/material';
+import { Box, Button, ButtonGroup, Grid, Typography } from '@mui/material';
+import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
+import { toast } from 'react-toastify';
 
 import { Product } from '../../types/products';
 import { useAppDispatch, useAppSelector } from '../../hooks/appHooks';
@@ -51,6 +53,25 @@ const ProductDetailsContent = ({
       })
     );
     setCartQuantity(1);
+    toast.success(`${title} added to cart!`, {
+      position: 'bottom-right',
+      autoClose: 3000,
+    });
+  };
+
+  const handleDeleteCart = () => {
+    setCartQuantity(0);
+    dispatch(
+      addToCart({
+        title: title,
+        quantity: 0,
+        token: accessToken,
+      })
+    );
+    toast.error(`${title} removed from cart!`, {
+      position: 'bottom-right',
+      autoClose: 3000,
+    });
   };
 
   const handleCartIncrease = () => {
@@ -62,6 +83,10 @@ const ProductDetailsContent = ({
         token: accessToken,
       })
     );
+    toast.info(`${title} quantity increased!`, {
+      position: 'bottom-right',
+      autoClose: 1500,
+    });
   };
 
   const handleCartDecrease = () => {
@@ -74,6 +99,10 @@ const ProductDetailsContent = ({
           token: accessToken,
         })
       );
+      toast.info(`${title} quantity decreased!`, {
+        position: 'bottom-right',
+        autoClose: 1500,
+      });
     }
   };
 
@@ -91,26 +120,37 @@ const ProductDetailsContent = ({
         </Typography>
       </Box>
       <Box sx={styles.buttonsWrapper}>
-        {products && products.find((p) => p.productId._id == _id) ? (
-          <ButtonGroup
-            variant='contained'
-            size='large'
-            color='primary'
-            fullWidth
-          >
-            <Button
-              disabled={cartQuantity == 1 ? true : false}
-              onClick={handleCartDecrease}
-            >
-              -
-            </Button>
-            <Button disableTouchRipple>
-              {
-                cartQuantity
-              }
-            </Button>
-            <Button onClick={handleCartIncrease}>+</Button>
-          </ButtonGroup>
+        {products && cartQuantity > 0 ? (
+          <Grid container spacing={1} alignItems='center'>
+            <Grid item xs={8}>
+              <ButtonGroup
+                variant='contained'
+                size='large'
+                color='primary'
+                fullWidth
+              >
+                <Button
+                  disabled={cartQuantity <= 1 ? true : false}
+                  onClick={handleCartDecrease}
+                >
+                  -
+                </Button>
+                <Button disableTouchRipple>{cartQuantity}</Button>
+                <Button onClick={handleCartIncrease}>+</Button>
+              </ButtonGroup>
+            </Grid>
+            <Grid item xs={4}>
+              <Button
+                variant='contained'
+                color='error'
+                size='large'
+                fullWidth
+                onClick={handleDeleteCart}
+              >
+                <DeleteForeverIcon />
+              </Button>
+            </Grid>
+          </Grid>
         ) : (
           <Button
             onClick={handleAddToCart}

@@ -18,6 +18,7 @@ export const getUsersShoppingCart = createAsyncThunk(
           Authorization: `Bearer ${token}`
         }
       })
+      
       return (response.data ? response.data : {id: '', products: [], totalPrice: 0})
     } catch (err) {
       console.log(err)
@@ -35,7 +36,6 @@ export const addToCart = createAsyncThunk(
         headers: {
           Authorization: `Bearer ${token}`
       }})
-      // toast.info(`Item cart amount updated`, {position: 'bottom-right'});
 
       return response.data
     } catch (err) {
@@ -54,6 +54,7 @@ export const deleteCart = createAsyncThunk(
       headers: {
         Authorization: `Bearer ${token}`
       }})
+
     return {id: '', products: []}
   }
 )
