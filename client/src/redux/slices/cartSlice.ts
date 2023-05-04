@@ -35,7 +35,7 @@ export const addToCart = createAsyncThunk(
         headers: {
           Authorization: `Bearer ${token}`
       }})
-      toast.success(`${title} added to a cart`, {position: 'bottom-right'});
+      // toast.info(`Item cart amount updated`, {position: 'bottom-right'});
 
       return response.data
     } catch (err) {

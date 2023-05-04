@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { Box, Button, ButtonGroup, Typography } from '@mui/material';
 
 import { Product } from '../../types/products';
@@ -29,6 +29,10 @@ const ProductDetailsContent = ({
   const { usersShoppingCart } = useAppSelector((state) => state.cartReducer);
   const { products } = usersShoppingCart || { products: undefined };
 
+  const [cartQuantity, setCartQuantity] = useState<number>(
+    products?.find((product) => product.productId._id === _id)?.quantity || 0
+  );
+
   useEffect(() => {
     dispatch(
       getUsersShoppingCart({
@@ -37,6 +41,41 @@ const ProductDetailsContent = ({
       })
     );
   }, []);
+
+  const handleAddToCart = () => {
+    dispatch(
+      addToCart({
+        title: title,
+        quantity: 1,
+        token: accessToken,
+      })
+    );
+    setCartQuantity(1);
+  };
+
+  const handleCartIncrease = () => {
+    setCartQuantity(cartQuantity + 1);
+    dispatch(
+      addToCart({
+        title: title,
+        quantity: cartQuantity + 1,
+        token: accessToken,
+      })
+    );
+  };
+
+  const handleCartDecrease = () => {
+    if (cartQuantity > 1) {
+      setCartQuantity(cartQuantity - 1);
+      dispatch(
+        addToCart({
+          title: title,
+          quantity: cartQuantity - 1,
+          token: accessToken,
+        })
+      );
+    }
+  };
 
   return (
     <Box sx={styles.contentWrapper}>
@@ -59,26 +98,22 @@ const ProductDetailsContent = ({
             color='primary'
             fullWidth
           >
-            <Button>decrease</Button>
+            <Button
+              disabled={cartQuantity == 1 ? true : false}
+              onClick={handleCartDecrease}
+            >
+              -
+            </Button>
             <Button disableTouchRipple>
               {
-                products.find((product) => product.productId._id === _id)
-                  ?.quantity
+                cartQuantity
               }
             </Button>
-            <Button>increase</Button>
+            <Button onClick={handleCartIncrease}>+</Button>
           </ButtonGroup>
         ) : (
           <Button
-            onClick={() =>
-              dispatch(
-                addToCart({
-                  title: title,
-                  quantity: 1,
-                  token: accessToken,
-                })
-              )
-            }
+            onClick={handleAddToCart}
             variant='contained'
             color='primary'
             size='large'
