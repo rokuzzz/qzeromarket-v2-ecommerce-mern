@@ -141,10 +141,11 @@ const ProductDetailsContent = ({
             </Grid>
             <Grid item xs={4}>
               <Button
-                variant='contained'
+                variant='outlined'
                 color='error'
                 size='large'
                 fullWidth
+                sx={{ height: '42.25px' }}
                 onClick={handleDeleteCart}
               >
                 <DeleteForeverIcon />

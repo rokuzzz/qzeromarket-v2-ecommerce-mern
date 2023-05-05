@@ -14,7 +14,9 @@ interface ProductDetailsSkeletonProps {
 const ProductDetailsSkeleton = ({ styles }: ProductDetailsSkeletonProps) => {
   const isXXSmallScreen = useMediaQuery('(max-width:390px)');
   const isSmallScreen = useMediaQuery('(max-width:900px)');
-  const isMediumScreen = useMediaQuery('(min-width:901px) and (max-width:1200px)');
+  const isMediumScreen = useMediaQuery(
+    '(min-width:901px) and (max-width:1200px)'
+  );
   const isLargeScreen = useMediaQuery('(min-width:1201px)');
 
   // Set the number of Skeleton components based on the screen size
@@ -43,18 +45,13 @@ const ProductDetailsSkeleton = ({ styles }: ProductDetailsSkeletonProps) => {
     <Box sx={styles.root}>
       <Grid container spacing={2}>
         <Grid item xs={12} md={6}>
-          <Box
-            sx={{
-              paddingBottom: isSmallScreen ? '100%' : undefined,
-              position: 'relative',
-            }}
-          >
+          <Box sx={styles.imageWrapper}>
             <Skeleton
               variant='rectangular'
               animation='wave'
-              height={isLargeScreen ? '88vh' : '100%'}
+              height={isLargeScreen ? '88.5vh' : isMediumScreen ? '100%' : ''}
               width={'100%'}
-              sx={{ position: 'absolute', top: 0, left: 0 }}
+              sx={isSmallScreen ? { paddingBottom: '100%' } : {}}
             />
           </Box>
         </Grid>
@@ -80,17 +77,18 @@ const ProductDetailsSkeleton = ({ styles }: ProductDetailsSkeletonProps) => {
               </Typography>
             </Box>
             <Box sx={styles.buttonsWrapper}>
-              <Button
-                variant='contained'
-                color='primary'
-                size='large'
-                fullWidth
-              >
-                Add to Cart
-              </Button>
-              <Button variant='outlined' color='primary' size='large' fullWidth>
-                Add to Favorites
-              </Button>
+              <Skeleton
+                variant='rectangular'
+                animation='wave'
+                width={'100%'}
+                height={'42.25px'}
+              />
+              <Skeleton
+                variant='rectangular'
+                animation='wave'
+                width={'100%'}
+                height={'42.25px'}
+              />
             </Box>
           </Box>
         </Grid>
