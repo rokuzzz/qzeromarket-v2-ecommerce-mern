@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import {
   Avatar,
   Box,
@@ -16,6 +16,7 @@ import { Theme, useTheme } from '@mui/material/styles';
 import { ProductInCart } from '../../types/cart';
 import { useAppDispatch, useAppSelector } from '../../hooks/appHooks';
 import { fetchAllProducts } from '../../redux/slices/productSlice';
+import { addToCart } from '../../redux/slices/cartSlice';
 
 interface CartContentProps {
   products: ProductInCart[] | undefined;
@@ -24,6 +25,7 @@ interface CartContentProps {
 
 const CartContent = ({ products, totalPrice }: CartContentProps) => {
   const theme: Theme = useTheme();
+  const dispatch = useAppDispatch();
 
   const productsInCart = products?.map((product, index) => (
     <ListItem
@@ -57,9 +59,34 @@ const CartContent = ({ products, totalPrice }: CartContentProps) => {
               Quantity
             </Typography>
             <ButtonGroup variant='outlined' size='large' sx={{ mt: 1 }}>
-              <Button>-</Button>
+              <Button
+                disabled={product.quantity <= 1 ? true : false}
+                onClick={() =>
+                  dispatch(
+                    addToCart({
+                      title: product.productId.title,
+                      quantity: product.quantity - 1,
+                      token: localStorage.getItem('access_token') || '',
+                    })
+                  )
+                }
+              >
+                -
+              </Button>
               <Button>{product.quantity}</Button>
-              <Button>+</Button>
+              <Button
+                onClick={() =>
+                  dispatch(
+                    addToCart({
+                      title: product.productId.title,
+                      quantity: product.quantity + 1,
+                      token: localStorage.getItem('access_token') || '',
+                    })
+                  )
+                }
+              >
+                +
+              </Button>
             </ButtonGroup>
           </>
         }
