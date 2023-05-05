@@ -106,6 +106,12 @@ const ProductDetailsContent = ({
     }
   };
 
+  useEffect(() => {
+    setCartQuantity(
+      products?.find((product) => product.productId._id === _id)?.quantity || 0
+    );
+  }, [products?.find((product) => product.productId._id === _id)?.quantity]);
+
   return (
     <Box sx={styles.contentWrapper}>
       <Box>
@@ -135,13 +141,18 @@ const ProductDetailsContent = ({
                 >
                   -
                 </Button>
-                <Button disableTouchRipple>{cartQuantity}</Button>
+                <Button disableTouchRipple>
+                  {
+                    products?.find((product) => product.productId._id === _id)
+                      ?.quantity
+                  }
+                </Button>
                 <Button onClick={handleCartIncrease}>+</Button>
               </ButtonGroup>
             </Grid>
             <Grid item xs={4}>
               <Button
-                variant='outlined'
+                variant='contained'
                 color='error'
                 size='large'
                 fullWidth
