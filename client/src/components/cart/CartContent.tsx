@@ -16,7 +16,7 @@ import { Theme, useTheme } from '@mui/material/styles';
 import { ProductInCart } from '../../types/cart';
 import { useAppDispatch, useAppSelector } from '../../hooks/appHooks';
 import { fetchAllProducts } from '../../redux/slices/productSlice';
-import { addToCart } from '../../redux/slices/cartSlice';
+import { addToCart, countTotalPrice } from '../../redux/slices/cartSlice';
 
 interface CartContentProps {
   products: ProductInCart[] | undefined;
@@ -26,6 +26,8 @@ interface CartContentProps {
 const CartContent = ({ products, totalPrice }: CartContentProps) => {
   const theme: Theme = useTheme();
   const dispatch = useAppDispatch();
+
+  dispatch(countTotalPrice());
 
   const productsInCart = products?.map((product, index) => (
     <ListItem
@@ -111,7 +113,7 @@ const CartContent = ({ products, totalPrice }: CartContentProps) => {
         sx={{ width: '100%', display: 'flex', justifyContent: 'space-between' }}
       >
         <Typography variant='button'>Checkout</Typography>
-        {/* <Typography variant='h6'>€{totalPrice}.00</Typography> */}
+        <Typography variant='h6'>€{totalPrice}.00</Typography>
       </Button>
     </Box>
   );
