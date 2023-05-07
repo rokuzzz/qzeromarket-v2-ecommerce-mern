@@ -27,6 +27,8 @@ const CartContent = ({ products, totalPrice }: CartContentProps) => {
   const theme: Theme = useTheme();
   const dispatch = useAppDispatch();
 
+  const { data } = useAppSelector((state) => state.productReducer.allProducts);
+
   dispatch(countTotalPrice());
 
   const productsInCart = products?.map((product, index) => (
@@ -94,11 +96,12 @@ const CartContent = ({ products, totalPrice }: CartContentProps) => {
         }
       />
       <ListItemAvatar sx={{ width: '100px', height: '100px' }}>
-        {/* {data.find((p) => p._id == product.productId.id)?.imageUrl} */}
-        {/* <Avatar
+        <Avatar
           alt={product.productId.title}
-          src={data.find((p) => p._id === product.productId.id)?.imageUrl}
-        /> */}
+          src={data.find((p) => p._id === product.productId._id)?.imageUrl}
+          variant='rounded'
+          sx={{ width: '100%', height: '100%' }}
+        />
       </ListItemAvatar>
     </ListItem>
   ));
