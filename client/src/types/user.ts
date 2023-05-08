@@ -17,7 +17,7 @@ export interface UserSliceState {
     isLoading: boolean,
     error: string | undefined
   },
-  currentUser: {
+  loggedInUser: {
     data: User | undefined,
     isLoading: boolean,
     error: string | undefined

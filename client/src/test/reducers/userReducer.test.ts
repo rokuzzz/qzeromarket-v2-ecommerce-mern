@@ -15,7 +15,7 @@ describe('test user reducers', () => {
       password: 'mypassword'
     }))
     // console.log('current user is: ', store.getState().userReducer.currentUser)
-    expect(store.getState().userReducer.currentUser).toBeDefined()
+    expect(store.getState().userReducer.loggedInUser).toBeDefined()
   })
 
   // test('login with wrong credentials (should not log in)', async () => {
@@ -30,7 +30,7 @@ describe('test user reducers', () => {
     // token expires in 3 days
     await store.dispatch(loginByToken('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzZGJiZDEyZTkzNjQ2NTJlNGRlMDM3ZiIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTY3ODc5MjYzNiwiZXhwIjoxNjc5MDUxODM2fQ.9krmMDnpAPvREmuXksfL2cNd-VVwMq3Sy9zPnZAiSrU'))
     // console.log(store.getState().userReducer.currentUser)
-    expect(store.getState().userReducer.currentUser).toBeDefined()
+    expect(store.getState().userReducer.loggedInUser).toBeDefined()
   })
 
   // // commented out because it creates the actual user in the database
@@ -67,6 +67,6 @@ describe('test user reducers', () => {
       token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzZGJiZDEyZTkzNjQ2NTJlNGRlMDM3ZiIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTY3ODk2NTc0OSwiZXhwIjoxNjc5MjI0OTQ5fQ.Qfn3iyDnkQlI1S6S7stgRqvzKNyVRLbcUY309DQI07Y'
     }))
     // console.log('updated user: ', store.getState().userReducer.currentUser)
-    expect(store.getState().userReducer.currentUser).toBeDefined()
+    expect(store.getState().userReducer.loggedInUser).toBeDefined()
   })
 })

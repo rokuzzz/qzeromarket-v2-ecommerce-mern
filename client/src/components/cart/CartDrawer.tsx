@@ -22,7 +22,7 @@ interface CartDrawerProps {
 }
 
 const CartDrawer = ({ cartIsOpen, setCartIsOpen }: CartDrawerProps) => {
-  const { currentUser } = useAppSelector((state) => state.userReducer);
+  const { loggedInUser } = useAppSelector((state) => state.userReducer);
 
   const { usersShoppingCart } = useAppSelector((state) => state.cartReducer);
   const { id, products, totalPrice } = usersShoppingCart ?? {};
@@ -32,7 +32,7 @@ const CartDrawer = ({ cartIsOpen, setCartIsOpen }: CartDrawerProps) => {
   useEffect(() => {
     dispatch(
       getUsersShoppingCart({
-        userId: currentUser.data!._id,
+        userId: loggedInUser.data!._id,
         token: localStorage.getItem('access_token'),
       })
     );

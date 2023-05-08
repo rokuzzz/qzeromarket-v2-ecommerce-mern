@@ -26,8 +26,8 @@ const LoginBox = styled(Paper)(({ theme }) => ({
 }));
 
 const SignIn = () => {
-  const { currentUser } = useAppSelector((state) => state.userReducer);
-  const { data, isLoading } = currentUser;
+  const { loggedInUser } = useAppSelector((state) => state.userReducer);
+  const { data, isLoading } = loggedInUser;
 
   const dispatch = useAppDispatch();
   const navigate = useNavigate();

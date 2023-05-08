@@ -79,6 +79,7 @@ const CartContent = ({ products, totalPrice }: CartContentProps) => {
               </Button>
               <Button>{product.quantity}</Button>
               <Button
+                disabled={product.quantity >= 6 ? true : false}
                 onClick={() =>
                   dispatch(
                     addToCart({

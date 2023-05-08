@@ -26,7 +26,7 @@ const ProductDetailsContent = ({
 
   const dispatch = useAppDispatch();
 
-  const { currentUser } = useAppSelector((state) => state.userReducer);
+  const { loggedInUser } = useAppSelector((state) => state.userReducer);
 
   const { usersShoppingCart } = useAppSelector((state) => state.cartReducer);
   const { products } = usersShoppingCart || { products: undefined };
@@ -38,7 +38,7 @@ const ProductDetailsContent = ({
   useEffect(() => {
     dispatch(
       getUsersShoppingCart({
-        userId: currentUser.data!._id,
+        userId: loggedInUser.data!._id,
         token: accessToken,
       })
     );

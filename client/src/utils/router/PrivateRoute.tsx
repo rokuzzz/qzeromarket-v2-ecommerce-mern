@@ -3,11 +3,11 @@ import { useAppSelector } from '../../hooks/appHooks';
 
 const PrivateRoute = () => {
   // Get the isAuthenticated value from the userReducer state
-  const { currentUser } = useAppSelector((state) => state.userReducer);
+  const { loggedInUser } = useAppSelector((state) => state.userReducer);
 
   // If authenticated, return an outlet that will render child elements
   // If not, return element that will navigate to login page
-  return  currentUser.data ? <Outlet /> : <Navigate to='/login' />;
+  return  loggedInUser.data ? <Outlet /> : <Navigate to='/login' />;
 };
 
 export default PrivateRoute;

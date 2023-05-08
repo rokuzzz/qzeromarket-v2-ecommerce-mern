@@ -10,7 +10,7 @@ const initialState: UserSliceState = {
     isLoading: false,
     error: undefined
   },
-  currentUser: {
+  loggedInUser: {
     data: undefined,
     isLoading: false,
     error: undefined
@@ -133,27 +133,27 @@ const userSlice = createSlice({
   reducers: {
     logout: (state) => {
       localStorage.removeItem('access_token')
-      state.currentUser.data = undefined
+      state.loggedInUser.data = undefined
     }
   },
   extraReducers: (builder) => {
     //  login
     builder.addCase(login.pending, (state) => {
-      state.currentUser = {
+      state.loggedInUser = {
         data: undefined,
         isLoading: true,
         error: undefined
       }
     })
     .addCase(login.fulfilled, (state, action) => {
-      state.currentUser = {
+      state.loggedInUser = {
         data: action.payload,
         isLoading: false,
         error: undefined
       }
     })
     .addCase(login.rejected, (state, action) => {
-      state.currentUser = {
+      state.loggedInUser = {
         data: undefined,
         isLoading: false,
         error: action.error.message
@@ -161,21 +161,21 @@ const userSlice = createSlice({
     })
     // loginByToken
     .addCase(loginByToken.pending, (state) => {
-      state.currentUser = {
+      state.loggedInUser = {
         data: undefined,
         isLoading: true,
         error: undefined
       }
     })
     .addCase(loginByToken.fulfilled, (state, action) => {
-      state.currentUser = {
+      state.loggedInUser = {
         data: action.payload,
         isLoading: false,
         error: undefined
       }
     })
     .addCase(loginByToken.rejected, (state, action) => {
-      state.currentUser = {
+      state.loggedInUser = {
         data: undefined,
         isLoading: false,
         error: action.error.message
@@ -183,21 +183,21 @@ const userSlice = createSlice({
     })
     // register
     .addCase(register.pending, (state) => {
-      state.currentUser = {
+      state.loggedInUser = {
         data: undefined,
         isLoading: true,
         error: undefined
       }
     })
     .addCase(register.fulfilled, (state, action) => {
-      state.currentUser = {
+      state.loggedInUser = {
         data: action.payload,
         isLoading: false,
         error: undefined
       }
     })
     .addCase(register.rejected, (state, action) => {
-      state.currentUser = {
+      state.loggedInUser = {
         data: undefined,
         isLoading: false,
         error: action.error.message
@@ -207,7 +207,7 @@ const userSlice = createSlice({
       state.listOfUsers = action.payload
     })
     .addCase(updateCurrentUser.fulfilled, (state, action) => {
-      state.currentUser = action.payload
+      state.loggedInUser = action.payload
     })
   }
 })

@@ -28,11 +28,11 @@ const RegisterBox = styled(Paper)(({ theme }) => ({
 
 const SignUp = () => {
   // Define appHooks
-  const { currentUser } = useAppSelector((state) => state.userReducer);
+  const { loggedInUser } = useAppSelector((state) => state.userReducer);
   const dispatch = useAppDispatch();
 
-  // Destructure the `data` object and `isLoading` value from the `currentUser` object obtained from the Redux store
-  const { data, isLoading } = currentUser; // `data` contains the user data fetched from the API
+  // Destructure the `data` object and `isLoading` value from the `loggedInUser` object obtained from the Redux store
+  const { data, isLoading } = loggedInUser; // `data` contains the user data fetched from the API
 
   // Get theme and screen size information from MUI
   const theme = useTheme();
