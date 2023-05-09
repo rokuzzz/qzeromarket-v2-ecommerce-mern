@@ -1,4 +1,3 @@
-import { useEffect, useState } from 'react';
 import {
   Avatar,
   Box,
@@ -15,7 +14,6 @@ import { Theme, useTheme } from '@mui/material/styles';
 
 import { ProductInCart } from '../../types/cart';
 import { useAppDispatch, useAppSelector } from '../../hooks/appHooks';
-import { fetchAllProducts } from '../../redux/slices/productSlice';
 import { addToCart, countTotalPrice } from '../../redux/slices/cartSlice';
 
 interface CartContentProps {

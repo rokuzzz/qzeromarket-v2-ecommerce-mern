@@ -1,4 +1,3 @@
-import { ClassNameMap } from '@mui/material/styles';
 import { Box } from '@mui/material';
 
 import { Product } from '../../types/products';

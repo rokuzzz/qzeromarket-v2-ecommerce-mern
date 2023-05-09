@@ -1,7 +1,6 @@
 import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { Box, Grid, Skeleton, Theme, Toolbar } from '@mui/material';
-import { makeStyles } from '@mui/styles';
 
 import Header from '../components/navigation/Header';
 import ProductDetailsImage from '../components/products/ProductDetailsImage';
