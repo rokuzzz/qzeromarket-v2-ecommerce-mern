@@ -3,7 +3,10 @@ import { Box, Divider, Drawer } from '@mui/material';
 import { styled } from '@mui/system';
 
 import { useAppDispatch, useAppSelector } from '../../hooks/appHooks';
-import { getUsersShoppingCart } from '../../redux/slices/cartSlice';
+import {
+  countTotalPrice,
+  getUsersShoppingCart,
+} from '../../redux/slices/cartSlice';
 import CartContent from './CartContent';
 import CartHeading from './CartHeading';
 
@@ -32,6 +35,8 @@ const CartDrawer = ({ cartIsOpen, setCartIsOpen }: CartDrawerProps) => {
       })
     );
   }, []);
+
+  dispatch(countTotalPrice());
 
   // Computes the total quantity of items in the shopping cart
   const getCartTotalQuantity = () => {

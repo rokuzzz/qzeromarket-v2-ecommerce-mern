@@ -23,91 +23,98 @@ interface CartContentProps {
 
 const CartContent = ({ products, totalPrice }: CartContentProps) => {
   const theme: Theme = useTheme();
+
   const dispatch = useAppDispatch();
 
-  const { data } = useAppSelector((state) => state.productReducer.allProducts);
+  const { allProducts } = useAppSelector((state) => state.productReducer);
 
-  dispatch(countTotalPrice());
+  const productList = products?.map((product, index) => {
+    const { productId, quantity } = product;
+    const { _id, title, price } = productId;
 
-  const productsInCart = products?.map((product, index) => (
-    <ListItem
-      key={product.productId._id}
-      divider={index !== products.length - 1}
-    >
-      <ListItemText
-        primary={
-          <Typography
-            variant='h6'
-            textTransform={'uppercase'}
-            sx={{ fontWeight: 700, lineHeight: 1 }}
-          >
-            {product.productId.title}
-          </Typography>
-        }
-        secondary={
-          <>
+    const handleCartDecrease = () => {
+      dispatch(
+        addToCart({
+          title: title,
+          quantity: quantity - 1,
+          token: localStorage.getItem('access_token') || '',
+        })
+      );
+    };
+
+    const handleCartIncrease = () => {
+      dispatch(
+        addToCart({
+          title: title,
+          quantity: quantity + 1,
+          token: localStorage.getItem('access_token') || '',
+        })
+      );
+    };
+
+    const imageUrl = allProducts.data.find((p) => p._id === _id)?.imageUrl;
+
+    return (
+      <ListItem key={_id} divider={index !== products.length - 1}>
+        <ListItemText
+          primary={
             <Typography
               variant='h6'
-              color={theme.palette.common.black}
-              sx={{ fontWeight: 700, mb: 1 }}
+              textTransform={'uppercase'}
+              sx={{ fontWeight: 700, lineHeight: 1 }}
             >
-              €{product.productId.price * product.quantity}.00
+              {title}
             </Typography>
-            <Typography
-              variant='subtitle2'
-              color={theme.palette.common.black}
-              sx={{ fontWeight: 700 }}
-            >
-              Quantity
-            </Typography>
-            <ButtonGroup variant='outlined' size='large' sx={{ mt: 1 }}>
-              <Button
-                disabled={product.quantity <= 1 ? true : false}
-                onClick={() =>
-                  dispatch(
-                    addToCart({
-                      title: product.productId.title,
-                      quantity: product.quantity - 1,
-                      token: localStorage.getItem('access_token') || '',
-                    })
-                  )
-                }
+          }
+          secondary={
+            <>
+              <Typography
+                variant='h6'
+                color={theme.palette.common.black}
+                sx={{ fontWeight: 700, mb: 1 }}
               >
-                -
-              </Button>
-              <Button>{product.quantity}</Button>
-              <Button
-                disabled={product.quantity >= 6 ? true : false}
-                onClick={() =>
-                  dispatch(
-                    addToCart({
-                      title: product.productId.title,
-                      quantity: product.quantity + 1,
-                      token: localStorage.getItem('access_token') || '',
-                    })
-                  )
-                }
+                €{price * quantity}.00
+              </Typography>
+              <Typography
+                variant='subtitle2'
+                color={theme.palette.common.black}
+                sx={{ fontWeight: 700 }}
               >
-                +
-              </Button>
-            </ButtonGroup>
-          </>
-        }
-      />
-      <ListItemAvatar sx={{ width: '100px', height: '100px' }}>
-        <Avatar
-          alt={product.productId.title}
-          src={data.find((p) => p._id === product.productId._id)?.imageUrl}
-          variant='rounded'
-          sx={{ width: '100%', height: '100%' }}
+                Quantity
+              </Typography>
+              <ButtonGroup variant='outlined' size='large' sx={{ mt: 1 }}>
+                <Button
+                  disabled={quantity <= 1 ? true : false}
+                  onClick={handleCartDecrease}
+                >
+                  -
+                </Button>
+                <Button>{quantity}</Button>
+                <Button
+                  disabled={quantity >= 6 ? true : false}
+                  onClick={handleCartIncrease}
+                >
+                  +
+                </Button>
+              </ButtonGroup>
+            </>
+          }
         />
-      </ListItemAvatar>
-    </ListItem>
-  ));
+        <ListItemAvatar sx={{ width: '100px', height: '100px' }}>
+          <Avatar
+            alt={productId.title}
+            src={imageUrl}
+            variant='rounded'
+            sx={{ width: '100%', height: '100%' }}
+          />
+        </ListItemAvatar>
+      </ListItem>
+    );
+  });
 
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '88vh' }}>
-      <List sx={{ flexGrow: 1, padding: 0 }}>{productsInCart}</List>
+      <List sx={{ flexGrow: 1, padding: 0 }}>{productList}</List>
       <Divider sx={{ my: 2 }} />
       <Button
         variant='contained'
