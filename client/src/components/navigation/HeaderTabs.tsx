@@ -4,6 +4,7 @@ import { styled } from '@mui/material/styles';
 interface HeaderTabsProps {
   value?: number;
   onChange?: (event: React.SyntheticEvent, newValue: number) => void;
+  isDownMd: boolean;
 }
 
 const StyledTab = styled(Tab)(({ theme }) => ({
@@ -12,11 +13,16 @@ const StyledTab = styled(Tab)(({ theme }) => ({
   },
 }));
 
-const HeaderTabs = (Props: HeaderTabsProps) => {
-  const { value, onChange } = Props;
-
+const HeaderTabs = ({ value, onChange, isDownMd }: HeaderTabsProps) => {
   return (
-    <Box sx={{ maxWidth: { xs: '95%', sm: 480, md: '100%' }, margin: '0 auto' }}>
+    <Box
+      sx={{
+        maxWidth: '100%',
+        margin: isDownMd ? '0 16px' : '0 48px',
+        display: 'flex',
+        justifyContent: 'center',
+      }}
+    >
       <Tabs
         value={value}
         onChange={onChange}

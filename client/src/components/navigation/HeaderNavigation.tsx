@@ -10,7 +10,11 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import { ReactComponent as AppLogo } from '../../assets/qzeromarket-logo.svg';
 import CartDrawer from '../cart/CartDrawer';
 
-const HeaderNavigation = () => {
+interface HeaderNavigationProps {
+  isDownMd: boolean;
+}
+
+const HeaderNavigation = ({ isDownMd }: HeaderNavigationProps) => {
   const theme: Theme = useTheme();
 
   const [isHovered, setIsHovered] = useState(false);
@@ -21,10 +25,16 @@ const HeaderNavigation = () => {
   const toggleCartOpen = () => setCartIsOpen(!cartIsOpen);
 
   return (
-    <Toolbar sx={{ m: 0, p: 0 }}>
+    <Toolbar
+      sx={
+        isDownMd
+          ? { margin: '4px 16px 0px 16px', p: 0 }
+          : { margin: '4px 24px 0px 24px', p: 0 }
+      }
+    >
       <Link
         to={'/'}
-        style={{ textDecoration: 'none' }}
+        style={{ textDecoration: 'none', width: '20px' }}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
       >
@@ -35,6 +45,7 @@ const HeaderNavigation = () => {
               ? theme.palette.secondary.main
               : theme.palette.primary.contrastText
           }
+          style={{ width: '65px' }}
         />
       </Link>
       <Box sx={{ flexGrow: 1 }} />

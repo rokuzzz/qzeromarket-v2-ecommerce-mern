@@ -14,7 +14,7 @@ import { Theme, useTheme } from '@mui/material/styles';
 
 import { ProductInCart } from '../../types/cart';
 import { useAppDispatch, useAppSelector } from '../../hooks/appHooks';
-import { addToCart, countTotalPrice } from '../../redux/slices/cartSlice';
+import { addToCart } from '../../redux/slices/cartSlice';
 
 interface CartContentProps {
   products: ProductInCart[] | undefined;

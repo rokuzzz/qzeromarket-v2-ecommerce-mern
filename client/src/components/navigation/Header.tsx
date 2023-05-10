@@ -1,4 +1,4 @@
-import { AppBar, Box, Slide } from '@mui/material';
+import { AppBar, Box, Slide, useMediaQuery, useTheme } from '@mui/material';
 import useScrollTrigger from '@mui/material/useScrollTrigger';
 
 import HeaderTabs from './HeaderTabs';
@@ -19,14 +19,24 @@ interface HeaderProps {
 }
 
 const Header = ({ selectedTab, handleTabChange }: HeaderProps) => {
+  const theme = useTheme();
+  const isDownMd = useMediaQuery(theme.breakpoints.down('md'));
+
   const hasTabs =
-    typeof selectedTab !== 'undefined' && typeof handleTabChange !== 'undefined';
+    typeof selectedTab !== 'undefined' &&
+    typeof handleTabChange !== 'undefined';
 
   return (
     <HideOnScroll>
       <AppBar>
-        <HeaderNavigation />
-        {hasTabs && <HeaderTabs value={selectedTab} onChange={handleTabChange} />}
+        <HeaderNavigation isDownMd={isDownMd} />
+        {hasTabs && (
+          <HeaderTabs
+            value={selectedTab}
+            onChange={handleTabChange}
+            isDownMd={isDownMd}
+          />
+        )}
       </AppBar>
     </HideOnScroll>
   );
