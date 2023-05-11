@@ -8,6 +8,7 @@ import ProductDetailsContent from '../components/products/ProductDetailsContent'
 import { useAppDispatch, useAppSelector } from '../hooks/appHooks';
 import { getProductByID } from '../redux/slices/productSlice';
 import ProductDetailsSkeleton from '../components/products/ProductDetailsSkeleton';
+import useProductDetails from '../hooks/useProductDetails';
 
 const styles = {
   root: {
@@ -52,16 +53,7 @@ const styles = {
 };
 
 const ProductDetails = () => {
-  const dispatch = useAppDispatch();
-
-  const { productId } = useParams();
-  useEffect(() => {
-    dispatch(getProductByID(productId));
-  }, [productId]);
-
-  const { data, isLoading } = useAppSelector(
-    (state) => state.productReducer.currentProduct
-  );
+  const { data, isLoading } = useProductDetails();
 
   return (
     <>
