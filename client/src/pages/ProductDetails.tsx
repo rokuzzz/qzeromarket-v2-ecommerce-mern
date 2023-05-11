@@ -1,12 +1,8 @@
-import { useEffect } from 'react';
-import { useParams } from 'react-router-dom';
-import { Box, Grid, Skeleton, Theme, Toolbar } from '@mui/material';
+import { Box, Grid, Toolbar } from '@mui/material';
 
 import Header from '../components/navigation/Header';
 import ProductDetailsImage from '../components/products/ProductDetailsImage';
 import ProductDetailsContent from '../components/products/ProductDetailsContent';
-import { useAppDispatch, useAppSelector } from '../hooks/appHooks';
-import { getProductByID } from '../redux/slices/productSlice';
 import ProductDetailsSkeleton from '../components/products/ProductDetailsSkeleton';
 import useProductDetails from '../hooks/useProductDetails';
 

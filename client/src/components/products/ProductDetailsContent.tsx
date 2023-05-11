@@ -6,6 +6,7 @@ import { toast } from 'react-toastify';
 import { Product } from '../../types/products';
 import { useAppDispatch, useAppSelector } from '../../hooks/appHooks';
 import { addToCart, getUsersShoppingCart } from '../../redux/slices/cartSlice';
+import useCartQuantity from '../../hooks/useCartQuantity';
 
 interface ProductDetailsContentProps {
   styles: any;
@@ -22,18 +23,21 @@ const ProductDetailsContent = ({
     description: '',
     price: 0,
   };
-  const accessToken = localStorage.getItem('access_token') || '';
 
   const dispatch = useAppDispatch();
-
-  const { loggedInUser } = useAppSelector((state) => state.userReducer);
 
   const { usersShoppingCart } = useAppSelector((state) => state.cartReducer);
   const { products } = usersShoppingCart || { products: undefined };
 
-  const [cartQuantity, setCartQuantity] = useState<number>(
-    products?.find((product) => product.productId._id === _id)?.quantity || 0
-  );
+  const { cartQuantity, setCartQuantity } = useCartQuantity({ _id, products });
+
+  // const [cartQuantity, setCartQuantity] = useState<number>(
+  //   products?.find((product) => product.productId._id === _id)?.quantity || 0
+  // );
+
+  const { loggedInUser } = useAppSelector((state) => state.userReducer);
+
+  const accessToken = localStorage.getItem('access_token') || '';
 
   useEffect(() => {
     dispatch(
@@ -106,11 +110,11 @@ const ProductDetailsContent = ({
     }
   };
 
-  useEffect(() => {
-    setCartQuantity(
-      products?.find((product) => product.productId._id === _id)?.quantity || 0
-    );
-  }, [products?.find((product) => product.productId._id === _id)?.quantity]);
+  // useEffect(() => {
+  //   setCartQuantity(
+  //     products?.find((product) => product.productId._id === _id)?.quantity || 0
+  //   );
+  // }, [products?.find((product) => product.productId._id === _id)?.quantity]);
 
   return (
     <Box sx={styles.contentWrapper}>
@@ -141,12 +145,7 @@ const ProductDetailsContent = ({
                 >
                   -
                 </Button>
-                <Button disableTouchRipple>
-                  {
-                    products?.find((product) => product.productId._id === _id)
-                      ?.quantity
-                  }
-                </Button>
+                <Button disableTouchRipple>{cartQuantity}</Button>
                 <Button onClick={handleCartIncrease}>+</Button>
               </ButtonGroup>
             </Grid>
