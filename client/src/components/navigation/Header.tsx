@@ -20,7 +20,10 @@ interface HeaderProps {
 
 const Header = ({ selectedTab, handleTabChange }: HeaderProps) => {
   const theme = useTheme();
+  const isDownSm = useMediaQuery(theme.breakpoints.down('sm'));
   const isDownMd = useMediaQuery(theme.breakpoints.down('md'));
+  const isUpMd = useMediaQuery(theme.breakpoints.up('md'));
+  const isDownLg = useMediaQuery(theme.breakpoints.down('lg'));
 
   const hasTabs =
     typeof selectedTab !== 'undefined' &&
@@ -35,6 +38,8 @@ const Header = ({ selectedTab, handleTabChange }: HeaderProps) => {
             value={selectedTab}
             onChange={handleTabChange}
             isDownMd={isDownMd}
+            isUpMd={isUpMd}
+            isDownSm={isDownSm}
           />
         )}
       </AppBar>

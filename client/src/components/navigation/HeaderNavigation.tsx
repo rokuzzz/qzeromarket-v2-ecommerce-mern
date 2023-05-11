@@ -45,7 +45,7 @@ const HeaderNavigation = ({ isDownMd }: HeaderNavigationProps) => {
               ? theme.palette.secondary.main
               : theme.palette.primary.contrastText
           }
-          style={{ width: '65px' }}
+          style={{ width: '60px' }}
         />
       </Link>
       <Box sx={{ flexGrow: 1 }} />

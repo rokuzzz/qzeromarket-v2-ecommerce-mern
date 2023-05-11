@@ -5,20 +5,28 @@ interface HeaderTabsProps {
   value?: number;
   onChange?: (event: React.SyntheticEvent, newValue: number) => void;
   isDownMd: boolean;
+  isUpMd: boolean;
+  isDownSm: boolean;
 }
 
 const StyledTab = styled(Tab)(({ theme }) => ({
-  [theme.breakpoints.up('sm')]: {
-    width: '125px',
+  [theme.breakpoints.up('md')]: {
+    width: '180px',
   },
 }));
 
-const HeaderTabs = ({ value, onChange, isDownMd }: HeaderTabsProps) => {
+const HeaderTabs = ({
+  value,
+  onChange,
+  isDownMd,
+  isUpMd,
+  isDownSm,
+}: HeaderTabsProps) => {
   return (
     <Box
       sx={{
         maxWidth: '100%',
-        margin: isDownMd ? '0 16px' : '0 48px',
+        margin: isDownSm ? '0 16px' : isUpMd ? '0 8px' : '0px',
         display: 'flex',
         justifyContent: 'center',
       }}
@@ -34,9 +42,12 @@ const HeaderTabs = ({ value, onChange, isDownMd }: HeaderTabsProps) => {
       >
         <StyledTab label='All' />
         <StyledTab label='New in' />
+        <StyledTab label='Bestsellers' />
         <StyledTab label='Clothing' />
         <StyledTab label='Shoes' />
         <StyledTab label='Accessories' />
+        <StyledTab label='Denim' />
+        <StyledTab label='Sportswear' />
       </Tabs>
     </Box>
   );

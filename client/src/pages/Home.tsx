@@ -7,7 +7,9 @@ import Header from '../components/navigation/Header';
 import ProductList from '../components/products/ProductList';
 
 const Home = () => {
-  const { data, isLoading } = useAppSelector((state) => state.productReducer.allProducts);
+  const { data, isLoading } = useAppSelector(
+    (state) => state.productReducer.allProducts
+  );
   const dispatch = useAppDispatch();
 
   // This state manages the selected tab index
@@ -21,19 +23,68 @@ const Home = () => {
   useEffect(() => {
     switch (selectedTab) {
       case 0:
-        dispatch(fetchAllProducts({ categories: '&categories=All' }));
+        dispatch(
+          fetchAllProducts({
+            categories: '&categories=All',
+            limit: '&limit=100',
+          })
+        );
         break;
       case 1:
-        dispatch(fetchAllProducts({ categories: '&categories=New' }));
+        dispatch(
+          fetchAllProducts({
+            categories: '&categories=New',
+            limit: '&limit=100',
+          })
+        );
         break;
       case 2:
-        dispatch(fetchAllProducts({ categories: '&categories=Clothing' }));
+        dispatch(
+          fetchAllProducts({
+            categories: '&categories=Bestsellers',
+            limit: '&limit=100',
+          })
+        );
         break;
       case 3:
-        dispatch(fetchAllProducts({ categories: '&categories=Shoes' }));
+        dispatch(
+          fetchAllProducts({
+            categories: '&categories=Clothing',
+            limit: '&limit=100',
+          })
+        );
         break;
       case 4:
-        dispatch(fetchAllProducts({ categories: '&categories=Accessories' }));
+        dispatch(
+          fetchAllProducts({
+            categories: '&categories=Shoes',
+            limit: '&limit=100',
+          })
+        );
+        break;
+      case 5:
+        dispatch(
+          fetchAllProducts({
+            categories: '&categories=Accessories',
+            limit: '&limit=100',
+          })
+        );
+        break;
+      case 6:
+        dispatch(
+          fetchAllProducts({
+            categories: '&categories=Denim',
+            limit: '&limit=100',
+          })
+        );
+        break;
+      case 7:
+        dispatch(
+          fetchAllProducts({
+            categories: '&categories=Sportswear',
+            limit: '&limit=100',
+          })
+        );
         break;
     }
   }, [selectedTab, setSelectedTab]);
