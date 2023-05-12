@@ -1,12 +1,12 @@
-import { useEffect, useState } from 'react';
 import { Box, Button, ButtonGroup, Grid, Typography } from '@mui/material';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import { toast } from 'react-toastify';
 
 import { Product } from '../../types/products';
-import { useAppDispatch, useAppSelector } from '../../hooks/appHooks';
-import { addToCart, getUsersShoppingCart } from '../../redux/slices/cartSlice';
+import { useAppDispatch } from '../../hooks/appHooks';
+import { addToCart } from '../../redux/slices/cartSlice';
 import useCartQuantity from '../../hooks/useCartQuantity';
+import useShoppingCart from '../../hooks/useShoppingCart';
 
 interface ProductDetailsContentProps {
   styles: any;
@@ -24,29 +24,11 @@ const ProductDetailsContent = ({
     price: 0,
   };
 
-  const dispatch = useAppDispatch();
-
-  const { usersShoppingCart } = useAppSelector((state) => state.cartReducer);
-  const { products } = usersShoppingCart || { products: undefined };
-
-  const { cartQuantity, setCartQuantity } = useCartQuantity({ _id, products });
-
-  // const [cartQuantity, setCartQuantity] = useState<number>(
-  //   products?.find((product) => product.productId._id === _id)?.quantity || 0
-  // );
-
-  const { loggedInUser } = useAppSelector((state) => state.userReducer);
-
   const accessToken = localStorage.getItem('access_token') || '';
 
-  useEffect(() => {
-    dispatch(
-      getUsersShoppingCart({
-        userId: loggedInUser.data!._id,
-        token: accessToken,
-      })
-    );
-  }, []);
+  const dispatch = useAppDispatch();
+  const { cartItems } = useShoppingCart({ accessToken: accessToken });
+  const { cartQuantity, setCartQuantity } = useCartQuantity({ _id, cartItems });
 
   const handleAddToCart = () => {
     dispatch(
@@ -110,12 +92,6 @@ const ProductDetailsContent = ({
     }
   };
 
-  // useEffect(() => {
-  //   setCartQuantity(
-  //     products?.find((product) => product.productId._id === _id)?.quantity || 0
-  //   );
-  // }, [products?.find((product) => product.productId._id === _id)?.quantity]);
-
   return (
     <Box sx={styles.contentWrapper}>
       <Box>
@@ -130,7 +106,7 @@ const ProductDetailsContent = ({
         </Typography>
       </Box>
       <Box sx={styles.buttonsWrapper}>
-        {products && cartQuantity > 0 ? (
+        {cartQuantity > 0 ? (
           <Grid container spacing={1} alignItems='center'>
             <Grid item xs={8}>
               <ButtonGroup

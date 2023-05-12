@@ -3,17 +3,17 @@ import { useEffect, useState } from "react";
 import { ProductInCart } from "../types/cart";
 
 interface UseCartQuantityProps {
-  products: ProductInCart[] | undefined, 
+  cartItems: ProductInCart[] | undefined, 
   _id: string
 }
 
-const useCartQuantity = ({products, _id}: UseCartQuantityProps) => {
+const useCartQuantity = ({cartItems, _id}: UseCartQuantityProps) => {
   const [cartQuantity, setCartQuantity] = useState<number>(
-    products?.find((product) => product.productId._id === _id)?.quantity || 0
+    cartItems?.find((cartItems) => cartItems.productId._id === _id)?.quantity || 0
   );
 
-  const currentQuantity = products?.find(
-    (product) => product.productId._id === _id
+  const currentQuantity = cartItems?.find(
+    (item) => item.productId._id === _id
   )?.quantity;
 
   useEffect(() => {
