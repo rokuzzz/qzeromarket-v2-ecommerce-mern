@@ -1,6 +1,6 @@
 import { useTheme } from '@mui/material/styles';
 import styled from '@mui/material/styles/styled';
-import { Box, Grid, Toolbar, useMediaQuery } from '@mui/material';
+import { Box, Grid, Toolbar, Typography, useMediaQuery } from '@mui/material';
 
 import { Product } from './../../types/products';
 import ProductCard from './ProductCard';
@@ -37,6 +37,13 @@ const styles = {
     width: '100%',
     paddingTop: '100%', // 1:1 aspect ratio
   },
+  heading: {
+    margin: '20px',
+  },
+  headingText: {
+    fontWeight: 700,
+    opacity: '80%',
+  },
   title: {
     fontSize: '0.9rem',
     lineHeight: 1.2,
@@ -54,7 +61,7 @@ const styles = {
 
 const ProductListWrapper = styled(Box)(({ theme }) => ({
   [theme.breakpoints.down('md')]: {
-    margin: '0 16px',
+    margin: '0 0px',
   },
   [theme.breakpoints.up('md')]: {
     margin: '0 48px',
@@ -69,6 +76,9 @@ interface ProductListProps {
 const ProductList = ({ products, isLoading }: ProductListProps) => {
   const theme = useTheme();
   const isDownSmall = useMediaQuery(theme.breakpoints.down('sm'));
+  const isDownMedium = useMediaQuery(theme.breakpoints.down('md'));
+
+  const productsAmount = products.length;
 
   // Create a new ProductCard component for each product in the list
   const productCards = products.map((product) => (
@@ -86,8 +96,14 @@ const ProductList = ({ products, isLoading }: ProductListProps) => {
 
   return (
     <ProductListWrapper style={styles.root}>
-      <Toolbar sx={isDownSmall ? { height: '128px' } : { height: '144px' }} />
-      <Grid container columnSpacing={2} rowSpacing={2}>
+      <Toolbar sx={isDownSmall ? { height: '128px' } : { height: '116px' }} />
+      <Box sx={styles.heading}>
+        <Typography variant='h5' sx={styles.headingText}>
+          {isLoading ? 'X' : productsAmount}{' '}
+          {productsAmount > 1 ? 'results' : 'result'}
+        </Typography>
+      </Box>
+      <Grid container columnSpacing={isDownMedium ? 1 : 2} rowSpacing={2}>
         {isLoading ? skeletonCards : productCards}
       </Grid>
     </ProductListWrapper>
