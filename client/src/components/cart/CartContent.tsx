@@ -13,7 +13,7 @@ import {
 import { Theme, useTheme } from '@mui/material/styles';
 
 import { ProductInCart } from '../../types/cart';
-import { useAppDispatch, useAppSelector } from '../../hooks/appHooks';
+import { useAppDispatch, useAppSelector } from '../../hooks/common/appHooks';
 import { addToCart } from '../../redux/slices/cartSlice';
 
 interface CartContentProps {

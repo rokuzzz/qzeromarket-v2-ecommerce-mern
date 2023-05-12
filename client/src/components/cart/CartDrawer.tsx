@@ -2,7 +2,8 @@ import { useEffect } from 'react';
 import { Box, Divider, Drawer } from '@mui/material';
 import { styled } from '@mui/system';
 
-import { useAppDispatch, useAppSelector } from '../../hooks/appHooks';
+import { useAppDispatch, useAppSelector } from '../../hooks/common/appHooks';
+import useShoppingCart from '../../hooks/common/useShoppingCart';
 import {
   countTotalPrice,
   getUsersShoppingCart,
@@ -20,30 +21,19 @@ interface CartDrawerProps {
 }
 
 const CartDrawer = ({ cartIsOpen, setCartIsOpen }: CartDrawerProps) => {
-  const { loggedInUser } = useAppSelector((state) => state.userReducer);
+  const accessToken = localStorage.getItem('access_token') || '';
 
   const dispatch = useAppDispatch();
-
-  const { usersShoppingCart } = useAppSelector((state) => state.cartReducer);
-  const { products, totalPrice } = usersShoppingCart ?? {};
-
-  useEffect(() => {
-    dispatch(
-      getUsersShoppingCart({
-        userId: loggedInUser.data!._id,
-        token: localStorage.getItem('access_token'),
-      })
-    );
-  }, []);
+  const { cartItems, totalPrice } = useShoppingCart({ accessToken });
 
   dispatch(countTotalPrice());
 
   // Computes the total quantity of items in the shopping cart
   const getCartTotalQuantity = () => {
     let cartTotalQuantity = 0;
-    if (products) {
-      for (let i = 0; i < products?.length; i++) {
-        cartTotalQuantity += products[i].quantity;
+    if (cartItems) {
+      for (let i = 0; i < cartItems?.length; i++) {
+        cartTotalQuantity += cartItems[i].quantity;
       }
     }
     return cartTotalQuantity;
@@ -64,12 +54,12 @@ const CartDrawer = ({ cartIsOpen, setCartIsOpen }: CartDrawerProps) => {
     >
       <CartWrapper>
         <CartHeading
-          products={products}
+          products={cartItems}
           cartTotalQuantity={getCartTotalQuantity()}
           setCartIsOpen={setCartIsOpen}
         />
         <Divider />
-        <CartContent products={products} totalPrice={totalPrice} />
+        <CartContent products={cartItems} totalPrice={totalPrice} />
       </CartWrapper>
     </Drawer>
   );
