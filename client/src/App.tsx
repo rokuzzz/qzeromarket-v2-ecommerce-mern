@@ -19,7 +19,7 @@ function App() {
         <Route path='/login' element={<EntryPage />} />
         <Route path='/register' element={<SignUp />} />
       </Routes>
-      <ToastContainer limit={3} />
+      <ToastContainer limit={2} />
     </>
   );
 }

@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Toolbar } from '@mui/material';
 
-import { useAppDispatch, useAppSelector } from '../hooks/appHooks';
+import { useAppDispatch, useAppSelector } from '../hooks/common/appHooks';
 import { fetchAllProducts } from '../redux/slices/productSlice';
 import Header from '../components/navigation/Header';
 import ProductList from '../components/products/ProductList';

@@ -1,4 +1,5 @@
 import { Box, Grid, Toolbar } from '@mui/material';
+import styled from '@mui/material/styles/styled';
 
 import Header from '../components/navigation/Header';
 import ProductDetailsImage from '../components/products/ProductDetailsImage';
@@ -7,10 +8,6 @@ import ProductDetailsSkeleton from '../components/products/ProductDetailsSkeleto
 import useProductDetails from '../hooks/useProductDetails';
 
 const styles = {
-  root: {
-    margin: '16px',
-    height: '100%',
-  },
   image: {
     height: '100%',
     width: '100%',
@@ -42,11 +39,21 @@ const styles = {
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
-    '& > *:first-of-type': {
-      marginBottom: '8px',
-    },
   },
 };
+
+export const ProductDetailsWrapper = styled(Box)(({ theme }) => ({
+  [theme.breakpoints.down('sm')]: {
+    margin: '0px',
+    padding: '0px',
+  },
+  [theme.breakpoints.up('lg')]: {
+    margin: '16px 0px',
+    padding: '0 48px',
+  },
+  margin: '16px 0px',
+  padding: '0 16px',
+}));
 
 const ProductDetails = () => {
   const { data, isLoading } = useProductDetails();
@@ -54,11 +61,11 @@ const ProductDetails = () => {
   return (
     <>
       <Header />
-      <Toolbar />
+      <Toolbar sx={{ height: '60px' }} />
       {isLoading ? (
         <ProductDetailsSkeleton styles={styles} />
       ) : (
-        <Box sx={styles.root}>
+        <ProductDetailsWrapper>
           <Grid container spacing={2}>
             <Grid item xs={12} md={6}>
               <ProductDetailsImage styles={styles} data={data} />
@@ -67,7 +74,7 @@ const ProductDetails = () => {
               <ProductDetailsContent styles={styles} data={data} />
             </Grid>
           </Grid>
-        </Box>
+        </ProductDetailsWrapper>
       )}
     </>
   );

@@ -4,7 +4,7 @@ import { styled } from '@mui/material/styles';
 
 import ParticlesBackground from '../../common/particles/ParticlesBackground';
 import { useEffect, useState } from 'react';
-import { useAppDispatch, useAppSelector } from '../../../hooks/appHooks';
+import { useAppDispatch, useAppSelector } from '../../../hooks/common/appHooks';
 import { login, loginByToken } from '../../../redux/slices/userSlice';
 import LoginForm from './LoginForm';
 import SignInHeading from './SignInHeading';

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-import { ProductInCart } from "../types/cart";
+import { ProductInCart } from "../../types/cart";
 
 interface UseCartQuantityProps {
   cartItems: ProductInCart[] | undefined, 

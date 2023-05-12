@@ -4,7 +4,7 @@ import { Grid, Paper, useMediaQuery, useTheme } from '@mui/material';
 import { styled } from '@mui/material/styles';
 
 import ParticlesBackground from '../../common/particles/ParticlesBackground';
-import { useAppDispatch, useAppSelector } from '../../../hooks/appHooks';
+import { useAppDispatch, useAppSelector } from '../../../hooks/common/appHooks';
 import { loginByToken, register } from '../../../redux/slices/userSlice';
 import RegisterForm from './RegisterForm';
 import SignUpHeading from './SignUpHeading';
