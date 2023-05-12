@@ -6,6 +6,7 @@ import {
   Typography,
   useMediaQuery,
 } from '@mui/material';
+import { ProductDetailsWrapper } from '../../pages/ProductDetails';
 
 interface ProductDetailsSkeletonProps {
   styles: any;
@@ -42,7 +43,7 @@ const ProductDetailsSkeleton = ({ styles }: ProductDetailsSkeletonProps) => {
   );
 
   return (
-    <Box sx={styles.root}>
+    <ProductDetailsWrapper>
       <Grid container spacing={2}>
         <Grid item xs={12} md={6}>
           <Box sx={styles.imageWrapper}>
@@ -82,6 +83,7 @@ const ProductDetailsSkeleton = ({ styles }: ProductDetailsSkeletonProps) => {
                 animation='wave'
                 width={'100%'}
                 height={'42.25px'}
+                sx={{ mb: 1 }}
               />
               <Skeleton
                 variant='rectangular'
@@ -93,7 +95,7 @@ const ProductDetailsSkeleton = ({ styles }: ProductDetailsSkeletonProps) => {
           </Box>
         </Grid>
       </Grid>
-    </Box>
+    </ProductDetailsWrapper>
   );
 };
 

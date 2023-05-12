@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { useAppDispatch, useAppSelector } from '../hooks/appHooks';
+import { useAppDispatch, useAppSelector } from './common/appHooks';
 import { getProductByID } from '../redux/slices/productSlice';
 
 const useProductDetails = () => {

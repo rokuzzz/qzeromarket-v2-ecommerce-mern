@@ -3,10 +3,10 @@ import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import { toast } from 'react-toastify';
 
 import { Product } from '../../types/products';
-import { useAppDispatch } from '../../hooks/appHooks';
+import { useAppDispatch } from '../../hooks/common/appHooks';
 import { addToCart } from '../../redux/slices/cartSlice';
-import useCartQuantity from '../../hooks/useCartQuantity';
-import useShoppingCart from '../../hooks/useShoppingCart';
+import useCartQuantity from '../../hooks//common/useCartQuantity';
+import useShoppingCart from '../../hooks/common/useShoppingCart';
 
 interface ProductDetailsContentProps {
   styles: any;
@@ -107,7 +107,7 @@ const ProductDetailsContent = ({
       </Box>
       <Box sx={styles.buttonsWrapper}>
         {cartQuantity > 0 ? (
-          <Grid container spacing={1} alignItems='center'>
+          <Grid container spacing={1} alignItems='center' sx={{ mb: 1 }}>
             <Grid item xs={8}>
               <ButtonGroup
                 variant='contained'
@@ -145,6 +145,7 @@ const ProductDetailsContent = ({
             color='primary'
             size='large'
             fullWidth
+            sx={{ mb: 1 }}
           >
             Add to Cart
           </Button>
