@@ -4,12 +4,14 @@ import {
   Button,
   ButtonGroup,
   Divider,
+  IconButton,
   List,
   ListItem,
   ListItemAvatar,
   ListItemText,
   Typography,
 } from '@mui/material';
+import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import { Theme, useTheme } from '@mui/material/styles';
 
 import { ProductInCart } from '../../types/cart';
@@ -82,21 +84,38 @@ const CartContent = ({ products, totalPrice }: CartContentProps) => {
               >
                 Quantity
               </Typography>
-              <ButtonGroup variant='outlined' size='large' sx={{ mt: 1 }}>
+              <Box
+                sx={{
+                  display: 'flex',
+                  flexDirection: 'raw',
+                  alignItems: 'center',
+                  mt: 1,
+                }}
+              >
+                <ButtonGroup variant='outlined' size='large' sx={{ mr: 1 }}>
+                  <Button
+                    disabled={quantity <= 1 ? true : false}
+                    onClick={handleCartDecrease}
+                  >
+                    -
+                  </Button>
+                  <Button>{quantity}</Button>
+                  <Button
+                    disabled={quantity >= 6 ? true : false}
+                    onClick={handleCartIncrease}
+                  >
+                    +
+                  </Button>
+                </ButtonGroup>
                 <Button
-                  disabled={quantity <= 1 ? true : false}
-                  onClick={handleCartDecrease}
+                  variant='outlined'
+                  color='error'
+                  size='large'
+                  sx={{ height: '42.25px' }}
                 >
-                  -
+                  <DeleteForeverIcon />
                 </Button>
-                <Button>{quantity}</Button>
-                <Button
-                  disabled={quantity >= 6 ? true : false}
-                  onClick={handleCartIncrease}
-                >
-                  +
-                </Button>
-              </ButtonGroup>
+              </Box>
             </>
           }
         />
