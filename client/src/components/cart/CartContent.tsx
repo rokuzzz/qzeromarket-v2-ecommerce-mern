@@ -34,12 +34,14 @@ const CartContent = ({ products, totalPrice }: CartContentProps) => {
     const { productId, quantity } = product;
     const { _id, title, price } = productId;
 
+    const accessToken = localStorage.getItem('access_token') || '';
+
     const handleCartDecrease = () => {
       dispatch(
         addToCart({
           title: title,
           quantity: quantity - 1,
-          token: localStorage.getItem('access_token') || '',
+          token: accessToken,
         })
       );
     };
@@ -49,7 +51,17 @@ const CartContent = ({ products, totalPrice }: CartContentProps) => {
         addToCart({
           title: title,
           quantity: quantity + 1,
-          token: localStorage.getItem('access_token') || '',
+          token: accessToken,
+        })
+      );
+    };
+
+    const handleDeleteCart = () => {
+      dispatch(
+        addToCart({
+          title: title,
+          quantity: 0,
+          token: accessToken,
         })
       );
     };
@@ -112,6 +124,7 @@ const CartContent = ({ products, totalPrice }: CartContentProps) => {
                   color='error'
                   size='large'
                   sx={{ height: '42.25px' }}
+                  onClick={handleDeleteCart}
                 >
                   <DeleteForeverIcon />
                 </Button>

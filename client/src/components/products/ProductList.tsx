@@ -96,7 +96,7 @@ const ProductList = ({ products, isLoading }: ProductListProps) => {
 
   return (
     <ProductListWrapper style={styles.root}>
-      <Toolbar sx={isDownSmall ? { height: '128px' } : { height: '116px' }} />
+      <Toolbar sx={isDownSmall ? { height: '108px' } : { height: '116px' }} />
       <Box sx={styles.heading}>
         <Typography variant='h5' sx={styles.headingText}>
           {isLoading ? 'X' : productsAmount}{' '}
