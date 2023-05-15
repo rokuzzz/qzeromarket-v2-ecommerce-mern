@@ -1,4 +1,4 @@
-export interface ProductDetails {
+export interface CartItemDetails {
   _id: string,
   title: string,
   description: string,
@@ -7,7 +7,7 @@ export interface ProductDetails {
 
 export interface ProductInCart {
   id: string,
-  productId: ProductDetails,
+  productId: CartItemDetails,
   quantity: number
 }
 

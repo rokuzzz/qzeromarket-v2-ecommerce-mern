@@ -5,7 +5,7 @@ import { toast } from 'react-toastify';
 import { Product } from '../../types/products';
 import { useAppDispatch } from '../../hooks/common/appHooks';
 import { addToCart } from '../../redux/slices/cartSlice';
-import useCartQuantity from '../../hooks//common/useCartQuantity';
+import useCartQuantity from '../../hooks/common/useCartQuantity';
 import useShoppingCart from '../../hooks/common/useShoppingCart';
 
 interface ProductDetailsContentProps {

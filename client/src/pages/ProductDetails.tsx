@@ -2,9 +2,9 @@ import { Box, Grid, Toolbar } from '@mui/material';
 import styled from '@mui/material/styles/styled';
 
 import Header from '../components/navigation/Header';
-import ProductDetailsImage from '../components/products/ProductDetailsImage';
-import ProductDetailsContent from '../components/products/ProductDetailsContent';
-import ProductDetailsSkeleton from '../components/products/ProductDetailsSkeleton';
+import ProductDetailsImage from '../components/productDetails/ProductDetailsImage';
+import ProductDetailsContent from '../components/productDetails/ProductDetailsContent';
+import ProductDetailsSkeleton from '../components/productDetails/ProductDetailsSkeleton';
 import useProductDetails from '../hooks/useProductDetails';
 
 const styles = {
