@@ -34,30 +34,34 @@ const getUserByJWT = async (
   res: Response,
   next: NextFunction
 ) => {
-  const authHeader = req.headers.authorization
+  try {
+    const authHeader = req.headers.authorization
 
-  if (typeof authHeader == 'undefined') {
-    throw new UnauthorizedError('You are not authorized!')
-  }
-
-  const token = (authHeader as string).split(' ')[1]
-
-  jwt.verify(token, JWT_SECRET, async (err: any, decoded: any) => {
-    if (err) {
-      next(err)
-    } else {
-      try {
-        req.user = decoded
-
-        const user = await userService.findById(decoded.id)
-        const { password, ...others } = user?._doc
-
-        res.status(200).send(others)
-      } catch (err) {
-        next(err)
-      }
+    if (typeof authHeader == 'undefined') {
+      throw new UnauthorizedError('You are not authorized!')
     }
-  })
+
+    const token = (authHeader as string).split(' ')[1]
+
+    jwt.verify(token, JWT_SECRET, async (err: any, decoded: any) => {
+      if (err) {
+        next(err)
+      } else {
+        try {
+          req.user = decoded
+
+          const user = await userService.findById(decoded.id)
+          const { password, ...others } = user?._doc
+
+          res.status(200).send(others)
+        } catch (err) {
+          next(err)
+        }
+      }
+    })
+  } catch (err) {
+    next(err)
+  }
 }
 
 const updateUser = async (req: Request, res: Response, next: NextFunction) => {
