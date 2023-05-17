@@ -18,6 +18,8 @@ import {
   BUCKET_REGION,
   BUCKET_NAME,
 } from './../util/secrets'
+import { ProductUpdate, UpdateFields } from 'productTypes'
+import { BadRequestError } from '../helpers/apiError'
 
 const s3 = new S3Client({
   credentials: {
@@ -27,52 +29,64 @@ const s3 = new S3Client({
   region: BUCKET_REGION,
 })
 
+const generateRandomImageName = (bytes = 32) =>
+  crypto.randomBytes(bytes).toString('hex')
+
+const resizeImage = async (buffer: Buffer) =>
+  sharp(buffer).resize({ height: 800, width: 800, fit: 'contain' }).toBuffer()
+
+const uploadImage = async (
+  buffer: Buffer,
+  imageName: string,
+  mimetype: string
+) => {
+  const params = {
+    Bucket: BUCKET_NAME,
+    Key: imageName,
+    Body: buffer,
+    ContentType: mimetype,
+  }
+
+  const command = new PutObjectCommand(params)
+  await s3.send(command)
+}
+
 const createProduct = async (
   req: Request,
   res: Response,
   next: NextFunction
 ) => {
-  const { title, description, price, categories } = req.body
-  const categoryIds = await categoryService.getIdsByNames(categories)
+  try {
+    const { title, description, price, categories } = req.body
 
-  // if there is no file - throw error
-  if (!req.file?.buffer) return next()
+    const categoryIds = await categoryService.getIdsByNames(categories)
 
-  // set a unique name
-  const randomImageName = (bytes = 32) =>
-    crypto.randomBytes(bytes).toString('hex')
-  const imageName = randomImageName()
-  // resize image
-  const buffer = await sharp(req.file?.buffer)
-    .resize({ height: 800, width: 800, fit: 'contain' })
-    .toBuffer()
-
-  const params = {
-    Bucket: BUCKET_NAME,
-    Key: imageName,
-    Body: buffer,
-    ContentType: req.file?.mimetype,
-  }
-  const command = new PutObjectCommand(params)
-  await s3.send(command)
-
-  if (categoryIds.length == 0) {
-    next()
-  } else {
-    const newProduct = new Product({
-      title: title,
-      description: description,
-      price: price,
-      categories: categoryIds,
-      imageName: imageName,
-    })
-
-    try {
-      const savedProduct = await productService.createOne(newProduct)
-      res.status(200).json(savedProduct)
-    } catch (err) {
-      next(err)
+    if (!req.file?.buffer) {
+      throw new BadRequestError()
     }
+
+    const imageName = generateRandomImageName()
+    const resizedBuffer = await resizeImage(req.file?.buffer)
+
+    await uploadImage(resizedBuffer, imageName, req.file?.mimetype)
+
+    if (!title || !description || !price || categoryIds.length === 0) {
+      throw new BadRequestError()
+    } else {
+      const newProduct = new Product({
+        title: title,
+        description: description,
+        price: price,
+        categories: categoryIds,
+        imageName: imageName,
+      })
+
+      const savedProduct = await productService.createOne(newProduct)
+
+      res.status(200).json(savedProduct)
+    }
+  } catch (err) {
+    next(err)
   }
 }
 
@@ -217,8 +231,10 @@ const getProductById = async (
   next: NextFunction
 ) => {
   try {
-    const product = await productService.findById(req.params.id)
-    product.imageUrl = await getSignedUrl(
+    const { id } = req.params
+    const product = await productService.findById(id)
+
+    const imageUrl = await getSignedUrl(
       s3,
       new GetObjectCommand({
         Bucket: BUCKET_NAME,
@@ -226,6 +242,8 @@ const getProductById = async (
       }),
       { expiresIn: 3600 }
     )
+
+    product.imageUrl = imageUrl
 
     res.status(200).json(product)
   } catch (err) {
@@ -238,31 +256,36 @@ const updateProduct = async (
   res: Response,
   next: NextFunction
 ) => {
-  const { categories, ...others } = req.body
-  const categoryIds = await categoryService.getIdsByNames(categories)
+  try {
+    const { id } = req.params
+    const { title, description, price, categories } = req.body
 
-  if (categoryIds.length == 0) {
-    try {
-      const updatedProduct = await productService.updateOne(
-        req.params.id,
-        { $set: others },
-        { new: true }
-      )
-      res.status(200).json(updatedProduct)
-    } catch (err) {
-      next(err)
+    const categoryIds = await categoryService.getIdsByNames(categories)
+
+    let updateFields: UpdateFields = { $set: {} }
+
+    if (categoryIds.length === 0) {
+      updateFields = { $set: { title, description, price } }
+    } else {
+      updateFields = {
+        $set: { categories: categoryIds, title, description, price },
+      }
     }
-  } else {
-    try {
-      const updatedProduct = await productService.updateOne(
-        req.params.id,
-        { $set: { categories: categoryIds, others } },
-        { new: true }
-      )
-      res.status(200).json(updatedProduct)
-    } catch (err) {
-      next(err)
-    }
+
+    // Remove fields from the updateFields object if they are undefined in req.body
+    Object.keys(updateFields.$set).forEach((key) => {
+      if (updateFields.$set[key as keyof ProductUpdate] === undefined) {
+        delete updateFields.$set[key as keyof ProductUpdate]
+      }
+    })
+
+    const updatedProduct = await productService.updateOne(id, updateFields, {
+      new: true,
+    })
+
+    res.status(200).json(updatedProduct)
+  } catch (err) {
+    next(err)
   }
 }
 
@@ -272,14 +295,16 @@ const deleteProduct = async (
   next: NextFunction
 ) => {
   try {
-    const product = await productService.findById(req.params.id)
-    const deleteParams = {
-      Bucket: BUCKET_NAME,
-      Key: product.imageName,
-    }
+    const { id } = req.params
+    const product = await productService.findById(id)
+
+    // Delete the product image from the S3 bucket
+    const deleteParams = { Bucket: BUCKET_NAME, Key: product.imageName }
     await s3.send(new DeleteObjectCommand(deleteParams))
 
-    await productService.deleteOne(req.params.id)
+    // Delete the product from the database
+    await productService.deleteOne(id)
+
     res.status(200).json('Product has been deleted.')
   } catch (err) {
     next(err)

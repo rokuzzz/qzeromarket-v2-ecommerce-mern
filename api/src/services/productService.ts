@@ -1,4 +1,9 @@
-import { ObjectId, QueryOptions, UpdateQuery, UpdateWithAggregationPipeline } from 'mongoose'
+import {
+  ObjectId,
+  QueryOptions,
+  UpdateQuery,
+  UpdateWithAggregationPipeline,
+} from 'mongoose'
 import { NotFoundError } from '../helpers/apiError'
 import Product, { ProductDocument } from '../models/Product'
 
@@ -6,9 +11,13 @@ const createOne = async (product: ProductDocument) => {
   return await product.save()
 }
 
-const findAll = async (page: number, limit: number, sort: string, order: string | number ) => {
-  return await Product
-    .find()
+const findAll = async (
+  page: number,
+  limit: number,
+  sort: string,
+  order: string | number
+) => {
+  return await Product.find()
     .sort({ [sort]: order })
     .skip(page * limit)
     .limit(limit)
@@ -21,8 +30,7 @@ const findAllPipeline = async (
   order: string | number,
   categoryId: ObjectId[]
 ) => {
-  return await Product
-    .aggregate()
+  return await Product.aggregate()
     .sort({ [sort]: order })
     .skip(page * limit)
     .limit(limit)
@@ -44,6 +52,7 @@ const findAllPipeline = async (
 
 const findProductReviews = async (id: string) => {
   const foundOne = await Product.findById(id).populate('reviews')
+
   if (foundOne) {
     return foundOne
   } else {
@@ -53,6 +62,7 @@ const findProductReviews = async (id: string) => {
 
 const findById = async (id: string) => {
   const foundOne = await Product.findById(id)
+
   if (foundOne) {
     return foundOne
   } else {
@@ -61,7 +71,8 @@ const findById = async (id: string) => {
 }
 
 const findByName = async (title: string) => {
-  const foundOne = await Product.findOne({title})
+  const foundOne = await Product.findOne({ title })
+
   if (foundOne) {
     return foundOne
   } else {
@@ -69,12 +80,16 @@ const findByName = async (title: string) => {
   }
 }
 
-const updateOne = async ( 
-  id: string, 
-  update?: UpdateWithAggregationPipeline | UpdateQuery<ProductDocument> | undefined, 
+const updateOne = async (
+  id: string,
+  update?:
+    | UpdateWithAggregationPipeline
+    | UpdateQuery<ProductDocument>
+    | undefined,
   options?: QueryOptions | null | undefined
 ) => {
   const foundOne = await Product.findByIdAndUpdate(id, update, options)
+
   if (foundOne) {
     return foundOne
   } else {
@@ -84,6 +99,7 @@ const updateOne = async (
 
 const deleteOne = async (id: string) => {
   const foundOne = await Product.findByIdAndDelete(id)
+
   if (foundOne) {
     return foundOne
   } else {
