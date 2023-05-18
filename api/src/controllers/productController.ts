@@ -20,6 +20,7 @@ import {
 } from './../util/secrets'
 import { ProductUpdate, UpdateFields } from 'productTypes'
 import { BadRequestError } from '../helpers/apiError'
+import { ObjectId } from 'mongoose'
 
 const s3 = new S3Client({
   credentials: {
@@ -90,138 +91,95 @@ const createProduct = async (
   }
 }
 
+const DEFAULT_PAGE = 0
+const DEFAULT_LIMIT = 10
+const DEFAULT_SORT = 'random'
+const DEFAULT_ORDER = 0
+
+const parseRequestParameters = (req: Request) => {
+  const page = parseInt(req.query.page as string) || DEFAULT_PAGE
+  const limit = parseInt(req.query.limit as string) || DEFAULT_LIMIT
+  const sort = req.query.sort?.toString() || DEFAULT_SORT
+  const order = req.query.order?.toString() || DEFAULT_ORDER
+
+  return { page, limit, sort, order }
+}
+
+const convertCategories = (categories: any): string[] => {
+  const convertedCategories: string[] = []
+
+  if (Array.isArray(categories)) {
+    for (const category of categories) {
+      convertedCategories.push(
+        typeof category !== 'string' ? category.toString() : category
+      )
+    }
+  } else if (typeof categories === 'string' && categories !== '') {
+    convertedCategories.push(categories)
+  } else {
+    convertedCategories.push('All')
+  }
+
+  return convertedCategories
+}
+
+const getCategoryIds = async (categories: any) => {
+  const convertedCategories = convertCategories(categories)
+  const categoryIds = await categoryService.getIdsByNames(convertedCategories)
+
+  return categoryIds
+}
+
+const fetchProducts = async (
+  page: number,
+  limit: number,
+  sort: string,
+  order: string | number,
+  categoryIds: ObjectId[]
+) => {
+  const products = await productService.findAllPipeline(
+    page,
+    limit,
+    sort,
+    order,
+    categoryIds
+  )
+
+  return products
+}
+
+const addSignedUrlsToProducts = async (products: any[]) => {
+  const productsWithUrls = []
+
+  for (const product of products) {
+    product.imageUrl = await getSignedUrl(
+      s3,
+      new GetObjectCommand({ Bucket: BUCKET_NAME, Key: product.imageName }),
+      { expiresIn: 3600 }
+    )
+    productsWithUrls.push(product)
+  }
+
+  return productsWithUrls
+}
+
 const getFilteredProducts = async (
   req: Request,
   res: Response,
   next: NextFunction
 ) => {
-  const skipPages = parseInt(req.query.page as string) || 0
-  const limitPages = parseInt(req.query.limit as string) || 10
-  const sortBy = req.query.sort?.toString() || 'random'
-  const order = req.query.order?.toString() || 0
-  let categories = req.query.categories
+  try {
+    const { page, limit, sort, order } = parseRequestParameters(req)
 
-  const convertedCategories: string[] = []
+    const categories = req.query.categories
+    const categoryIds = await getCategoryIds(categories)
 
-  // check if categories value is an array
-  if (Array.isArray(categories)) {
-    // converts each category in the categories to a string (if it's not already)
-    // push values to convertedCategories
-    for (const category of categories) {
-      if (typeof category !== 'string') {
-        convertedCategories.push(category.toString())
-      } else {
-        convertedCategories.push(category)
-      }
-    }
-    try {
-      const categoryIds = await categoryService.getIdsByNames(
-        convertedCategories
-      )
-      const products = await productService.findAllPipeline(
-        skipPages,
-        limitPages,
-        sortBy,
-        order,
-        categoryIds
-      )
+    const products = await fetchProducts(page, limit, sort, order, categoryIds)
+    const productsWithUrls = await addSignedUrlsToProducts(products)
 
-      for (const product of products) {
-        product.imageUrl = await getSignedUrl(
-          s3,
-          new GetObjectCommand({
-            Bucket: BUCKET_NAME,
-            Key: product.imageName,
-          }),
-          { expiresIn: 3600 }
-        )
-      }
-
-      res.status(200).json(products)
-    } catch (err) {
-      next(err)
-    }
-    // if category value is string and it is not empty - convert it to string array type
-  } else if (typeof categories == 'string' && categories !== '') {
-    convertedCategories.push(categories)
-    try {
-      const categoryIds = await categoryService.getIdsByNames(
-        convertedCategories
-      )
-      // if the categoryIds value is an empty array - show all products
-      if (categoryIds.length == 0) {
-        categories = ['All']
-        const categoryIds = await categoryService.getIdsByNames(categories)
-        const products = await productService.findAllPipeline(
-          skipPages,
-          limitPages,
-          sortBy,
-          order,
-          categoryIds
-        )
-
-        for (const product of products) {
-          product.imageUrl = await getSignedUrl(
-            s3,
-            new GetObjectCommand({
-              Bucket: BUCKET_NAME,
-              Key: product.imageName,
-            }),
-            { expiresIn: 60 }
-          )
-        }
-
-        res.status(200).json(products)
-      } else {
-        const products = await productService.findAllPipeline(
-          skipPages,
-          limitPages,
-          sortBy,
-          order,
-          categoryIds
-        )
-        for (const product of products) {
-          product.imageUrl = await getSignedUrl(
-            s3,
-            new GetObjectCommand({
-              Bucket: BUCKET_NAME,
-              Key: product.imageName,
-            }),
-            { expiresIn: 3600 }
-          )
-        }
-
-        res.status(200).json(products)
-      }
-    } catch (err) {
-      next(err)
-    }
-  } else {
-    categories = ['All']
-    try {
-      const categoryIds = await categoryService.getIdsByNames(categories)
-      const products = await productService.findAllPipeline(
-        skipPages,
-        limitPages,
-        sortBy,
-        order,
-        categoryIds
-      )
-      for (const product of products) {
-        product.imageUrl = await getSignedUrl(
-          s3,
-          new GetObjectCommand({
-            Bucket: BUCKET_NAME,
-            Key: product.imageName,
-          }),
-          { expiresIn: 3600 }
-        )
-      }
-
-      res.status(200).json(products)
-    } catch (err) {
-      next(err)
-    }
+    res.status(200).json(productsWithUrls)
+  } catch (err) {
+    next(err)
   }
 }
 
