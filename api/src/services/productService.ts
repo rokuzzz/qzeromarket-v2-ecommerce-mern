@@ -31,23 +31,23 @@ const findAllPipeline = async (
   categoryId: ObjectId[]
 ) => {
   return await Product.aggregate()
-    .sort({ [sort]: order })
-    .skip(page * limit)
-    .limit(limit)
-    // .lookup({
-    //   from: 'productreviews',
-    //   localField: '_id',
-    //   foreignField: 'productId',
-    //   as: 'reviews',
-    // })
-    // .addFields({
-    //   rate: {
-    //     $ifNull: [{ $avg: '$reviews.rate' }, 0],
-    //   },
-    // })
     .match({
       categories: { $in: categoryId },
     })
+    .sort({ [sort]: order })
+    .skip(page * limit)
+    .limit(limit)
+  // .lookup({
+  //   from: 'productreviews',
+  //   localField: '_id',
+  //   foreignField: 'productId',
+  //   as: 'reviews',
+  // })
+  // .addFields({
+  //   rate: {
+  //     $ifNull: [{ $avg: '$reviews.rate' }, 0],
+  //   },
+  // })
 }
 
 const findProductReviews = async (id: string) => {
