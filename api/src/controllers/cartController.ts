@@ -1,42 +1,57 @@
-import { NextFunction, Request, Response } from "express";
-import jwt from "jsonwebtoken";
+import { NextFunction, Request, Response } from 'express'
+import jwt from 'jsonwebtoken'
 
-import { JWT_SECRET } from "../util/secrets";
-import { ForbiddenError, UnauthorizedError, NotFoundError } from "../helpers/apiError";
-import cartService from "../services/cartService";
-import productService from "../services/productService";
+import { JWT_SECRET } from '../util/secrets'
+import {
+  ForbiddenError,
+  UnauthorizedError,
+  NotFoundError,
+} from '../helpers/apiError'
+import cartService from '../services/cartService'
+import productService from '../services/productService'
+import { ObjectId } from 'mongoose'
+import { UserRole } from './../models/User'
 
-const createOrUpdateCart = async (req: Request, res: Response, next: NextFunction) => {
-  const authHeader = req.headers.authorization
-  const {title, quantity} = req.body
+interface MyJwtPayload extends jwt.JwtPayload {
+  id: ObjectId
+  role: UserRole
+}
 
-  if (typeof authHeader == 'undefined') throw new UnauthorizedError('You are not authorized!')
-  const token = (<string>authHeader).split(" ")[1]
-  jwt.verify(token, JWT_SECRET, async (err: any, decoded: any) => {
-    if (err) throw new ForbiddenError()
-    else {
-      try {
-        req.user = decoded
-        const userId = decoded.id
+const modifyCart = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const authHeader = req.headers.authorization
+    if (!authHeader)
+      throw new UnauthorizedError('Authorization header is missing')
 
-        const product = await productService.findByName(title)
-        const productId = product._id
-        const cartItem = {productId, quantity}
-
-        const newItem = await cartService.addToCart(cartItem, userId)
-        res.status(200).json(newItem)
-
-      } catch (err) {
-        next(err)
-      }
+    const token = authHeader.split(' ')[1]
+    let decoded: MyJwtPayload
+    try {
+      decoded = jwt.verify(token, JWT_SECRET) as MyJwtPayload
+    } catch (err) {
+      throw new ForbiddenError('Invalid or expired token')
     }
-  })
+
+    if (!decoded) throw new ForbiddenError('Invalid Token')
+
+    const userId = decoded.id
+    const { title, quantity } = req.body
+
+    const product = await productService.findByName(title)
+    const cartItem = { cartItemDetails: product._id, quantity }
+
+    const newItem = await cartService.addToCart(cartItem, userId)
+
+    res.status(200).json(newItem)
+  } catch (err) {
+    next(err)
+  }
 }
 
 const getUserCart = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const cart = await cartService.findByCondition(req.params.id)
-    console.log(cart)
+    const id = req.params.id
+    const cart = await cartService.findByCondition(id)
+
     res.status(200).send(cart)
   } catch (err) {
     next(err)
@@ -46,6 +61,7 @@ const getUserCart = async (req: Request, res: Response, next: NextFunction) => {
 const getAllCarts = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const carts = await cartService.findAll()
+
     res.status(200).send(carts)
   } catch (err) {
     next(err)
@@ -54,7 +70,9 @@ const getAllCarts = async (req: Request, res: Response, next: NextFunction) => {
 
 const deleteCart = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    await cartService.deleteOne(req.params.id)
+    const id = req.params.id
+    await cartService.deleteOne(id)
+
     res.status(200).json('Cart has been deleted...')
   } catch (err) {
     next(err)
@@ -62,8 +80,8 @@ const deleteCart = async (req: Request, res: Response, next: NextFunction) => {
 }
 
 export default {
-  createOrUpdateCart,
+  modifyCart,
   getAllCarts,
   getUserCart,
-  deleteCart
+  deleteCart,
 }
