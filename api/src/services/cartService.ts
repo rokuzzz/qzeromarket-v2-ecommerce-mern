@@ -1,86 +1,85 @@
 import e from 'express'
 import { ObjectId } from 'mongoose'
 import { BadRequestError, NotFoundError } from '../helpers/apiError'
-import Cart, { CartDocument, ProductInCart } from '../models/Cart'
+import Cart, { CartDocument, ItemInCart } from '../models/Cart'
 // import paymentService from './paymentService'
 
-// a function that CREATES a cart, ADDS new products to the cart (if the cart already exists), and additionally UPDATES existing products in the cart
-const addToCart = async (cartItem: ProductInCart, userId: ObjectId) => {
-
-  const {productId, quantity} = cartItem
-
-  // check if cart exists for this user
-  let existingCart = await Cart.findOne({userId: userId})
-
-  function getProductIndex (products: ProductInCart[], id: ObjectId ) {
-    let index = -1 
-    for (let i = 0; i < products.length; i++) {
-      if (products[i].productId.toString() === id.toString()) {
-        index = i
-        break
-      }
+// Function to find an item in the cart by its details (ID)
+const findItemIndex = (cartItems: ItemInCart[], itemId: ObjectId): number => {
+  for (let i = 0; i < cartItems.length; i++) {
+    if (cartItems[i].cartItemDetails.toString() === itemId.toString()) {
+      return i
     }
-    return index
   }
+  return -1
+}
 
-  if (existingCart) {
-
-    // returns -1 if the product is new and the product index if it already exists
-    const existingProductIndex = getProductIndex(existingCart.products, productId)
-
-    // if such a product is already in the cart - update its quantity
-    // otherwise just add this product to products array
-    if (existingProductIndex >= 0) {
-      // if the user reduces the quantity of the product to 0 (or less than zero) - remove the product from the cart
-      if (quantity <= 0) {
-        existingCart.products.splice(existingProductIndex, 1)
-        
-        return await Cart.findByIdAndUpdate(
-          existingCart._id,
-          {
-            $set: {products: existingCart.products}
-          },
-          {new: true}
-        )
-        .populate({ path: 'userId', select: '_id username' })
-        .populate({path: 'products.productId', select: '_id title description price' })
-      }
-
-      existingCart.products[existingProductIndex].quantity = quantity
-    } else {
-      // prevent adding product with zero or negative quantity
-      if (quantity <= 0) throw new BadRequestError('You are trying to add a product with zero or negative quantity')
-
-      existingCart.products.push({productId: productId, quantity: quantity})
-    }
-    return await Cart.findByIdAndUpdate(
-      existingCart._id,
-      {
-        $set: {products: existingCart.products}
-      },
-      {new: true}
-    )
-    .populate({ path: 'userId', select: '_id username' })
-    .populate({path: 'products.productId', select: '_id title description price' })
+// Function to handle quantity updates and removing items from cart
+const updateQuantityOrRemove = (
+  cartItems: ItemInCart[],
+  itemIndex: number,
+  quantity: number
+) => {
+  if (quantity <= 0) {
+    cartItems.splice(itemIndex, 1)
   } else {
-    const newCart = new Cart({userId: userId, products: cartItem})
-    await newCart.save()
-    return Cart.findById(newCart._id)
-    .populate({ path: 'userId', select: '_id username' })
-    .populate({path: 'products.productId', select: '_id title description price' })
+    cartItems[itemIndex].quantity = quantity
   }
+  return cartItems
+}
+
+// The main function to modify the cart
+const addToCart = async (cartItem: ItemInCart, userId: ObjectId) => {
+  const { cartItemDetails, quantity } = cartItem
+
+  // Find an existing cart or create a new one
+  const userCart =
+    (await Cart.findOne({ userId })) || new Cart({ userId, cartItems: [] })
+
+  const itemIndex = findItemIndex(userCart.cartItems, cartItemDetails)
+
+  // If the item exists in the cart, update its quantity or remove it
+  // If it doesn't exist and quantity is positive, add it to the cart
+  if (itemIndex >= 0) {
+    userCart.cartItems = updateQuantityOrRemove(
+      userCart.cartItems,
+      itemIndex,
+      quantity
+    )
+  } else if (quantity > 0) {
+    userCart.cartItems.push({ cartItemDetails, quantity })
+  } else {
+    throw new BadRequestError(
+      'You are trying to add a product with zero or negative quantity'
+    )
+  }
+
+  await userCart.save()
+
+  return Cart.findById(userCart._id)
+    .populate({ path: 'userId', select: '_id username' })
+    .populate({
+      path: 'cartItems.cartItemDetails',
+      select: '_id title description price',
+    })
 }
 
 const findAll = async () => {
   return await Cart.find()
-  .populate({ path: 'userId', select: '_id username' })
-  .populate({path: 'products.productId', select: '_id title description price' })
+    .populate({ path: 'userId', select: '_id username' })
+    .populate({
+      path: 'cartItems.cartItemDetails',
+      select: '_id title description price',
+    })
 }
 
 const findByCondition = async (id: string) => {
-  const foundOne = await Cart.findOne({userId: id})
-  .populate({ path: 'userId', select: '_id username' })
-  .populate({path: 'products.productId', select: '_id title description price' })
+  const foundOne = await Cart.findOne({ userId: id })
+    .populate({ path: 'userId', select: '_id username' })
+    .populate({
+      path: 'cartItems.cartItemDetails',
+      select: '_id title description price',
+    })
 
   if (foundOne) {
     return foundOne

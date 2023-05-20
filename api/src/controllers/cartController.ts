@@ -2,11 +2,7 @@ import { NextFunction, Request, Response } from 'express'
 import jwt from 'jsonwebtoken'
 
 import { JWT_SECRET } from '../util/secrets'
-import {
-  ForbiddenError,
-  UnauthorizedError,
-  NotFoundError,
-} from '../helpers/apiError'
+import { ForbiddenError, UnauthorizedError } from '../helpers/apiError'
 import cartService from '../services/cartService'
 import productService from '../services/productService'
 import { ObjectId } from 'mongoose'
@@ -20,8 +16,9 @@ interface MyJwtPayload extends jwt.JwtPayload {
 const modifyCart = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const authHeader = req.headers.authorization
-    if (!authHeader)
+    if (!authHeader) {
       throw new UnauthorizedError('Authorization header is missing')
+    }
 
     const token = authHeader.split(' ')[1]
     let decoded: MyJwtPayload
@@ -39,9 +36,9 @@ const modifyCart = async (req: Request, res: Response, next: NextFunction) => {
     const product = await productService.findByName(title)
     const cartItem = { cartItemDetails: product._id, quantity }
 
-    const newItem = await cartService.addToCart(cartItem, userId)
+    const modifiedCart = await cartService.addToCart(cartItem, userId)
 
-    res.status(200).json(newItem)
+    res.status(200).json(modifiedCart)
   } catch (err) {
     next(err)
   }
