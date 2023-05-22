@@ -29,12 +29,13 @@ const updateQuantityOrRemove = (
 }
 
 // The main function to modify the cart
-const addToCart = async (cartItem: ItemInCart, userId: ObjectId) => {
+const handleCartItem = async (cartItem: ItemInCart, userId: ObjectId) => {
   const { cartItemDetails, quantity } = cartItem
 
   // Find an existing cart or create a new one
   const userCart =
-    (await Cart.findOne({ userId })) || new Cart({ userId, cartItems: [] })
+    (await Cart.findOne({ associatedUser: userId })) ||
+    new Cart({ associatedUser: userId, cartItems: [] })
 
   const itemIndex = findItemIndex(userCart.cartItems, cartItemDetails)
 
@@ -57,7 +58,7 @@ const addToCart = async (cartItem: ItemInCart, userId: ObjectId) => {
   await userCart.save()
 
   return Cart.findById(userCart._id)
-    .populate({ path: 'userId', select: '_id username' })
+    .populate({ path: 'associatedUser', select: '_id username' })
     .populate({
       path: 'cartItems.cartItemDetails',
       select: '_id title description price',
@@ -66,7 +67,7 @@ const addToCart = async (cartItem: ItemInCart, userId: ObjectId) => {
 
 const findAll = async () => {
   return await Cart.find()
-    .populate({ path: 'userId', select: '_id username' })
+    .populate({ path: 'associatedUser', select: '_id username' })
     .populate({
       path: 'cartItems.cartItemDetails',
       select: '_id title description price',
@@ -74,8 +75,8 @@ const findAll = async () => {
 }
 
 const findByCondition = async (id: string) => {
-  const foundOne = await Cart.findOne({ userId: id })
-    .populate({ path: 'userId', select: '_id username' })
+  const foundOne = await Cart.findOne({ associatedUser: id })
+    .populate({ path: 'associatedUser', select: '_id username' })
     .populate({
       path: 'cartItems.cartItemDetails',
       select: '_id title description price',
@@ -115,7 +116,7 @@ const deleteOne = async (id: string) => {
 // }
 
 export default {
-  addToCart,
+  handleCartItem,
   findAll,
   findByCondition,
   updateOne,

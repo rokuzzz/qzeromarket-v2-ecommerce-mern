@@ -6,7 +6,7 @@ export interface ItemInCart {
 }
 
 export interface CartDocument extends Document {
-  userId: ObjectId | string
+  associatedUser: ObjectId | string
   cartItems: {
     cartItemDetails: ObjectId
     quantity: number
@@ -15,7 +15,7 @@ export interface CartDocument extends Document {
 }
 
 const CartSchema = new Schema<CartDocument>({
-  userId: {
+  associatedUser: {
     type: Schema.Types.ObjectId,
     ref: 'User',
   },

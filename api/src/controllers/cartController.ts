@@ -1,12 +1,12 @@
 import { NextFunction, Request, Response } from 'express'
 import jwt from 'jsonwebtoken'
+import { ObjectId } from 'mongoose'
 
-import { JWT_SECRET } from '../util/secrets'
 import { ForbiddenError, UnauthorizedError } from '../helpers/apiError'
+import { UserRole } from './../models/User'
 import cartService from '../services/cartService'
 import productService from '../services/productService'
-import { ObjectId } from 'mongoose'
-import { UserRole } from './../models/User'
+import { JWT_SECRET } from '../util/secrets'
 
 interface MyJwtPayload extends jwt.JwtPayload {
   id: ObjectId
@@ -36,7 +36,7 @@ const modifyCart = async (req: Request, res: Response, next: NextFunction) => {
     const product = await productService.findByName(title)
     const cartItem = { cartItemDetails: product._id, quantity }
 
-    const modifiedCart = await cartService.addToCart(cartItem, userId)
+    const modifiedCart = await cartService.handleCartItem(cartItem, userId)
 
     res.status(200).json(modifiedCart)
   } catch (err) {
