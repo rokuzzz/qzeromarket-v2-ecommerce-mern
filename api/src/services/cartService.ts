@@ -67,7 +67,10 @@ const handleCartItem = async (cartItem: ItemInCart, userId: ObjectId) => {
 
 const findAll = async () => {
   return await Cart.find()
-    .populate({ path: 'associatedUser', select: '_id username' })
+    .populate({
+      path: 'associatedUser',
+      select: '_id username',
+    })
     .populate({
       path: 'cartItems.cartItemDetails',
       select: '_id title description price',
@@ -76,7 +79,10 @@ const findAll = async () => {
 
 const findByCondition = async (id: string) => {
   const foundOne = await Cart.findOne({ associatedUser: id })
-    .populate({ path: 'associatedUser', select: '_id username' })
+    .populate({
+      path: 'associatedUser',
+      select: '_id username',
+    })
     .populate({
       path: 'cartItems.cartItemDetails',
       select: '_id title description price',
@@ -91,6 +97,7 @@ const findByCondition = async (id: string) => {
 
 const updateOne = async (id: string, update: Partial<CartDocument>) => {
   const foundOne = await Cart.findByIdAndUpdate(id, update)
+
   if (foundOne) {
     return foundOne
   } else {
@@ -100,6 +107,7 @@ const updateOne = async (id: string, update: Partial<CartDocument>) => {
 
 const deleteOne = async (id: string) => {
   const foundOne = await Cart.findByIdAndDelete(id)
+
   if (foundOne) {
     return foundOne
   } else {

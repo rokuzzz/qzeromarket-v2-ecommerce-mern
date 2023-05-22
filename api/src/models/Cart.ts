@@ -7,10 +7,7 @@ export interface ItemInCart {
 
 export interface CartDocument extends Document {
   associatedUser: ObjectId | string
-  cartItems: {
-    cartItemDetails: ObjectId
-    quantity: number
-  }[]
+  cartItems: ItemInCart[]
   // status: 'paid' | 'unpaid'
 }
 
