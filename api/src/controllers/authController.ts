@@ -1,10 +1,8 @@
 import { Response, Request, NextFunction } from 'express'
 import CryptoJS from 'crypto-js'
-import jwt from 'jsonwebtoken'
 
-import { CRYPTO_SECRET, JWT_SECRET } from '../util/secrets'
+import { CRYPTO_SECRET } from '../util/secrets'
 import User, { UserRole } from '../models/User'
-import { UnauthorizedError } from '../helpers/apiError'
 import authService from '../services/authService'
 
 const encryptPassword = (password: string): string => {
