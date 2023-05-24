@@ -1,7 +1,7 @@
 import mongoose, { Document, ObjectId, Schema } from 'mongoose'
 
 export interface ItemInFavorites {
-  favoriteItem: ObjectId
+  itemInFavorites: ObjectId
 }
 
 export interface FavoritesDocument extends Document {
@@ -18,7 +18,7 @@ const FavoritesSchema = new Schema<FavoritesDocument>({
   },
   favoritesItems: [
     {
-      favoriteItem: {
+      itemInFavorites: {
         type: Schema.Types.ObjectId,
         ref: 'Product',
         required: true,

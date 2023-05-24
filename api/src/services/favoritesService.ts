@@ -16,7 +16,7 @@ const findItemIndex = (
   itemId: ObjectId
 ): number => {
   for (let i = 0; i < favoritesItems.length; i++) {
-    if (favoritesItems[i].toString() === itemId.toString()) {
+    if (favoritesItems[i].itemInFavorites.toString() === itemId.toString()) {
       return i
     }
   }
@@ -24,7 +24,7 @@ const findItemIndex = (
 }
 
 // The main function to modify the cart
-const handleCartItem = async (
+const handleFavoritesItem = async (
   itemInFavorites: ItemInFavorites,
   userId: ObjectId
 ) => {
@@ -33,12 +33,17 @@ const handleCartItem = async (
     (await Favorites.findOne({ associatedUser: userId })) ||
     new Favorites({ associatedUser: userId, favoritesItems: [] })
 
-  const itemIndex = findItemIndex(userFavorites.favoritesItems, itemInFavorites)
+  const itemIndex = findItemIndex(
+    userFavorites.favoritesItems,
+    itemInFavorites.itemInFavorites
+  )
 
-  // If the item exists in the cart, update its quantity or remove it
-  // If it doesn't exist and quantity is positive, add it to the cart
+  // If the item exists in the favorites, remove it.
+  // If it doesn't exist, add it to the favorites.
   if (itemIndex >= 0) {
+    userFavorites.favoritesItems.splice(itemIndex, 1)
   } else {
+    userFavorites.favoritesItems.push(itemInFavorites)
   }
 
   await userFavorites.save()
@@ -46,13 +51,9 @@ const handleCartItem = async (
   return Favorites.findById(userFavorites._id)
     .populate({ path: 'associatedUser', select: '_id username' })
     .populate({
-      path: 'favoritesItems',
+      path: 'favoritesItems.itemInFavorites',
       select: '_id title description price',
     })
-}
-
-const createOne = async (Favorites: FavoritesDocument) => {
-  return await Favorites.save()
 }
 
 const findAll = async () => {
@@ -97,7 +98,7 @@ const deleteOne = async (id: string) => {
 }
 
 export default {
-  createOne,
+  handleFavoritesItem,
   findAll,
   findById,
   updateOne,
