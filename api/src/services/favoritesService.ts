@@ -68,21 +68,21 @@ const findAll = async () => {
     })
 }
 
-const findFavoritesByUserId = async (id: string) => {
-  const foundOne = await Favorites.findOne({ associatedUser: id })
+const findFavoritesByUserId = async (userId: string) => {
+  const foundOne = await Favorites.findOne({ associatedUser: userId })
     .populate({
       path: 'associatedUser',
       select: '_id username',
     })
     .populate({
-      path: 'cartItems.cartItemDetails',
+      path: 'favoritesItems.itemInFavorites',
       select: '_id title description price',
     })
 
-  if (foundOne) {
-    return foundOne
-  } else {
+  if (!foundOne) {
     throw new NotFoundError()
+  } else {
+    return foundOne
   }
 }
 

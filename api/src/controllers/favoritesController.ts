@@ -65,7 +65,23 @@ const getAllFavorites = async (
   }
 }
 
+const getUserFavorites = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const userId = req.params.userId
+    const favorites = await favoritesService.findFavoritesByUserId(userId)
+
+    res.status(200).send(favorites)
+  } catch (err) {
+    next(err)
+  }
+}
+
 export default {
   modifyFavorites,
   getAllFavorites,
+  getUserFavorites,
 }
