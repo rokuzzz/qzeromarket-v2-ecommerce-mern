@@ -8,5 +8,6 @@ import {
 
 const favoritesRoute = Router()
 favoritesRoute.post('/', favoritesController.modifyFavorites)
+favoritesRoute.get('/', verifyAdmin, favoritesController.getAllFavorites)
 
 export default favoritesRoute

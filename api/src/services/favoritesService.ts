@@ -58,10 +58,26 @@ const handleFavoritesItem = async (
 
 const findAll = async () => {
   return await Favorites.find()
+    .populate({
+      path: 'associatedUser',
+      select: '_id username',
+    })
+    .populate({
+      path: 'favoritesItems.itemInFavorites',
+      select: '_id title description price',
+    })
 }
 
-const findById = async (id: string) => {
-  const foundOne = await Favorites.findById(id)
+const findFavoritesByUserId = async (id: string) => {
+  const foundOne = await Favorites.findOne({ associatedUser: id })
+    .populate({
+      path: 'associatedUser',
+      select: '_id username',
+    })
+    .populate({
+      path: 'cartItems.cartItemDetails',
+      select: '_id title description price',
+    })
 
   if (foundOne) {
     return foundOne
@@ -100,7 +116,7 @@ const deleteOne = async (id: string) => {
 export default {
   handleFavoritesItem,
   findAll,
-  findById,
+  findFavoritesByUserId,
   updateOne,
   deleteOne,
 }
