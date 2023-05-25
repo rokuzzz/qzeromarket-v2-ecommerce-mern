@@ -80,8 +80,24 @@ const getUserFavorites = async (
   }
 }
 
+const deleteFavorites = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const id = req.params.id
+    await favoritesService.deleteOne(id)
+
+    res.status(200).json('Cart has been deleted...')
+  } catch (err) {
+    next(err)
+  }
+}
+
 export default {
   modifyFavorites,
   getAllFavorites,
   getUserFavorites,
+  deleteFavorites,
 }

@@ -14,5 +14,10 @@ favoritesRoute.get(
   verifyUserOrAdmin,
   favoritesController.getUserFavorites
 )
+favoritesRoute.delete(
+  '/:id',
+  verifyUserOrAdmin,
+  favoritesController.deleteFavorites
+)
 
 export default favoritesRoute

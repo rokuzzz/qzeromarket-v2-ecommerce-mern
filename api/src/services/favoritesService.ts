@@ -81,42 +81,24 @@ const findFavoritesByUserId = async (userId: string) => {
 
   if (!foundOne) {
     throw new NotFoundError()
-  } else {
-    return foundOne
   }
-}
 
-const updateOne = async (
-  id: string,
-  update?:
-    | UpdateWithAggregationPipeline
-    | UpdateQuery<FavoritesDocument>
-    | undefined,
-  options?: QueryOptions | null | undefined
-) => {
-  const foundOne = await Favorites.findByIdAndUpdate(id, update, options)
-
-  if (!foundOne) {
-    throw new NotFoundError()
-  } else {
-    return foundOne
-  }
+  return foundOne
 }
 
 const deleteOne = async (id: string) => {
-  const foundFavorites = await Favorites.findById(id)
+  const deletedFavorites = await Favorites.findByIdAndDelete(id)
 
-  if (foundFavorites) {
-    return await Favorites.findByIdAndDelete(id)
-  } else {
+  if (!deletedFavorites) {
     throw new NotFoundError()
   }
+
+  return deletedFavorites
 }
 
 export default {
   handleFavoritesItem,
   findAll,
   findFavoritesByUserId,
-  updateOne,
   deleteOne,
 }
