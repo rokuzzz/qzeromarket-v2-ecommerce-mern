@@ -1,6 +1,7 @@
-import { verifyAdmin } from './../middlewares/tokenVerificator';
-import { Router } from "express";
-import categoryController from '../controllers/categoryController';
+import { Router } from 'express'
+
+import categoryController from '../controllers/categoryController'
+import { verifyAdmin } from './../middlewares/tokenVerificator'
 
 const categoryRoute = Router()
 

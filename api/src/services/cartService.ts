@@ -88,31 +88,31 @@ const findByCondition = async (id: string) => {
       select: '_id title description price',
     })
 
-  if (foundOne) {
-    return foundOne
-  } else {
+  if (!foundOne) {
     throw new NotFoundError()
   }
+
+  return foundOne
 }
 
 const updateOne = async (id: string, update: Partial<CartDocument>) => {
   const foundOne = await Cart.findByIdAndUpdate(id, update)
 
-  if (foundOne) {
-    return foundOne
-  } else {
+  if (!foundOne) {
     throw new NotFoundError()
   }
+
+  return foundOne
 }
 
 const deleteOne = async (id: string) => {
   const foundOne = await Cart.findByIdAndDelete(id)
 
-  if (foundOne) {
-    return foundOne
-  } else {
+  if (!foundOne) {
     throw new NotFoundError()
   }
+
+  return foundOne
 }
 
 // const checkoutCart = async (cartId: string) => {

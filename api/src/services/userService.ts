@@ -17,11 +17,11 @@ const findAll = async () => {
 const findById = async (id: string) => {
   const foundOne = await User.findById(id)
 
-  if (foundOne) {
-    return foundOne
-  } else {
+  if (!foundOne) {
     throw new NotFoundError()
   }
+
+  return foundOne
 }
 
 const updateOne = async (
@@ -32,16 +32,16 @@ const updateOne = async (
     | undefined,
   options?: QueryOptions | null | undefined
 ) => {
-  const foundOne = await User.findByIdAndUpdate(id, update, options)
+  const updatedUser = await User.findByIdAndUpdate(id, update, options)
 
-  if (foundOne) {
+  if (updatedUser) {
     const updatedUserData = {
-      _id: foundOne._id,
-      fistname: foundOne.firstname,
-      lastname: foundOne.lastname,
-      username: foundOne.username,
-      email: foundOne.email,
-      role: foundOne.role,
+      _id: updatedUser._id,
+      fistname: updatedUser.firstname,
+      lastname: updatedUser.lastname,
+      username: updatedUser.username,
+      email: updatedUser.email,
+      role: updatedUser.role,
     }
 
     return updatedUserData
@@ -51,13 +51,13 @@ const updateOne = async (
 }
 
 const deleteOne = async (id: string) => {
-  const foundUser = await User.findById(id)
+  const deletedUser = await User.findByIdAndDelete(id)
 
-  if (foundUser) {
-    return await User.findByIdAndDelete(id)
-  } else {
+  if (!deletedUser) {
     throw new NotFoundError()
   }
+
+  return deletedUser
 }
 
 export default {

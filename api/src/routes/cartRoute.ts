@@ -1,8 +1,9 @@
+import { Router } from 'express'
+
 import {
   verifyUserOrAdmin,
   verifyAdmin,
 } from './../middlewares/tokenVerificator'
-import { Router } from 'express'
 
 import cartController from '../controllers/cartController'
 

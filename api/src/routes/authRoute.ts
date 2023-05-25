@@ -1,6 +1,6 @@
-import { Router } from "express";
+import { Router } from 'express'
 
-import authController from "../controllers/authController";
+import authController from '../controllers/authController'
 
 const authRoute = Router()
 authRoute.post('/register', authController.register)

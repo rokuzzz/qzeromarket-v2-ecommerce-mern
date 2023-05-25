@@ -53,31 +53,31 @@ const findAllPipeline = async (
 const findProductReviews = async (id: string) => {
   const foundOne = await Product.findById(id).populate('reviews')
 
-  if (foundOne) {
-    return foundOne
-  } else {
+  if (!foundOne) {
     throw new NotFoundError()
   }
+
+  return foundOne
 }
 
 const findById = async (id: string) => {
   const foundOne = await Product.findById(id)
 
-  if (foundOne) {
-    return foundOne
-  } else {
+  if (!foundOne) {
     throw new NotFoundError()
   }
+
+  return foundOne
 }
 
 const findByName = async (title: string) => {
   const foundOne = await Product.findOne({ title })
 
-  if (foundOne) {
-    return foundOne
-  } else {
+  if (!foundOne) {
     throw new NotFoundError('This product does not exist')
   }
+
+  return foundOne
 }
 
 const updateOne = async (
@@ -90,21 +90,21 @@ const updateOne = async (
 ) => {
   const foundOne = await Product.findByIdAndUpdate(id, update, options)
 
-  if (foundOne) {
-    return foundOne
-  } else {
+  if (!foundOne) {
     throw new NotFoundError()
   }
+
+  return foundOne
 }
 
 const deleteOne = async (id: string) => {
   const foundOne = await Product.findByIdAndDelete(id)
 
-  if (foundOne) {
-    return foundOne
-  } else {
+  if (!foundOne) {
     throw new NotFoundError()
   }
+
+  return foundOne
 }
 
 export default {

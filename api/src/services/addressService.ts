@@ -11,29 +11,32 @@ const findAll = async () => {
 
 const findById = async (id: string) => {
   const foundOne = await Address.findById(id)
-  if (foundOne) {
-    return foundOne
-  } else {
+
+  if (!foundOne) {
     throw new NotFoundError()
   }
+
+  return foundOne
 }
 
 const updateOne = async (id: string, update: Partial<AddressDocument>) => {
   const foundOne = await Address.findByIdAndUpdate(id, update)
-  if (foundOne) {
-    return foundOne
-  } else {
+
+  if (!foundOne) {
     throw new NotFoundError()
   }
+
+  return foundOne
 }
 
 const deleteOne = async (id: string) => {
   const foundOne = await Address.findByIdAndDelete(id)
-  if (foundOne) {
-    return foundOne
-  } else {
+
+  if (!foundOne) {
     throw new NotFoundError()
   }
+
+  return foundOne
 }
 
 export default {

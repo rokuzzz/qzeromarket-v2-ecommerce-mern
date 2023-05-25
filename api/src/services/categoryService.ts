@@ -4,7 +4,7 @@ import {
   UpdateWithAggregationPipeline,
   ObjectId,
 } from 'mongoose'
-import { BadRequestError, NotFoundError } from '../helpers/apiError'
+import { NotFoundError } from '../helpers/apiError'
 import Category, { CategoryDocument } from '../models/Category'
 
 const createOne = async (category: CategoryDocument) => {
@@ -20,9 +20,9 @@ const findById = async (id: string) => {
 
   if (!foundOne) {
     throw new NotFoundError('Category does not exist.')
-  } else {
-    return foundOne
   }
+
+  return foundOne
 }
 
 const getIdsByNames = async (names: string[]) => {
@@ -45,19 +45,19 @@ const updateOne = async (
 
   if (!foundOne) {
     throw new NotFoundError()
-  } else {
-    return foundOne
   }
+
+  return foundOne
 }
 
 const deleteOne = async (id: string) => {
-  const foundCategory = await Category.findById(id)
+  const deletedCategory = await Category.findByIdAndDelete(id)
 
-  if (!foundCategory) {
+  if (!deletedCategory) {
     throw new NotFoundError()
-  } else {
-    return await Category.findByIdAndDelete(id)
   }
+
+  return deletedCategory
 }
 
 export default {
