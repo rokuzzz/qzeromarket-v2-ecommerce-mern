@@ -7,13 +7,13 @@ export interface CartItemDetails {
 
 export interface ProductInCart {
   id: string,
-  productId: CartItemDetails,
+  cartItemDetails: CartItemDetails,
   quantity: number
 }
 
 export interface Cart {
   id: string,
-  products: ProductInCart[]
+  cartItems: ProductInCart[]
   totalPrice?: number
 }
 

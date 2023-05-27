@@ -9,11 +9,11 @@ interface UseCartQuantityProps {
 
 const useCartQuantity = ({cartItems, _id}: UseCartQuantityProps) => {
   const [cartQuantity, setCartQuantity] = useState<number>(
-    cartItems?.find((cartItems) => cartItems.productId._id === _id)?.quantity || 0
+    cartItems?.find((cartItems) => cartItems.cartItemDetails._id === _id)?.quantity || 0
   );
 
   const currentQuantity = cartItems?.find(
-    (item) => item.productId._id === _id
+    (item) => item.cartItemDetails._id === _id
   )?.quantity;
 
   useEffect(() => {

@@ -5,7 +5,7 @@ import { toast } from 'react-toastify';
 import { CartSliceState, GetUsersShoppingCartProps, AddToCartProps, DeleteCartProps } from '../../types/cart'
 
 const initialState: CartSliceState = {
-  usersShoppingCart: { id: '', products: [], totalPrice: 0 }
+  usersShoppingCart: { id: '', cartItems: [], totalPrice: 0 }
 }
 
 export const getUsersShoppingCart = createAsyncThunk(
@@ -55,7 +55,7 @@ export const deleteCart = createAsyncThunk(
         Authorization: `Bearer ${token}`
       }})
 
-    return {id: '', products: []}
+    return {id: '', cartItems: []}
   }
 )
 
@@ -65,9 +65,9 @@ const cartSlice = createSlice({
   reducers: {
     countTotalPrice: (state) => {
       let totalPrice = 0
-      if (state.usersShoppingCart?.products) {
-        for (let i = 0; i < state.usersShoppingCart.products.length; i++) {
-          totalPrice += state.usersShoppingCart.products[i].quantity * state.usersShoppingCart.products[i].productId.price
+      if (state.usersShoppingCart?.cartItems) {
+        for (let i = 0; i < state.usersShoppingCart.cartItems.length; i++) {
+          totalPrice += state.usersShoppingCart.cartItems[i].quantity * state.usersShoppingCart.cartItems[i].cartItemDetails.price
         }
         state.usersShoppingCart.totalPrice = totalPrice
       }

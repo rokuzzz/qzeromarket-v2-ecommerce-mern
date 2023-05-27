@@ -4,14 +4,16 @@ import { useAppDispatch, useAppSelector } from './appHooks';
 import { getUsersShoppingCart } from '../../redux/slices/cartSlice';
 
 interface useShoppingCartProps {
-  accessToken: string
+  accessToken: string;
 }
 
-const useShoppingCart = ({accessToken}: useShoppingCartProps ) => {
+const useShoppingCart = ({ accessToken }: useShoppingCartProps) => {
   const dispatch = useAppDispatch();
 
   const { usersShoppingCart } = useAppSelector((state) => state.cartReducer);
-  const { products, totalPrice } = usersShoppingCart || { products: undefined };
+  const { cartItems, totalPrice } = usersShoppingCart || {
+    cartItems: undefined,
+  };
 
   const { loggedInUser } = useAppSelector((state) => state.userReducer);
 
@@ -24,10 +26,7 @@ const useShoppingCart = ({accessToken}: useShoppingCartProps ) => {
     );
   }, [dispatch, loggedInUser, accessToken]);
 
-  return {
-    cartItems: products,
-    totalPrice: totalPrice
-  };
+  return { cartItems, totalPrice, };
 };
 
 export default useShoppingCart;

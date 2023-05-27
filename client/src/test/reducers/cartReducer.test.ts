@@ -14,7 +14,7 @@ describe('test cart reducer', () => {
       token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzZGJiZDEyZTkzNjQ2NTJlNGRlMDM3ZiIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTY3OTQxODkzMywiZXhwIjoxNjc5Njc4MTMzfQ.FP_RbciK-xcJ8kXXPSAj6Nq01ultU8bp8b93MMGDB88'
     }))
     // console.log(store.getState().cartReducer.usersShoppingCart.products[0].productId.title)
-    expect(store.getState().cartReducer.usersShoppingCart!.products[0].productId.title).toBe('Designer Shoes')
+    expect(store.getState().cartReducer.usersShoppingCart!.cartItems[0].cartItemDetails.title).toBe('Designer Shoes')
   })
   
   test('should create/update shopping cart', async () => {
@@ -24,7 +24,7 @@ describe('test cart reducer', () => {
       token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzZGJiZDEyZTkzNjQ2NTJlNGRlMDM3ZiIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTY3OTQxODkzMywiZXhwIjoxNjc5Njc4MTMzfQ.FP_RbciK-xcJ8kXXPSAj6Nq01ultU8bp8b93MMGDB88'
     }))
 
-    expect(store.getState().cartReducer.usersShoppingCart!.products[1].quantity).toBe(4)
+    expect(store.getState().cartReducer.usersShoppingCart!.cartItems[1].quantity).toBe(4)
   })
 
   test('should count total price of the initial cart', async () => {

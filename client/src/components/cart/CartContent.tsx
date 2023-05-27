@@ -21,14 +21,14 @@ const CartContent = ({
   const { allProducts } = useAppSelector((state) => state.productReducer);
 
   const cartItemList = cartItems?.map((cartItem, index) => {
-    const { productId: cartItemData, quantity: itemQuantity } = cartItem;
+    const { cartItemDetails, quantity: itemQuantity } = cartItem;
 
     const accessToken = localStorage.getItem('access_token') || '';
 
     const handleCartDecrease = () => {
       dispatch(
         addToCart({
-          title: cartItemData.title,
+          title: cartItemDetails.title,
           quantity: itemQuantity - 1,
           token: accessToken,
         })
@@ -38,7 +38,7 @@ const CartContent = ({
     const handleCartIncrease = () => {
       dispatch(
         addToCart({
-          title: cartItemData.title,
+          title: cartItemDetails.title,
           quantity: itemQuantity + 1,
           token: accessToken,
         })
@@ -48,7 +48,7 @@ const CartContent = ({
     const handleDeleteCart = () => {
       dispatch(
         addToCart({
-          title: cartItemData.title,
+          title: cartItemDetails.title,
           quantity: 0,
           token: accessToken,
         })
@@ -56,14 +56,14 @@ const CartContent = ({
     };
 
     const imageUrl = allProducts.data.find(
-      (product) => product._id === cartItemData._id
+      (product) => product._id === cartItemDetails._id
     )?.imageUrl;
 
     return (
       <CartItem
         index={index}
         products={cartItems}
-        productId={cartItemData}
+        productId={cartItemDetails}
         quantity={itemQuantity}
         imageUrl={imageUrl}
         theme={theme}
