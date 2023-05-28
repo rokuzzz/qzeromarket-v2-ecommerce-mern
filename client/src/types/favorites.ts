@@ -1,20 +1,25 @@
 export interface ItemInFavorites {
-  _id: string,
-  title: string,
-  description: string,
-  price: number
+  _id: string;
+  title: string;
+  description: string;
+  price: number;
 }
 
 export interface FavoritesItem {
-  _id: string,
-  itemInFavorites: ItemInFavorites
+  _id: string;
+  itemInFavorites: ItemInFavorites;
 }
 
 export interface Favorites {
-  _id: string,
-  favoritesItems: FavoritesItem[],
+  _id: string;
+  favoritesItems: FavoritesItem[];
 }
 
 export interface FavoritesSliceState {
-  usersFavorites?: Favorites
+  usersFavorites?: Favorites;
+}
+
+export interface GetUsersFavoritesProps {
+  userId: string,
+  token: string
 }
