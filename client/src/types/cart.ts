@@ -6,19 +6,19 @@ export interface CartItemDetails {
 }
 
 export interface ProductInCart {
-  id: string,
+  _id: string,
   cartItemDetails: CartItemDetails,
   quantity: number
 }
 
 export interface Cart {
-  id: string,
+  _id: string,
   cartItems: ProductInCart[]
   totalPrice?: number
 }
 
 export interface CartSliceState {
-  usersShoppingCart: Cart | undefined
+  usersShoppingCart?: Cart
 }
 
 export interface GetUsersShoppingCartProps {
