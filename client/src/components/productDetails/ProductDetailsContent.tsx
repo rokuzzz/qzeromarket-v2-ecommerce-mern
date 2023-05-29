@@ -4,7 +4,7 @@ import { toast } from 'react-toastify';
 
 import { Product } from '../../types/products';
 import { useAppDispatch } from '../../hooks/common/appHooks';
-import { addToCart } from '../../redux/slices/cartSlice';
+import { modifyCart } from '../../redux/slices/cartSlice';
 import useCartQuantity from '../../hooks/common/useCartQuantity';
 import useShoppingCart from '../../hooks/common/useShoppingCart';
 
@@ -32,7 +32,7 @@ const ProductDetailsContent = ({
 
   const handleAddToCart = () => {
     dispatch(
-      addToCart({
+      modifyCart({
         title: title,
         quantity: 1,
         token: accessToken,
@@ -48,7 +48,7 @@ const ProductDetailsContent = ({
   const handleDeleteCart = () => {
     setCartQuantity(0);
     dispatch(
-      addToCart({
+      modifyCart({
         title: title,
         quantity: 0,
         token: accessToken,
@@ -63,7 +63,7 @@ const ProductDetailsContent = ({
   const handleCartIncrease = () => {
     setCartQuantity(cartQuantity + 1);
     dispatch(
-      addToCart({
+      modifyCart({
         title: title,
         quantity: cartQuantity + 1,
         token: accessToken,
@@ -79,7 +79,7 @@ const ProductDetailsContent = ({
     if (cartQuantity > 1) {
       setCartQuantity(cartQuantity - 1);
       dispatch(
-        addToCart({
+        modifyCart({
           title: title,
           quantity: cartQuantity - 1,
           token: accessToken,

@@ -26,8 +26,8 @@ export const getUsersShoppingCart = createAsyncThunk(
   }
 )
 
-export const addToCart = createAsyncThunk(
-  'addToCart', 
+export const modifyCart = createAsyncThunk(
+  'modifyCart', 
   async ({title, quantity, token}: AddToCartProps) => {
     try {
       const response = await axios.post('https://qzero-market-backend.herokuapp.com/api/carts',
@@ -77,7 +77,7 @@ const cartSlice = createSlice({
     builder.addCase(getUsersShoppingCart.fulfilled, (state, action) => {
       state.usersShoppingCart = action.payload
     })
-    .addCase(addToCart.fulfilled, (state, action) => {
+    .addCase(modifyCart.fulfilled, (state, action) => {
       state.usersShoppingCart = action.payload
     })
     .addCase(deleteCart.fulfilled, (state, action) => {

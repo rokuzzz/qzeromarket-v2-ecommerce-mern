@@ -1,6 +1,6 @@
 import {
   getUsersShoppingCart,
-  addToCart,
+  modifyCart,
   countTotalPrice,
   cartReducer,
 } from './../../redux/slices/cartSlice';
@@ -30,7 +30,7 @@ describe('test cart reducer', () => {
 
   test('should create/update shopping cart', async () => {
     await store.dispatch(
-      addToCart({
+      modifyCart({
         title: 'Black T-Shirt',
         quantity: 4,
         token:

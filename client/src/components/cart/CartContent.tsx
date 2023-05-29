@@ -3,7 +3,7 @@ import { Theme, useTheme } from '@mui/material/styles';
 
 import { ProductInCart } from '../../types/cart';
 import { useAppDispatch, useAppSelector } from '../../hooks/common/appHooks';
-import { addToCart } from '../../redux/slices/cartSlice';
+import { modifyCart } from '../../redux/slices/cartSlice';
 import CartItem from './CartItem';
 
 interface CartContentProps {
@@ -27,7 +27,7 @@ const CartContent = ({
 
     const handleCartDecrease = () => {
       dispatch(
-        addToCart({
+        modifyCart({
           title: cartItemDetails.title,
           quantity: itemQuantity - 1,
           token: accessToken,
@@ -37,7 +37,7 @@ const CartContent = ({
 
     const handleCartIncrease = () => {
       dispatch(
-        addToCart({
+        modifyCart({
           title: cartItemDetails.title,
           quantity: itemQuantity + 1,
           token: accessToken,
@@ -47,7 +47,7 @@ const CartContent = ({
 
     const handleDeleteCart = () => {
       dispatch(
-        addToCart({
+        modifyCart({
           title: cartItemDetails.title,
           quantity: 0,
           token: accessToken,
