@@ -17,9 +17,11 @@ export interface Favorites {
 
 export interface FavoritesSliceState {
   usersFavorites?: Favorites;
+  isLoading: boolean;
+  error?: string;
 }
 
 export interface GetUsersFavoritesProps {
-  userId: string,
-  token: string
+  userId: string;
+  token: string;
 }

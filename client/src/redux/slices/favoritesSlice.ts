@@ -4,9 +4,15 @@ import {
   GetUsersFavoritesProps,
 } from '../../types/favorites';
 import axios from 'axios';
+import { act } from 'react-dom/test-utils';
 
 const initialState: FavoritesSliceState = {
-  usersFavorites: { _id: '', favoritesItems: [] },
+  usersFavorites: {
+    _id: '',
+    favoritesItems: [],
+  },
+  isLoading: false,
+  error: undefined,
 };
 
 export const getUsersFavorites = createAsyncThunk(
@@ -14,7 +20,7 @@ export const getUsersFavorites = createAsyncThunk(
   async ({ userId, token }: GetUsersFavoritesProps) => {
     try {
       const response = await axios.get(
-        `https://qzero-market-backend.herokuapp.com/api/carts/${userId}`,
+        `https://qzero-market-backend.herokuapp.com/api/favorites/${userId}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -36,9 +42,23 @@ const favoritesSlice = createSlice({
   initialState: initialState,
   reducers: {},
   extraReducers: (builder) => {
-    builder.addCase(getUsersFavorites.fulfilled, (state, action) => {
-      state.usersFavorites = action.payload;
-    });
+    // getUsersFavorites
+    builder
+      .addCase(getUsersFavorites.pending, (state) => {
+        state.usersFavorites = { _id: '', favoritesItems: [] };
+        state.isLoading = true;
+        state.error = undefined;
+      })
+      .addCase(getUsersFavorites.fulfilled, (state, action) => {
+        state.usersFavorites = action.payload;
+        state.isLoading = false;
+        state.error = undefined;
+      })
+      .addCase(getUsersFavorites.rejected, (state, action) => {
+        state.usersFavorites = { _id: '', favoritesItems: [] };
+        state.isLoading = true;
+        state.error = action.error.message;
+      });
   },
 });
 
