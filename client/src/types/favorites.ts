@@ -25,3 +25,8 @@ export interface GetUsersFavoritesProps {
   userId: string;
   token: string;
 }
+
+export interface ModifyFavoritesProps {
+  title: string;
+  token: string;
+}
