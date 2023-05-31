@@ -119,7 +119,27 @@ const favoritesSlice = createSlice({
         state.usersFavorites = action.payload;
       })
       // getAllFavorites
-      .addCase(getAllFavorites.fulfilled, (state, action) => {});
+      .addCase(getAllFavorites.pending, (state) => {
+        state.allFavorites = {
+          data: [],
+          isLoading: true,
+          error: undefined,
+        };
+      })
+      .addCase(getAllFavorites.fulfilled, (state, action) => {
+        state.allFavorites = {
+          data: action.payload,
+          isLoading: false,
+          error: undefined,
+        };
+      })
+      .addCase(getAllFavorites.rejected, (state, action) => {
+        state.allFavorites = {
+          data: [],
+          isLoading: false,
+          error: action.error.message,
+        };
+      });
   },
 });
 
