@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import {
   FavoritesSliceState,
+  GetAllFavoritesProps,
   GetUsersFavoritesProps,
   ModifyFavoritesProps,
 } from '../../types/favorites';
@@ -9,11 +10,15 @@ import { toast } from 'react-toastify';
 
 const initialState: FavoritesSliceState = {
   usersFavorites: {
-    _id: '',
-    favoritesItems: [],
+    data: { _id: '', favoritesItems: [] },
+    isLoading: false,
+    error: undefined,
   },
-  isLoading: false,
-  error: undefined,
+  allFavorites: {
+    data: [],
+    isLoading: false,
+    error: undefined,
+  },
 };
 
 export const getUsersFavorites = createAsyncThunk(
@@ -61,31 +66,60 @@ export const modifyFavorites = createAsyncThunk(
   }
 );
 
+export const getAllFavorites = createAsyncThunk(
+  'getAllFavorites',
+  async ({ token }: GetAllFavoritesProps) => {
+    try {
+      const response = await axios.get(
+        'https://qzero-market-backend.herokuapp.com/api/favorites',
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      return response.data;
+    } catch (err) {
+      console.log(err);
+    }
+  }
+);
+
 const favoritesSlice = createSlice({
   name: 'favorites slice',
   initialState: initialState,
   reducers: {},
   extraReducers: (builder) => {
-    // getUsersFavorites
     builder
+      // getUsersFavorites
       .addCase(getUsersFavorites.pending, (state) => {
-        state.usersFavorites = { _id: '', favoritesItems: [] };
-        state.isLoading = true;
-        state.error = undefined;
+        state.usersFavorites = {
+          data: { _id: '', favoritesItems: [] },
+          isLoading: true,
+          error: undefined,
+        };
       })
       .addCase(getUsersFavorites.fulfilled, (state, action) => {
-        state.usersFavorites = action.payload;
-        state.isLoading = false;
-        state.error = undefined;
+        state.usersFavorites = {
+          data: action.payload,
+          isLoading: false,
+          error: undefined,
+        };
       })
       .addCase(getUsersFavorites.rejected, (state, action) => {
-        state.usersFavorites = { _id: '', favoritesItems: [] };
-        state.isLoading = true;
-        state.error = action.error.message;
+        state.usersFavorites = {
+          data: { _id: '', favoritesItems: [] },
+          isLoading: false,
+          error: action.error.message,
+        };
       })
+      // modifyFavorites
       .addCase(modifyFavorites.fulfilled, (state, action) => {
         state.usersFavorites = action.payload;
-      });
+      })
+      // getAllFavorites
+      .addCase(getAllFavorites.fulfilled, (state, action) => {});
   },
 });
 

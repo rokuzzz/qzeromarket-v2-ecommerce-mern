@@ -16,9 +16,16 @@ export interface Favorites {
 }
 
 export interface FavoritesSliceState {
-  usersFavorites?: Favorites;
-  isLoading: boolean;
-  error?: string;
+  usersFavorites?: {
+    data: Favorites;
+    isLoading: boolean;
+    error?: string;
+  };
+  allFavorites?: {
+    data: Favorites[];
+    isLoading: boolean;
+    error?: string;
+  };
 }
 
 export interface GetUsersFavoritesProps {
@@ -28,5 +35,9 @@ export interface GetUsersFavoritesProps {
 
 export interface ModifyFavoritesProps {
   title: string;
+  token: string;
+}
+
+export interface GetAllFavoritesProps {
   token: string;
 }

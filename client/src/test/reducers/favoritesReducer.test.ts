@@ -27,7 +27,7 @@ describe('test favorites reducer', () => {
     // );
 
     expect(
-      store.getState().favoritesReducer.usersFavorites?.favoritesItems[0]
+      store.getState().favoritesReducer.usersFavorites?.data.favoritesItems[0]
         .itemInFavorites.title
     ).toBe('Whispering Mist Wool Hoodie');
   });
@@ -42,7 +42,7 @@ describe('test favorites reducer', () => {
     );
 
     expect(
-      store.getState().favoritesReducer.usersFavorites?.favoritesItems[1]
+      store.getState().favoritesReducer.usersFavorites?.data.favoritesItems[1]
         .itemInFavorites.title
     ).toBe('Classic Black T-Shirt');
   });
