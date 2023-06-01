@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import {
+  DeleteFavoritesProps,
   FavoritesSliceState,
   GetAllFavoritesProps,
   GetUsersFavoritesProps,
@@ -86,6 +87,19 @@ export const getAllFavorites = createAsyncThunk(
   }
 );
 
+export const deleteFavorites = createAsyncThunk(
+  'deleteFavorites',
+  async ({ id, token }: DeleteFavoritesProps) => {
+    await axios.post(`http://localhost:5000/api/favorites/${id}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    return { _id: '', favoritesItems: [] };
+  }
+);
+
 const favoritesSlice = createSlice({
   name: 'favorites slice',
   initialState: initialState,
@@ -138,6 +152,14 @@ const favoritesSlice = createSlice({
           data: [],
           isLoading: false,
           error: action.error.message,
+        };
+      })
+      // deleteFavorites
+      .addCase(getAllFavorites.fulfilled, (state, action) => {
+        state.usersFavorites = {
+          data: action.payload,
+          isLoading: false,
+          error: undefined,
         };
       });
   },

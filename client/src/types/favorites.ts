@@ -28,16 +28,23 @@ export interface FavoritesSliceState {
   };
 }
 
+export type token = string
+
 export interface GetUsersFavoritesProps {
   userId: string;
-  token: string;
+  token: token;
 }
 
 export interface ModifyFavoritesProps {
   title: string;
-  token: string;
+  token: token;
 }
 
 export interface GetAllFavoritesProps {
-  token: string;
+  token: token;
+}
+
+export interface DeleteFavoritesProps {
+  id: string;
+  token: token;
 }
