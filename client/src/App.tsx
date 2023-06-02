@@ -7,6 +7,7 @@ import Home from './pages/Home';
 import EntryPage from './pages/EntryPage';
 import SignUp from './components/authorization/register/SignUp';
 import ProductDetails from './pages/ProductDetails';
+import Favorites from './pages/Favorites';
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
         <Route path='/' element={<PrivateRoute />}>
           <Route path='/' element={<Home />} />
           <Route path='/products/:productId' element={<ProductDetails />} />
+          <Route path='/favorites' element={<Favorites />} />
         </Route>
         <Route path='/login' element={<EntryPage />} />
         <Route path='/register' element={<SignUp />} />

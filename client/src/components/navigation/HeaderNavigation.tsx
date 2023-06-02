@@ -50,9 +50,14 @@ const HeaderNavigation = ({ isDownMd }: HeaderNavigationProps) => {
       </Link>
       <Box sx={{ flexGrow: 1 }} />
       <Box sx={{ display: { xs: 'none', sm: 'flex' } }}>
-        <IconButton size='large' color='inherit' aria-label='profile'>
-          <FavoriteIcon />
-        </IconButton>
+        <Link
+          to={'/favorites'}
+          style={{ textDecoration: 'none', color: 'inherit' }}
+        >
+          <IconButton size='large' color='inherit' aria-label='profile'>
+            <FavoriteIcon />
+          </IconButton>
+        </Link>
         <IconButton
           size='large'
           color='inherit'

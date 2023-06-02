@@ -155,7 +155,7 @@ const favoritesSlice = createSlice({
         };
       })
       // deleteFavorites
-      .addCase(getAllFavorites.fulfilled, (state, action) => {
+      .addCase(deleteFavorites.fulfilled, (state, action) => {
         state.usersFavorites = {
           data: action.payload,
           isLoading: false,
