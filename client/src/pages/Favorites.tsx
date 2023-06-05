@@ -2,28 +2,23 @@ import { Toolbar } from '@mui/material';
 
 import Header from '../components/navigation/Header';
 import FavoritesList from '../components/favorites/FavoritesList';
-import { useAppDispatch, useAppSelector } from '../hooks/common/appHooks';
-import { useEffect } from 'react';
-import { getUsersFavorites } from '../redux/slices/favoritesSlice';
+import { useAppSelector } from '../hooks/common/appHooks';
+import useToken from '../hooks/common/useToken';
+import useFetchUserFavorites from '../hooks/useFetchUserFavorites';
 
 const Favorites = () => {
   const { usersFavorites } = useAppSelector((state) => state.favoritesReducer);
-  const { data, isLoading } = usersFavorites || {
-    data: { _id: '', favoritesItems: [] },
+  const { _id: favoritesId, favoritesItems } = usersFavorites?.data || {
+    _id: '',
+    favoritesItems: [],
   };
 
-  const dispatch = useAppDispatch();
+  const { loggedInUser } = useAppSelector((state) => state.userReducer);
 
-  const accessToken = localStorage.getItem('access_token') || '';
+  const { _id: userId } = loggedInUser.data || { _id: '' };
+  const token = useToken();
 
-  // useEffect(() => {
-  //   dispatch(
-  //     getUsersFavorites({
-  //       userId: '',
-  //       token: accessToken,
-  //     })
-  //   );
-  // }, [data, isLoading]);
+  useFetchUserFavorites({ userId, token });
 
   return (
     <>
