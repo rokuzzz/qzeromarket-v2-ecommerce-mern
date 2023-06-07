@@ -1,6 +1,8 @@
 import styled from '@mui/material/styles/styled';
-import { Box, Grid, Typography } from '@mui/material';
+import { useTheme } from '@mui/material/styles';
+import { Box, Grid, Typography, useMediaQuery } from '@mui/material';
 import { useAppSelector } from '../../hooks/common/appHooks';
+import FavoritesCard from './FavoritesCard';
 
 const styles = {
   root: {
@@ -25,6 +27,9 @@ const FavoritesListWrapper = styled(Box)(({ theme }) => ({
 }));
 
 const FavoritesList = () => {
+  const theme = useTheme();
+  const isDownMedium = useMediaQuery(theme.breakpoints.down('md'));
+
   const { usersFavorites } = useAppSelector((state) => state.favoritesReducer);
   const { data, isLoading } = usersFavorites || {
     data: {
@@ -36,7 +41,7 @@ const FavoritesList = () => {
   // Create a new favoritesCards component for each product in the list
   const favoritesCards = data.favoritesItems.map((item) => (
     <Grid item xs={6} sm={6} md={4} key={item._id}>
-      {item.itemInFavorites.title}
+      <FavoritesCard itemInFavorites={item.itemInFavorites} />
     </Grid>
   ));
 
@@ -47,7 +52,9 @@ const FavoritesList = () => {
           Favorites
         </Typography>
       </Box>
-      {favoritesCards}
+      <Grid container columnSpacing={isDownMedium ? 1 : 2} rowSpacing={2}>
+        {favoritesCards}
+      </Grid>
     </FavoritesListWrapper>
   );
 };
