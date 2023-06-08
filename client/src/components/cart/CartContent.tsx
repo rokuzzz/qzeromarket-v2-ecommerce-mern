@@ -7,12 +7,12 @@ import { modifyCart } from '../../redux/slices/cartSlice';
 import CartItem from './CartItem';
 
 interface CartContentProps {
-  products: ProductInCart[] | undefined;
+  cartItems: ProductInCart[] | undefined;
   totalPrice: number | undefined;
 }
 
 const CartContent = ({
-  products: cartItems,
+  cartItems: cartItems,
   totalPrice: totalPrice,
 }: CartContentProps) => {
   const theme: Theme = useTheme();
@@ -62,7 +62,7 @@ const CartContent = ({
     return (
       <CartItem
         index={index}
-        products={cartItems}
+        cartItems={cartItems}
         productId={cartItemDetails}
         quantity={itemQuantity}
         imageUrl={imageUrl}

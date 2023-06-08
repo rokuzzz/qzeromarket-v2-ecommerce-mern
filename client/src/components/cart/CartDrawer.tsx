@@ -54,12 +54,12 @@ const CartDrawer = ({ cartIsOpen, setCartIsOpen }: CartDrawerProps) => {
     >
       <CartWrapper>
         <CartHeading
-          products={cartItems}
+          cartItems={cartItems}
           cartTotalQuantity={getCartTotalQuantity()}
           setCartIsOpen={setCartIsOpen}
         />
         <Divider />
-        <CartContent products={cartItems} totalPrice={totalPrice} />
+        <CartContent cartItems={cartItems} totalPrice={totalPrice} />
       </CartWrapper>
     </Drawer>
   );

@@ -16,7 +16,7 @@ import { CartItemDetails, ProductInCart } from '../../types/cart';
 
 interface CartItemProps {
   index: number;
-  products: ProductInCart[];
+  cartItems: ProductInCart[];
   productId: CartItemDetails;
   quantity: number;
   imageUrl?: string;
@@ -28,7 +28,7 @@ interface CartItemProps {
 
 const CartItem = ({
   index,
-  products: cartItems,
+  cartItems,
   productId: cartItem,
   quantity: itemQuantity,
   imageUrl,

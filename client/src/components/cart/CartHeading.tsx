@@ -6,19 +6,19 @@ import CloseIcon from '@mui/icons-material/Close';
 import { ProductInCart } from '../../types/cart';
 
 interface CartHeadingProps {
-  products: ProductInCart[] | undefined;
+  cartItems: ProductInCart[] | undefined;
   cartTotalQuantity: number;
   setCartIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const CartHeading = ({
-  products,
+  cartItems,
   cartTotalQuantity,
   setCartIsOpen,
 }: CartHeadingProps) => {
   return (
     <Box sx={{ display: 'flex', alignItems: 'center', mb: 1 }}>
-      {products?.length === 0 ? (
+      {cartItems?.length === 0 ? (
         <ShoppingBagOutlinedIcon sx={{ width: '32px', height: '32px' }} />
       ) : (
         <Box sx={{ display: 'flex', alignItems: 'center' }}>
