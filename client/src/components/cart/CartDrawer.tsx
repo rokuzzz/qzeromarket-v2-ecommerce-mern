@@ -10,9 +10,11 @@ import {
 } from '../../redux/slices/cartSlice';
 import CartContent from './CartContent';
 import CartHeading from './CartHeading';
+import EmptyCartContent from './EmptyCartContent';
 
 const CartWrapper = styled(Box)(({ theme }) => ({
   padding: '12px 32px 8px 32px',
+  flex: '1 0 auto',
 }));
 
 interface CartDrawerProps {
@@ -46,6 +48,8 @@ const CartDrawer = ({ cartIsOpen, setCartIsOpen }: CartDrawerProps) => {
       anchor='right'
       PaperProps={{
         sx: {
+          display: 'flex',
+          flexDirection: 'column',
           width: { xs: '100%', sm: 600 },
           maxWidth: '100%',
           overflow: 'auto',
@@ -59,7 +63,11 @@ const CartDrawer = ({ cartIsOpen, setCartIsOpen }: CartDrawerProps) => {
           setCartIsOpen={setCartIsOpen}
         />
         <Divider />
-        <CartContent cartItems={cartItems} totalPrice={totalPrice} />
+        {cartItems && cartItems?.length > 0 ? (
+          <CartContent cartItems={cartItems} totalPrice={totalPrice} />
+        ) : (
+          <EmptyCartContent setCartIsOpen={setCartIsOpen} />
+        )}
       </CartWrapper>
     </Drawer>
   );
