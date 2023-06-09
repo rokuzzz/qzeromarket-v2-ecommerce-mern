@@ -1,4 +1,5 @@
-import { Box, Typography } from '@mui/material';
+import { Box, Typography, useMediaQuery } from '@mui/material';
+import { useTheme } from '@mui/material/styles';
 import { Link } from 'react-router-dom';
 
 import emptyCartGif from '../../assets/emptyCartGif.gif';
@@ -8,6 +9,9 @@ interface EmptyCartContentProps {
 }
 
 const EmptyCartContent = ({ setCartIsOpen }: EmptyCartContentProps) => {
+  const theme = useTheme();
+  const isDownSmall = useMediaQuery(theme.breakpoints.down('sm'));
+
   return (
     <Box
       sx={{
@@ -16,12 +20,12 @@ const EmptyCartContent = ({ setCartIsOpen }: EmptyCartContentProps) => {
         justifyContent: 'center',
         alignItems: 'center',
         height: '92%',
-        margin: 'auto 0'
+        margin: 'auto 0',
       }}
     >
       <img
         src={emptyCartGif}
-        style={{ width: '100%', marginTop: '0px' }}
+        style={{ width: '90%', marginTop: '0px' }}
         alt='Empty Cart'
       />
       <Link
