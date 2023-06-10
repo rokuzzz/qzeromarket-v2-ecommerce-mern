@@ -1,12 +1,16 @@
 import { Box, Button, ButtonGroup, Grid, Typography } from '@mui/material';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import FavoriteIcon from '@mui/icons-material/Favorite';
 import { toast } from 'react-toastify';
 
 import { Product } from '../../types/products';
-import { useAppDispatch } from '../../hooks/common/appHooks';
+import { useAppDispatch, useAppSelector } from '../../hooks/common/appHooks';
 import { modifyCart } from '../../redux/slices/cartSlice';
 import useCartQuantity from '../../hooks/common/useCartQuantity';
 import useShoppingCart from '../../hooks/common/useShoppingCart';
+import { useEffect, useState } from 'react';
+import { modifyFavorites } from '../../redux/slices/favoritesSlice';
 
 interface ProductDetailsContentProps {
   styles: any;
@@ -92,6 +96,27 @@ const ProductDetailsContent = ({
     }
   };
 
+  const { usersFavorites } = useAppSelector((state) => state.favoritesReducer);
+
+  const [isInFavorites, setIsInFavorites] = useState(false);
+
+  useEffect(() => {
+    if (
+      usersFavorites?.data?.favoritesItems.find(
+        (i) => i.itemInFavorites.title === title
+      )
+    ) {
+      setIsInFavorites(true);
+    } else {
+      setIsInFavorites(false);
+    }
+  }, []);
+
+  const handleModifyFavorites = () => {
+    dispatch(modifyFavorites({ title: data?.title || '', token: accessToken }));
+    setIsInFavorites(!isInFavorites);
+  };
+
   return (
     <Box sx={styles.contentWrapper}>
       <Box>
@@ -150,8 +175,21 @@ const ProductDetailsContent = ({
             Add to Cart
           </Button>
         )}
-        <Button variant='outlined' color='primary' size='large' fullWidth>
+        <Button
+          variant='outlined'
+          color='primary'
+          size='large'
+          fullWidth
+          onClick={handleModifyFavorites}
+        >
           Add to Favorites
+          <Box ml={1} display='flex' alignItems='center'>
+            {isInFavorites ? (
+              <FavoriteIcon fontSize='small' />
+            ) : (
+              <FavoriteBorderIcon fontSize='small' />
+            )}
+          </Box>
         </Button>
       </Box>
     </Box>
