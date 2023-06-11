@@ -31,19 +31,16 @@ const FavoritesList = () => {
   const isDownMedium = useMediaQuery(theme.breakpoints.down('md'));
 
   const { usersFavorites } = useAppSelector((state) => state.favoritesReducer);
-  const { data, isLoading } = usersFavorites || {
-    data: {
-      _id: '',
-      favoritesItems: [],
-    },
-  };
+  const { data = { _id: '', favoritesItems: [] }, isLoading } =
+    usersFavorites || {};
 
   // Create a new favoritesCards component for each product in the list
-  const favoritesCards = data.favoritesItems.map((item) => (
-    <Grid item xs={6} sm={6} md={4} key={item._id}>
-      <FavoritesCard itemInFavorites={item.itemInFavorites} />
-    </Grid>
-  ));
+  const favoritesCards =
+    data.favoritesItems?.map((item) => (
+      <Grid item xs={6} sm={6} md={4} key={item._id}>
+        <FavoritesCard itemInFavorites={item.itemInFavorites} />
+      </Grid>
+    )) || [];
 
   return (
     <FavoritesListWrapper sx={styles.root}>

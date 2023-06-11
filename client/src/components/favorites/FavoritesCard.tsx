@@ -84,9 +84,7 @@ const FavoritesCard = ({ itemInFavorites }: FavoritesCardProps) => {
           </Typography>
         </CardContent>
       </CardActionArea>
-      <Button variant='outlined'>
-        Move to cart
-      </Button>
+      <Button variant='outlined'>Move to cart</Button>
     </Card>
   );
 };
