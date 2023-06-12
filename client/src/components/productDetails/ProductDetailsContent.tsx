@@ -5,12 +5,13 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 import { toast } from 'react-toastify';
 
 import { Product } from '../../types/products';
-import { useAppDispatch, useAppSelector } from '../../hooks/common/appHooks';
+import { useAppDispatch } from '../../hooks/common/appHooks';
 import { modifyCart } from '../../redux/slices/cartSlice';
-import useCartQuantity from '../../hooks/common/useCartQuantity';
-import useShoppingCart from '../../hooks/common/useShoppingCart';
-import { useEffect, useState } from 'react';
+import useCartQuantity from '../../hooks/cart/useCartQuantity';
+import useUserShoppingCart from '../../hooks/cart/useUserShoppingCart';
 import { modifyFavorites } from '../../redux/slices/favoritesSlice';
+import useFavoriteStatus from '../../hooks/favorites/useFavoriteStatus';
+import useToken from '../../hooks/common/useToken';
 
 interface ProductDetailsContentProps {
   styles: any;
@@ -28,10 +29,10 @@ const ProductDetailsContent = ({
     price: 0,
   };
 
-  const accessToken = localStorage.getItem('access_token') || '';
+  const accessToken = useToken();
 
   const dispatch = useAppDispatch();
-  const { cartItems } = useShoppingCart({ accessToken: accessToken });
+  const { cartItems } = useUserShoppingCart({ accessToken: accessToken });
   const { cartQuantity, setCartQuantity } = useCartQuantity({ _id, cartItems });
 
   const handleAddToCart = () => {
@@ -96,21 +97,7 @@ const ProductDetailsContent = ({
     }
   };
 
-  const { usersFavorites } = useAppSelector((state) => state.favoritesReducer);
-
-  const [isInFavorites, setIsInFavorites] = useState(false);
-
-  useEffect(() => {
-    if (
-      usersFavorites?.data?.favoritesItems.find(
-        (i) => i.itemInFavorites.title === title
-      )
-    ) {
-      setIsInFavorites(true);
-    } else {
-      setIsInFavorites(false);
-    }
-  }, []);
+  const { isInFavorites, setIsInFavorites } = useFavoriteStatus({ title });
 
   const handleModifyFavorites = () => {
     dispatch(modifyFavorites({ title: data?.title || '', token: accessToken }));
