@@ -4,7 +4,7 @@ import Header from '../components/navigation/Header';
 import FavoritesList from '../components/favorites/FavoritesList';
 import { useAppSelector } from '../hooks/common/appHooks';
 import useToken from '../hooks/common/useToken';
-import useFetchUserFavorites from '../hooks/useFetchUserFavorites';
+import useFetchUserFavorites from '../hooks/favorites/useFetchUserFavorites';
 
 const Favorites = () => {
   const { loggedInUser } = useAppSelector((state) => state.userReducer);

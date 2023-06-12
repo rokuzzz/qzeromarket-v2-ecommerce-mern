@@ -3,7 +3,7 @@ import { Box, Divider, Drawer } from '@mui/material';
 import { styled } from '@mui/system';
 
 import { useAppDispatch, useAppSelector } from '../../hooks/common/appHooks';
-import useShoppingCart from '../../hooks/common/useShoppingCart';
+import useUserShoppingCart from '../../hooks/cart/useUserShoppingCart';
 import {
   countTotalPrice,
   getUsersShoppingCart,
@@ -26,7 +26,7 @@ const CartDrawer = ({ cartIsOpen, setCartIsOpen }: CartDrawerProps) => {
   const accessToken = localStorage.getItem('access_token') || '';
 
   const dispatch = useAppDispatch();
-  const { cartItems, totalPrice } = useShoppingCart({ accessToken });
+  const { cartItems, totalPrice } = useUserShoppingCart({ accessToken });
 
   dispatch(countTotalPrice());
 
