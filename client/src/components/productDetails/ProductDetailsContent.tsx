@@ -12,6 +12,7 @@ import useUserShoppingCart from '../../hooks/cart/useUserShoppingCart';
 import { modifyFavorites } from '../../redux/slices/favoritesSlice';
 import useFavoriteStatus from '../../hooks/favorites/useFavoriteStatus';
 import useToken from '../../hooks/common/useToken';
+import CartInteractionButtons from './CartInteractionButtons';
 
 interface ProductDetailsContentProps {
   styles: any;
@@ -101,6 +102,7 @@ const ProductDetailsContent = ({
 
   const handleModifyFavorites = () => {
     dispatch(modifyFavorites({ title: data?.title || '', token: accessToken }));
+
     setIsInFavorites(!isInFavorites);
   };
 
@@ -118,50 +120,13 @@ const ProductDetailsContent = ({
         </Typography>
       </Box>
       <Box sx={styles.buttonsWrapper}>
-        {cartQuantity > 0 ? (
-          <Grid container spacing={1} alignItems='center' sx={{ mb: 1 }}>
-            <Grid item xs={8}>
-              <ButtonGroup
-                variant='contained'
-                size='large'
-                color='primary'
-                fullWidth
-              >
-                <Button
-                  disabled={cartQuantity <= 1 ? true : false}
-                  onClick={handleCartDecrease}
-                >
-                  -
-                </Button>
-                <Button disableTouchRipple>{cartQuantity}</Button>
-                <Button onClick={handleCartIncrease}>+</Button>
-              </ButtonGroup>
-            </Grid>
-            <Grid item xs={4}>
-              <Button
-                variant='contained'
-                color='error'
-                size='large'
-                fullWidth
-                sx={{ height: '42.25px' }}
-                onClick={handleDeleteCart}
-              >
-                <DeleteForeverIcon />
-              </Button>
-            </Grid>
-          </Grid>
-        ) : (
-          <Button
-            onClick={handleAddToCart}
-            variant='contained'
-            color='primary'
-            size='large'
-            fullWidth
-            sx={{ mb: 1 }}
-          >
-            Add to Cart
-          </Button>
-        )}
+        <CartInteractionButtons
+          cartQuantity={cartQuantity}
+          handleCartDecrease={handleCartDecrease}
+          handleCartIncrease={handleCartIncrease}
+          handleDeleteCart={handleDeleteCart}
+          handleAddToCart={handleAddToCart}
+        />
         <Button
           variant='outlined'
           color='primary'
