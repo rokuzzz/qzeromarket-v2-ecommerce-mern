@@ -13,6 +13,7 @@ import { modifyFavorites } from '../../redux/slices/favoritesSlice';
 import useFavoriteStatus from '../../hooks/favorites/useFavoriteStatus';
 import useToken from '../../hooks/common/useToken';
 import CartInteractionButtons from './CartInteractionButtons';
+import ModifyFavoritesButton from './ModifyFavoritesButton';
 
 interface ProductDetailsContentProps {
   styles: any;
@@ -127,22 +128,10 @@ const ProductDetailsContent = ({
           handleDeleteCart={handleDeleteCart}
           handleAddToCart={handleAddToCart}
         />
-        <Button
-          variant='outlined'
-          color='primary'
-          size='large'
-          fullWidth
-          onClick={handleModifyFavorites}
-        >
-          Add to Favorites
-          <Box ml={1} display='flex' alignItems='center'>
-            {isInFavorites ? (
-              <FavoriteIcon fontSize='small' />
-            ) : (
-              <FavoriteBorderIcon fontSize='small' />
-            )}
-          </Box>
-        </Button>
+        <ModifyFavoritesButton
+          handleModifyFavorites={handleModifyFavorites}
+          isInFavorites={isInFavorites}
+        />
       </Box>
     </Box>
   );
