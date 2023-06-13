@@ -1,7 +1,4 @@
-import { Box, Button, ButtonGroup, Grid, Typography } from '@mui/material';
-import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
-import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
-import FavoriteIcon from '@mui/icons-material/Favorite';
+import { Box, Typography } from '@mui/material';
 import { toast } from 'react-toastify';
 
 import { Product } from '../../types/products';
