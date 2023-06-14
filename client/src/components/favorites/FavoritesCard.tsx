@@ -7,9 +7,13 @@ import {
   Typography,
 } from '@mui/material';
 import { Link } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 import { ItemInFavorites } from '../../types/favorites';
-import { useAppSelector } from '../../hooks/common/appHooks';
+import { useAppDispatch, useAppSelector } from '../../hooks/common/appHooks';
+import { modifyFavorites } from '../../redux/slices/favoritesSlice';
+import useToken from '../../hooks/common/useToken';
+import { modifyCart } from '../../redux/slices/cartSlice';
 
 const styles = {
   card: {
@@ -59,11 +63,27 @@ interface FavoritesCardProps {
 }
 
 const FavoritesCard = ({ itemInFavorites }: FavoritesCardProps) => {
+  const dispatch = useAppDispatch();
   const { allProducts } = useAppSelector((state) => state.productReducer);
+
+  const token = useToken();
 
   const imageUrl = allProducts.data.find(
     (product) => product._id === itemInFavorites._id
   )?.imageUrl;
+
+  const handleMoveToCart = () => {
+    dispatch(
+      modifyCart({ title: itemInFavorites.title, quantity: 1, token: token })
+    );
+
+    dispatch(modifyFavorites({ title: itemInFavorites.title, token: token }));
+
+    toast.success(`${itemInFavorites.title} added to cart!`, {
+      position: 'bottom-right',
+      autoClose: 3000,
+    });
+  };
 
   return (
     <Card sx={styles.card}>
@@ -84,7 +104,9 @@ const FavoritesCard = ({ itemInFavorites }: FavoritesCardProps) => {
           </Typography>
         </CardContent>
       </CardActionArea>
-      <Button variant='outlined'>Move to cart</Button>
+      <Button variant='outlined' onClick={handleMoveToCart}>
+        Move to cart
+      </Button>
     </Card>
   );
 };

@@ -18,7 +18,7 @@ const useFetchUserFavorites = ({
     if (userId && token) {
       dispatch(getUsersFavorites({ userId, token }));
     }
-  }, [dispatch, userId, token]);
+  }, [dispatch, userId, token, dispatch]);
 };
 
 export default useFetchUserFavorites;
