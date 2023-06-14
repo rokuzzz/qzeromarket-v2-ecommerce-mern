@@ -63,23 +63,22 @@ interface FavoritesCardProps {
 }
 
 const FavoritesCard = ({ itemInFavorites }: FavoritesCardProps) => {
+  const { _id, title, price } = itemInFavorites;
+
   const dispatch = useAppDispatch();
+  const token = useToken();
   const { allProducts } = useAppSelector((state) => state.productReducer);
 
-  const token = useToken();
-
-  const imageUrl = allProducts.data.find(
-    (product) => product._id === itemInFavorites._id
-  )?.imageUrl;
+  // Helper function to find the product image url
+  const findProductImageUrl = () => {
+    return allProducts.data.find((product) => product._id === _id)?.imageUrl;
+  };
 
   const handleMoveToCart = () => {
-    dispatch(
-      modifyCart({ title: itemInFavorites.title, quantity: 1, token: token })
-    );
+    dispatch(modifyCart({ title, quantity: 1, token }));
+    dispatch(modifyFavorites({ title, token }));
 
-    dispatch(modifyFavorites({ title: itemInFavorites.title, token: token }));
-
-    toast.success(`${itemInFavorites.title} added to cart!`, {
+    toast.success(`${title} added to cart!`, {
       position: 'bottom-right',
       autoClose: 3000,
     });
@@ -88,19 +87,19 @@ const FavoritesCard = ({ itemInFavorites }: FavoritesCardProps) => {
   return (
     <Card sx={styles.card}>
       <CardActionArea>
-        <Link to={`/products/${itemInFavorites._id}`} style={styles.link}>
+        <Link to={`/products/${_id}`} style={styles.link}>
           <CardMedia
-            image={imageUrl}
-            title={itemInFavorites.title}
+            image={findProductImageUrl()}
+            title={title}
             sx={styles.media}
           />
         </Link>
         <CardContent sx={styles.cardContent}>
           <Typography variant='subtitle1' sx={styles.title}>
-            {itemInFavorites.title}
+            {title}
           </Typography>
           <Typography variant='overline' sx={styles.price}>
-            €{itemInFavorites.price}.00
+            €{price}.00
           </Typography>
         </CardContent>
       </CardActionArea>
