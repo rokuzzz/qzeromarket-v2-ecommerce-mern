@@ -19,7 +19,7 @@ export const getUsersShoppingCart = createAsyncThunk(
         }
       })
       
-      return (response.data ? response.data : {id: '', products: [], totalPrice: 0})
+      return (response.data ? response.data : {_id: '', cartItems: [], totalPrice: 0})
     } catch (err) {
       console.log(err)
     }
