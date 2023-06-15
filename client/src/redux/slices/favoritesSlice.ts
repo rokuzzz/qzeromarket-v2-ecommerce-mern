@@ -35,9 +35,7 @@ export const getUsersFavorites = createAsyncThunk(
         }
       );
 
-      return response.data
-        ? response.data
-        : { id: '', products: [], totalPrice: 0 };
+      return response.data ? response.data : { _id: '', favoritesItems: [] };
     } catch (err) {
       console.log(err);
     }
@@ -130,7 +128,11 @@ const favoritesSlice = createSlice({
       })
       // modifyFavorites
       .addCase(modifyFavorites.fulfilled, (state, action) => {
-        state.usersFavorites = action.payload;
+        state.usersFavorites = {
+          data: action.payload,
+          isLoading: false,
+          error: undefined,
+        };
       })
       // getAllFavorites
       .addCase(getAllFavorites.pending, (state) => {
