@@ -87,7 +87,7 @@ const ProductList = ({ products, isLoading }: ProductListProps) => {
     </Grid>
   ));
 
-  // If there are no products, render a grid of skeletons instead
+  // When the page is loading, render the skeleton grid instead
   const skeletonCards = [...Array(10)].map((_, index) => (
     <Grid item xs={6} sm={6} md={4} key={index} sx={{ flexGrow: 1 }}>
       <ProductCardSkeleton styles={styles} />
