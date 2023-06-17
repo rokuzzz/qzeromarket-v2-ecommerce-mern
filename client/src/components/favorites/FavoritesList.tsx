@@ -20,10 +20,10 @@ const styles = {
 
 const FavoritesListWrapper = styled(Box)(({ theme }) => ({
   [theme.breakpoints.down('md')]: {
-    margin: '0 0px',
+    margin: '0 0 32px 0',
   },
   [theme.breakpoints.up('md')]: {
-    margin: '0 48px',
+    margin: '0 48px 48px 48px',
   },
 }));
 
