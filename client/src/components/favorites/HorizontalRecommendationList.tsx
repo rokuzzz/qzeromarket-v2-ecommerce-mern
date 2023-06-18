@@ -78,8 +78,8 @@ const HorizontalRecommendationList = () => {
             <ImageListItemBar
               sx={{
                 background:
-                  'linear-gradient(to bottom, rgba(0,0,0,0.7) 0%, ' +
-                  'rgba(0,0,0,0.3) 70%, rgba(0,0,0,0) 100%)',
+                  'linear-gradient(to bottom, rgba(0,0,0,0.5) 0%, ' +
+                  'rgba(0,0,0,0.2) 50%, rgba(0,0,0,0) 100%)',
               }}
               title={item.title}
               position='top'
