@@ -14,6 +14,11 @@ const initialState: ProductSliceState = {
     isLoading: false,
     error: undefined,
   },
+  bestsellers: {
+    data: [],
+    isLoading: false,
+    error: undefined,
+  },
   currentProduct: {
     data: undefined,
     isLoading: false,
@@ -21,12 +26,26 @@ const initialState: ProductSliceState = {
   },
 };
 
-export const fetchAllProducts = createAsyncThunk(
+export const fetchFilteredProducts = createAsyncThunk(
   'fetchAllProducts',
   async ({ sort, order, page, limit, categories }: QueryParams) => {
     try {
       const response = await axios.get(
         `https://qzero-market-backend.herokuapp.com/api/products?${sort}${order}${page}${limit}${categories}`
+      );
+      return response.data ? response.data : [];
+    } catch (err) {
+      console.log(err);
+    }
+  }
+);
+
+export const fetchBestsellers = createAsyncThunk(
+  'fetchBestsellers',
+  async () => {
+    try {
+      const response = await axios.get(
+        `https://qzero-market-backend.herokuapp.com/api/products?categories=Bestsellers&limit=1000`
       );
       return response.data ? response.data : [];
     } catch (err) {
@@ -125,24 +144,46 @@ const productSlice = createSlice({
   initialState: initialState,
   reducers: {},
   extraReducers: (builder) => {
-    // fetchAllProducts
+    // fetchFilteredProducts
     builder
-      .addCase(fetchAllProducts.pending, (state) => {
+      .addCase(fetchFilteredProducts.pending, (state) => {
         state.allProducts = {
           data: [],
           isLoading: true,
           error: undefined,
         };
       })
-      .addCase(fetchAllProducts.fulfilled, (state, action) => {
+      .addCase(fetchFilteredProducts.fulfilled, (state, action) => {
         state.allProducts = {
           data: action.payload,
           isLoading: false,
           error: undefined,
         };
       })
-      .addCase(fetchAllProducts.rejected, (state, action) => {
+      .addCase(fetchFilteredProducts.rejected, (state, action) => {
         state.allProducts = {
+          data: [],
+          isLoading: false,
+          error: action.error.message,
+        };
+      })
+      // fetchBestsellers
+      .addCase(fetchBestsellers.pending, (state) => {
+        state.bestsellers = {
+          data: [],
+          isLoading: true,
+          error: undefined,
+        };
+      })
+      .addCase(fetchBestsellers.fulfilled, (state, action) => {
+        state.bestsellers = {
+          data: action.payload,
+          isLoading: false,
+          error: undefined,
+        };
+      })
+      .addCase(fetchBestsellers.rejected, (state, action) => {
+        state.bestsellers = {
           data: [],
           isLoading: false,
           error: action.error.message,

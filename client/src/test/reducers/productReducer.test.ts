@@ -1,8 +1,7 @@
 import { UpdatedProduct } from './../../types/products';
 import { getProductByID, createProduct, deleteProduct, updateProduct } from './../../redux/slices/productSlice';
-import { fetchAllProducts } from "../../redux/slices/productSlice"
+import { fetchFilteredProducts } from "../../redux/slices/productSlice"
 import createTestStore from "../utils/testStore"
-import { NewProductData } from '../../types/products';
 
 let store = createTestStore()
 
@@ -12,7 +11,7 @@ beforeEach(() => {
 
 describe('test product reducer', () => {
   test('should get a list of products based on the query parameters', async () => {
-    await store.dispatch(fetchAllProducts({
+    await store.dispatch(fetchFilteredProducts({
       sort: '&sort=price',
       order: '&order=asc',
       page: '&page=1',
@@ -31,7 +30,7 @@ describe('test product reducer', () => {
 
   // // does not work yet
   // test('should create a new product', async () => {
-  //   await store.dispatch(fetchAllProducts({}))
+  //   await store.dispatch(fetchFilteredProducts({}))
   //   const previousState = store.getState().productReducer.allProducts
   //   console.log('prev state: ', previousState.length)
 
@@ -76,7 +75,7 @@ describe('test product reducer', () => {
   })
 
   test('should delete the product and return updated product list', async () => {
-    await store.dispatch(fetchAllProducts({}))
+    await store.dispatch(fetchFilteredProducts({}))
     const prevState = store.getState().productReducer.allProducts
 
     await store.dispatch(deleteProduct({
