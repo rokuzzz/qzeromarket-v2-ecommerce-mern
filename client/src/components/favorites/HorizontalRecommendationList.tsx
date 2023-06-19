@@ -1,7 +1,6 @@
 import { useEffect } from 'react';
 import {
   Box,
-  CardActionArea,
   IconButton,
   ImageList,
   ImageListItem,
@@ -12,7 +11,10 @@ import styled from '@mui/material/styles/styled';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 
 import { useAppDispatch, useAppSelector } from '../../hooks/common/appHooks';
-import { fetchAllProducts } from '../../redux/slices/productSlice';
+import {
+  fetchBestsellers,
+  fetchFilteredProducts,
+} from '../../redux/slices/productSlice';
 import { Link } from 'react-router-dom';
 
 const FavoritesHorizontalListWrapper = styled(Box)(({ theme }) => ({
@@ -26,22 +28,22 @@ const FavoritesHorizontalListWrapper = styled(Box)(({ theme }) => ({
 
 const HorizontalRecommendationList = () => {
   const dispatch = useAppDispatch();
-  const { allProducts } = useAppSelector((state) => state.productReducer);
+  const { bestsellers } = useAppSelector((state) => state.productReducer);
 
-  const { data, isLoading } = allProducts;
+  const { data, isLoading } = bestsellers;
 
   useEffect(() => {
-    dispatch(
-      fetchAllProducts({
-        categories: '&categories=Bestsellers',
-        limit: '&limit=100',
-      })
-    );
+    dispatch(fetchFilteredProducts({}));
+
+    dispatch(fetchBestsellers());
   }, []);
 
   return (
     <FavoritesHorizontalListWrapper>
-      <Typography variant='h5' sx={{ fontWeight: 700, opacity: '80%' }}>
+      <Typography
+        variant='h5'
+        sx={{ fontWeight: 700, opacity: '80%', marginLeft: '48px' }}
+      >
         Find Your Next Favorite
       </Typography>
       <ImageList
@@ -60,12 +62,13 @@ const HorizontalRecommendationList = () => {
             key={index}
             sx={{
               flex: '0 0 auto',
-              margin: 0.5,
               position: 'relative',
               display: 'flex',
               flexDirection: 'column',
               alignItems: 'center',
               width: '27%',
+              marginLeft: index === 0 ? '48px' : '0.25rem',
+              marginRight: index === data.length - 1 ? '48px' : '0.25rem',
             }}
           >
             <Link to={`/products/${item._id}`}>

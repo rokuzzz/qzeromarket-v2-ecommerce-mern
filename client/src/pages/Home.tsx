@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 
 import { useAppDispatch, useAppSelector } from '../hooks/common/appHooks';
-import { fetchAllProducts } from '../redux/slices/productSlice';
+import { fetchFilteredProducts } from '../redux/slices/productSlice';
 import Header from '../components/navigation/Header';
 import ProductList from '../components/products/ProductList';
 
@@ -23,7 +23,7 @@ const Home = () => {
     switch (selectedTab) {
       case 0:
         dispatch(
-          fetchAllProducts({
+          fetchFilteredProducts({
             categories: '&categories=All',
             limit: '&limit=100',
           })
@@ -31,7 +31,7 @@ const Home = () => {
         break;
       case 1:
         dispatch(
-          fetchAllProducts({
+          fetchFilteredProducts({
             categories: '&categories=New',
             limit: '&limit=100',
           })
@@ -39,7 +39,7 @@ const Home = () => {
         break;
       case 2:
         dispatch(
-          fetchAllProducts({
+          fetchFilteredProducts({
             categories: '&categories=Bestsellers',
             limit: '&limit=100',
           })
@@ -47,7 +47,7 @@ const Home = () => {
         break;
       case 3:
         dispatch(
-          fetchAllProducts({
+          fetchFilteredProducts({
             categories: '&categories=Clothing',
             limit: '&limit=100',
           })
@@ -55,7 +55,7 @@ const Home = () => {
         break;
       case 4:
         dispatch(
-          fetchAllProducts({
+          fetchFilteredProducts({
             categories: '&categories=Shoes',
             limit: '&limit=100',
           })
@@ -63,7 +63,7 @@ const Home = () => {
         break;
       case 5:
         dispatch(
-          fetchAllProducts({
+          fetchFilteredProducts({
             categories: '&categories=Accessories',
             limit: '&limit=100',
           })
@@ -71,7 +71,7 @@ const Home = () => {
         break;
       case 6:
         dispatch(
-          fetchAllProducts({
+          fetchFilteredProducts({
             categories: '&categories=Denim',
             limit: '&limit=100',
           })
@@ -79,7 +79,7 @@ const Home = () => {
         break;
       case 7:
         dispatch(
-          fetchAllProducts({
+          fetchFilteredProducts({
             categories: '&categories=Sportswear',
             limit: '&limit=100',
           })
