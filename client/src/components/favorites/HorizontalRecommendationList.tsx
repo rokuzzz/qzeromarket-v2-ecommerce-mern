@@ -42,7 +42,11 @@ const HorizontalRecommendationList = () => {
     <FavoritesHorizontalListWrapper>
       <Typography
         variant='h5'
-        sx={{ fontWeight: 700, opacity: '80%', marginLeft: '48px' }}
+        sx={{
+          fontWeight: 700,
+          opacity: '80%',
+          marginLeft: { xs: '8px', sm: '16px', md: '48px' },
+        }}
       >
         Find Your Next Favorite
       </Typography>
@@ -66,9 +70,17 @@ const HorizontalRecommendationList = () => {
               display: 'flex',
               flexDirection: 'column',
               alignItems: 'center',
-              width: '27%',
-              marginLeft: index === 0 ? '48px' : '0.25rem',
-              marginRight: index === data.length - 1 ? '48px' : '0.25rem',
+              width: { xs: '65%', sm: '40%', md: '27%' },
+              marginLeft: {
+                xs: index === 0 ? '8px' : '0.1rem',
+                sm: index === 0 ? '16px' : '0.1rem',
+                md: index === 0 ? '48px' : '0.25rem',
+              },
+              marginRight: {
+                xs: index === data.length - 1 ? '8px' : '0.1rem',
+                sm: index === data.length - 1 ? '16px' : '0.1rem',
+                md: index === data.length - 1 ? '48px' : '0.25rem',
+              },
             }}
           >
             <Link to={`/products/${item._id}`}>
