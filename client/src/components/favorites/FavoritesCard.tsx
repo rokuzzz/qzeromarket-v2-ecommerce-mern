@@ -73,7 +73,7 @@ const FavoritesCard = ({ itemInFavorites }: FavoritesCardProps) => {
   const findProductImageUrl = () => {
     return allProducts.data.find((product) => product._id === _id)?.imageUrl;
   };
-
+  
   const handleMoveToCart = () => {
     dispatch(modifyCart({ title, quantity: 1, token }));
     dispatch(modifyFavorites({ title, token }));

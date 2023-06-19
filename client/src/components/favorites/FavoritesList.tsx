@@ -9,9 +9,6 @@ const styles = {
   root: {
     flexGrow: 1,
   },
-  heading: {
-    margin: '20px',
-  },
   headingText: {
     fontWeight: 700,
     opacity: '80%',
@@ -20,10 +17,19 @@ const styles = {
 
 const FavoritesListWrapper = styled(Box)(({ theme }) => ({
   [theme.breakpoints.down('md')]: {
-    margin: '0 0 32px 0',
+    margin: '0 8px 32px 8px',
   },
   [theme.breakpoints.up('md')]: {
     margin: '0 48px 48px 48px',
+  },
+}));
+
+const StyledHeadingBox = styled(Box)(({ theme }) => ({
+  [theme.breakpoints.down('md')]: {
+    margin: '25px 0 10px',
+  },
+  [theme.breakpoints.up('md')]: {
+    margin: '50px 0 20px',
   },
 }));
 
@@ -36,8 +42,8 @@ const FavoritesList = () => {
     usersFavorites || {};
 
   // Create a new favoritesCards component for each product in the list
-  const favoritesCards = data.favoritesItems?.map((item) => (
-    <Grid item xs={6} sm={6} md={4} key={item._id}>
+  const favoritesCards = data.favoritesItems?.map((item, index) => (
+    <Grid item xs={6} sm={6} md={4} key={index + '.' + item._id}>
       <FavoritesCard itemInFavorites={item.itemInFavorites} />
     </Grid>
   ));
@@ -52,12 +58,12 @@ const FavoritesList = () => {
 
   return (
     <FavoritesListWrapper sx={styles.root}>
-      <Box sx={styles.heading}>
+      <StyledHeadingBox>
         <Typography variant='h5' sx={styles.headingText}>
           Favorites
         </Typography>
-      </Box>
-      <Grid container columnSpacing={isDownMedium ? 1 : 2} rowSpacing={2}>
+      </StyledHeadingBox>
+      <Grid container columnSpacing={isDownMedium ? 2 : 4} rowSpacing={2}>
         {isLoading ? skeletonCards : favoritesCards}
       </Grid>
     </FavoritesListWrapper>
