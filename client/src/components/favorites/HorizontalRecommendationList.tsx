@@ -33,7 +33,7 @@ const HorizontalRecommendationList = () => {
   const { data, isLoading } = bestsellers;
 
   useEffect(() => {
-    dispatch(fetchFilteredProducts({}));
+    dispatch(fetchFilteredProducts({ limit: '&limit=1000' }));
 
     dispatch(fetchBestsellers());
   }, []);
@@ -90,7 +90,7 @@ const HorizontalRecommendationList = () => {
                 style={{ width: '100%' }}
               />
             </Link>
-            <ImageListItemBar
+            {/* <ImageListItemBar
               sx={{
                 background:
                   'linear-gradient(to bottom, rgba(0,0,0,0.5) 0%, ' +
@@ -107,6 +107,12 @@ const HorizontalRecommendationList = () => {
                 </IconButton>
               }
               actionPosition='left'
+            /> */}
+            <ImageListItemBar
+              title={item.title}
+              subtitle={<span>price in eur: {item.price}.00</span>}
+              position='below'
+              sx={{ alignSelf: 'start', padding: '0 12px' }}
             />
           </ImageListItem>
         ))}
