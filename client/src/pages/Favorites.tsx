@@ -6,6 +6,7 @@ import { useAppSelector } from '../hooks/common/appHooks';
 import useToken from '../hooks/common/useToken';
 import useFetchUserFavorites from '../hooks/favorites/useFetchUserFavorites';
 import HorizontalRecommendationList from '../components/favorites/HorizontalRecommendationList';
+import Footer from '../components/navigation/Footer';
 
 const Favorites = () => {
   const { loggedInUser } = useAppSelector((state) => state.userReducer);
@@ -21,6 +22,7 @@ const Favorites = () => {
       <Toolbar sx={{ height: '60px' }} />
       <FavoritesList />
       <HorizontalRecommendationList />
+      <Footer />
     </>
   );
 };
