@@ -19,10 +19,10 @@ import { Link } from 'react-router-dom';
 
 const FavoritesHorizontalListWrapper = styled(Box)(({ theme }) => ({
   [theme.breakpoints.down('md')]: {
-    margin: '0 16px 32px 16px',
+    margin: '0 16px 24px 16px',
   },
   [theme.breakpoints.up('md')]: {
-    margin: '0 24px 48px 24px',
+    margin: '0 24px 24px 24px',
   },
 }));
 
