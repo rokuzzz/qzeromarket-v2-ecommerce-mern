@@ -9,7 +9,7 @@ const Footer = () => {
     display: 'flex',
     justifyContent: 'space-around',
     gap: theme.spacing(5),
-    margin: '24px auto 24px auto',
+    margin: '12px auto 24px auto',
     [theme.breakpoints.down('sm')]: {
       flexDirection: 'column',
       textAlign: 'center',

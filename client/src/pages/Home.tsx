@@ -4,6 +4,7 @@ import { useAppDispatch, useAppSelector } from '../hooks/common/appHooks';
 import { fetchFilteredProducts } from '../redux/slices/productSlice';
 import Header from '../components/navigation/Header';
 import ProductList from '../components/products/ProductList';
+import Footer from '../components/navigation/Footer';
 
 const Home = () => {
   const { data, isLoading } = useAppSelector(
@@ -92,6 +93,7 @@ const Home = () => {
     <>
       <Header selectedTab={selectedTab} handleTabChange={handleTabChange} />
       <ProductList products={data} isLoading={isLoading} />
+      <Footer />
     </>
   );
 };
