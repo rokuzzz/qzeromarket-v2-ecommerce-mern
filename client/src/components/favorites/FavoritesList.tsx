@@ -63,7 +63,11 @@ const FavoritesList = () => {
           Favorites
         </Typography>
       </StyledHeadingBox>
-      <Grid container columnSpacing={isDownMedium ? 2 : 4} rowSpacing={2}>
+      <Grid
+        container
+        columnSpacing={isDownMedium ? 2 : 4}
+        rowSpacing={isDownMedium ? 3 : 6}
+      >
         {isLoading ? skeletonCards : favoritesCards}
       </Grid>
     </FavoritesListWrapper>

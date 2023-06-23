@@ -1,15 +1,15 @@
-import { ClassNameMap } from '@mui/material/styles';
 import {
   Card,
   CardActionArea,
-  CardContent,
   CardMedia,
   Typography,
 } from '@mui/material';
+import styled from '@mui/material/styles/styled';
 
 import { Product } from '../../types/products';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
+import { ProductDetailsCardContent } from '../../styles/products';
 
 interface SingleProductProps {
   product: Product;
@@ -26,14 +26,14 @@ const ProductCard = ({ product, styles }: SingleProductProps) => {
             image={product.imageUrl}
             title={product.title}
           />
-          <CardContent sx={styles.cardContent}>
+          <ProductDetailsCardContent>
             <Typography sx={styles.title} variant='subtitle1'>
               {product.title}
             </Typography>
             <Typography sx={styles.price} variant='overline'>
               €{product.price}.00
             </Typography>
-          </CardContent>
+          </ProductDetailsCardContent>
         </CardActionArea>
       </Link>
     </Card>

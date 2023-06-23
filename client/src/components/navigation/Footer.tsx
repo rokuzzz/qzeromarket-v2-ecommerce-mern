@@ -18,6 +18,7 @@ const Footer = () => {
 
   const FooterSectionTitle = styled(Typography)({
     textTransform: 'uppercase',
+    fontSize: '0.9rem',
     fontWeight: 700,
     lineHeight: 3,
   });

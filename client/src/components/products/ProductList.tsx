@@ -30,7 +30,6 @@ const styles = {
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'flex-start',
-    justifyContent: 'center',
   },
   media: {
     height: 0,
@@ -45,17 +44,17 @@ const styles = {
     opacity: '80%',
   },
   title: {
-    fontSize: '0.9rem',
+    fontSize: '1.1rem',
+    fontWeight: 700,
     lineHeight: 1.2,
     margin: '8px 0 0',
     whiteSpace: 'nowrap',
   },
   price: {
-    fontSize: '1rem',
-    fontWeight: 900,
+    fontSize: '0.9rem',
+    fontWeight: 500,
     lineHeight: 1.2,
-    opacity: '80%',
-    margin: '4px 0 32px',
+    margin: '12px 0 32px',
   },
 };
 
