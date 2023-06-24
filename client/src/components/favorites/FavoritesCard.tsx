@@ -14,6 +14,11 @@ import { useAppDispatch, useAppSelector } from '../../hooks/common/appHooks';
 import { modifyFavorites } from '../../redux/slices/favoritesSlice';
 import useToken from '../../hooks/common/useToken';
 import { modifyCart } from '../../redux/slices/cartSlice';
+import {
+  FavoriteDetailsCardContent,
+  FavoritePriceTypography,
+  FavoriteTitleTypography,
+} from '../../styles/favorites';
 
 const styles = {
   card: {
@@ -73,7 +78,7 @@ const FavoritesCard = ({ itemInFavorites }: FavoritesCardProps) => {
   const findProductImageUrl = () => {
     return allProducts.data.find((product) => product._id === _id)?.imageUrl;
   };
-  
+
   const handleMoveToCart = () => {
     dispatch(modifyCart({ title, quantity: 1, token }));
     dispatch(modifyFavorites({ title, token }));
@@ -94,14 +99,14 @@ const FavoritesCard = ({ itemInFavorites }: FavoritesCardProps) => {
             sx={styles.media}
           />
         </Link>
-        <CardContent sx={styles.cardContent}>
-          <Typography variant='subtitle1' sx={styles.title}>
+        <FavoriteDetailsCardContent>
+          <FavoriteTitleTypography variant='subtitle1'>
             {title}
-          </Typography>
-          <Typography variant='overline' sx={styles.price}>
+          </FavoriteTitleTypography>
+          <FavoritePriceTypography variant='subtitle1'>
             €{price}.00
-          </Typography>
-        </CardContent>
+          </FavoritePriceTypography>
+        </FavoriteDetailsCardContent>
       </CardActionArea>
       <Button variant='outlined' onClick={handleMoveToCart}>
         Move to cart

@@ -5,6 +5,11 @@ import {
   Skeleton,
   Typography,
 } from '@mui/material';
+import {
+  FavoriteDetailsCardContent,
+  FavoritePriceTypography,
+  FavoriteTitleTypography,
+} from '../../styles/favorites';
 
 const styles = {
   card: {
@@ -42,18 +47,24 @@ const styles = {
 };
 
 const FavoritesCardSkeleton = () => {
+  const randSkeletonTitleWidth = Math.floor(Math.random() * 130) + 100;
+
   return (
     <Card sx={styles.card}>
       <CardActionArea>
         <Skeleton sx={styles.media} variant='rectangular' animation='wave' />
-        <CardContent sx={styles.cardContent}>
-          <Typography sx={styles.title} variant='subtitle1'>
-            <Skeleton width={'150px'} variant='text' animation='wave' />
-          </Typography>
-          <Typography sx={styles.price} variant='overline'>
-            <Skeleton width={'80px'} variant='text' animation='wave' />
-          </Typography>
-        </CardContent>
+        <FavoriteDetailsCardContent>
+          <FavoriteTitleTypography variant='subtitle1'>
+            <Skeleton
+              width={`${randSkeletonTitleWidth}px`}
+              variant='text'
+              animation='wave'
+            />
+          </FavoriteTitleTypography>
+          <FavoritePriceTypography variant='overline'>
+            <Skeleton width={'65px'} variant='text' animation='wave' />
+          </FavoritePriceTypography>
+        </FavoriteDetailsCardContent>
       </CardActionArea>
       <Skeleton
         variant='rectangular'
