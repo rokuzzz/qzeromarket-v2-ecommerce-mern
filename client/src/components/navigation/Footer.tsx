@@ -7,9 +7,12 @@ import LinkedInIcon from '@mui/icons-material/LinkedIn';
 const Footer = () => {
   const FooterLinkWrapper = styled(Container)(({ theme }) => ({
     display: 'flex',
-    justifyContent: 'space-around',
-    gap: theme.spacing(5),
-    margin: '12px auto 24px auto',
+    justifyContent: 'space-between',
+    width: 'auto',
+    margin: '12px 24px 24px',
+    [theme.breakpoints.down('md')]: {
+      margin: '12px 0px 24px',
+    },
     [theme.breakpoints.down('sm')]: {
       flexDirection: 'column',
       textAlign: 'center',
@@ -42,7 +45,7 @@ const Footer = () => {
   return (
     <>
       <Divider variant='middle' />
-      <FooterLinkWrapper>
+      <FooterLinkWrapper maxWidth={false}>
         <Box>
           <FooterSectionTitle variant='subtitle1'>Get Help</FooterSectionTitle>
           <FooterLink>Order Status</FooterLink>
@@ -60,7 +63,7 @@ const Footer = () => {
         </Box>
         <Box>
           <FooterSectionTitle variant='subtitle1'>
-            More From The Developer
+            From the Dev
           </FooterSectionTitle>
           <FooterLink>Nokia Luncher</FooterLink>
           <FooterLink>QZM V1</FooterLink>
