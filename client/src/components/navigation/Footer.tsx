@@ -26,7 +26,7 @@ const Footer = () => {
     lineHeight: 3,
   });
 
-  const FooterLink = styled(Typography)(({ theme }) => ({
+  const FooterLink = styled(Typography)({
     fontSize: '0.8rem',
     fontWeight: 300,
     lineHeight: 2,
@@ -34,7 +34,7 @@ const Footer = () => {
     '&:hover': {
       opacity: '70%',
     },
-  }));
+  });
 
   const CopyrightText = styled(Typography)({
     fontSize: '0.8rem',

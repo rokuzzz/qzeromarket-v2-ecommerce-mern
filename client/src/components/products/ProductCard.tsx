@@ -1,15 +1,13 @@
-import {
-  Card,
-  CardActionArea,
-  CardMedia,
-  Typography,
-} from '@mui/material';
-import styled from '@mui/material/styles/styled';
-
-import { Product } from '../../types/products';
+import { Card, CardActionArea, CardMedia } from '@mui/material';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { ProductDetailsCardContent } from '../../styles/products';
+
+import { Product } from '../../types/products';
+import {
+  ProductDetailsCardContent,
+  ProductPriceTypography,
+  ProductTitleTypography,
+} from '../../styles/products';
 
 interface SingleProductProps {
   product: Product;
@@ -27,12 +25,12 @@ const ProductCard = ({ product, styles }: SingleProductProps) => {
             title={product.title}
           />
           <ProductDetailsCardContent>
-            <Typography sx={styles.title} variant='subtitle1'>
+            <ProductTitleTypography variant='subtitle1'>
               {product.title}
-            </Typography>
-            <Typography sx={styles.price} variant='overline'>
+            </ProductTitleTypography>
+            <ProductPriceTypography variant='overline'>
               €{product.price}.00
-            </Typography>
+            </ProductPriceTypography>
           </ProductDetailsCardContent>
         </CardActionArea>
       </Link>

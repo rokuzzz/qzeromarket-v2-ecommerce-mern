@@ -54,7 +54,7 @@ const styles = {
     fontSize: '0.9rem',
     fontWeight: 500,
     lineHeight: 1.2,
-    margin: '12px 0 32px',
+    margin: '12px 0 16px',
   },
 };
 

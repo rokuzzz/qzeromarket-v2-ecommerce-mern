@@ -1,11 +1,13 @@
 import {
   Card,
   CardActionArea,
-  CardContent,
   Skeleton,
-  Typography,
 } from '@mui/material';
-import { ProductDetailsCardContent } from '../../styles/products';
+import {
+  ProductDetailsCardContent,
+  ProductPriceTypography,
+  ProductTitleTypography,
+} from '../../styles/products';
 
 interface ProductCardSkeletonProps {
   styles: any;
@@ -17,12 +19,12 @@ const ProductCardSkeleton = ({ styles }: ProductCardSkeletonProps) => {
       <CardActionArea>
         <Skeleton sx={styles.media} variant='rectangular' animation='wave' />
         <ProductDetailsCardContent>
-          <Typography sx={styles.title} variant='subtitle1'>
+          <ProductTitleTypography variant='subtitle1'>
             <Skeleton width={'150px'} variant='text' animation='wave' />
-          </Typography>
-          <Typography sx={styles.price} variant='overline'>
+          </ProductTitleTypography>
+          <ProductPriceTypography variant='overline'>
             <Skeleton width={'80px'} variant='text' animation='wave' />
-          </Typography>
+          </ProductPriceTypography>
         </ProductDetailsCardContent>
       </CardActionArea>
     </Card>
