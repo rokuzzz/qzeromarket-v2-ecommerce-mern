@@ -99,7 +99,7 @@ const ProductList = ({ products, isLoading }: ProductListProps) => {
       <Box sx={styles.heading}>
         <Typography variant='h5' sx={styles.headingText}>
           {isLoading ? 'X' : productsAmount}{' '}
-          {productsAmount > 1 ? 'results' : 'result'}
+          {productsAmount == 1 ? 'result' : 'results'}
         </Typography>
       </Box>
       <Grid container columnSpacing={isDownMedium ? 1 : 2} rowSpacing={2}>
