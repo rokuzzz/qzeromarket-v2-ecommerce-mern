@@ -1,11 +1,4 @@
-import {
-  Box,
-  Button,
-  Grid,
-  Skeleton,
-  Typography,
-  useMediaQuery,
-} from '@mui/material';
+import { Box, Grid, Skeleton, Typography, useMediaQuery } from '@mui/material';
 import { ProductDetailsWrapper } from '../../pages/ProductDetails';
 
 interface ProductDetailsSkeletonProps {
@@ -83,13 +76,14 @@ const ProductDetailsSkeleton = ({ styles }: ProductDetailsSkeletonProps) => {
                 animation='wave'
                 width={'100%'}
                 height={'42.25px'}
-                sx={{ mb: 1 }}
+                sx={{ mb: 1, borderRadius: '4px' }}
               />
               <Skeleton
                 variant='rectangular'
                 animation='wave'
                 width={'100%'}
                 height={'42.25px'}
+                style={{ borderRadius: '4px' }}
               />
             </Box>
           </Box>
