@@ -1,6 +1,7 @@
 import { Box } from '@mui/material';
 
 import { Product } from '../../types/products';
+import { ImageWrapper } from '../../pages/ProductDetails';
 
 interface ProductDetailsImageProps {
   styles: any;
@@ -11,9 +12,9 @@ const ProductDetailsImage = ({ styles, data }: ProductDetailsImageProps) => {
   const { imageUrl, title } = data || {};
 
   return (
-    <Box sx={styles.imageWrapper}>
+    <ImageWrapper>
       <img style={styles.image} src={imageUrl} alt={title}></img>
-    </Box>
+    </ImageWrapper>
   );
 };
 

@@ -11,6 +11,7 @@ import useFavoriteStatus from '../../hooks/favorites/useFavoriteStatus';
 import useToken from '../../hooks/common/useToken';
 import CartInteractionButtons from './CartInteractionButtons';
 import ModifyFavoritesButton from './ModifyFavoritesButton';
+import { ButtonsWrapper } from '../../pages/ProductDetails';
 
 interface ProductDetailsContentProps {
   styles: any;
@@ -107,17 +108,17 @@ const ProductDetailsContent = ({
   return (
     <Box sx={styles.contentWrapper}>
       <Box>
-        <Typography sx={styles.title} variant='h3' gutterBottom>
+        <Typography sx={styles.title} variant='h5' gutterBottom>
           {title}
+        </Typography>
+        <Typography sx={styles.price} variant='overline' gutterBottom>
+          €{price}.00
         </Typography>
         <Typography sx={styles.description} variant='body1' gutterBottom>
           {description}
         </Typography>
-        <Typography sx={styles.price} variant='h5' gutterBottom>
-          Product price: €{price}.00
-        </Typography>
       </Box>
-      <Box sx={styles.buttonsWrapper}>
+      <ButtonsWrapper>
         <CartInteractionButtons
           cartQuantity={cartQuantity}
           handleCartDecrease={handleCartDecrease}
@@ -129,7 +130,7 @@ const ProductDetailsContent = ({
           handleModifyFavorites={handleModifyFavorites}
           isInFavorites={isInFavorites}
         />
-      </Box>
+      </ButtonsWrapper>
     </Box>
   );
 };
