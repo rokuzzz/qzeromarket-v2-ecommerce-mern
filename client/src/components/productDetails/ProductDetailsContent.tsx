@@ -11,7 +11,7 @@ import useFavoriteStatus from '../../hooks/favorites/useFavoriteStatus';
 import useToken from '../../hooks/common/useToken';
 import CartInteractionButtons from './CartInteractionButtons';
 import ModifyFavoritesButton from './ModifyFavoritesButton';
-import { ButtonsWrapper } from '../../pages/ProductDetails';
+import { ButtonsWrapper } from '../../styles/productDetails';
 
 interface ProductDetailsContentProps {
   styles: any;
