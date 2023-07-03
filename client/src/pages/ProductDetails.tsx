@@ -45,10 +45,10 @@ const ProductDetails = () => {
       fontWeight: 500,
       lineHeight: 1.2,
     },
-    description: {
+    description: { margin: '16px 0 0' },
+    productInfoWrapper: {
       maxHeight: isUpMd ? `${availableHeight}px` : 'auto',
       overflowY: isUpMd ? 'auto' : 'hidden',
-      margin: '16px 0 0 0',
       padding: '0 32px 0 0',
       '&::-webkit-scrollbar': {
         width: '10px',

@@ -81,7 +81,7 @@ const ProductDetailsSkeleton = ({ styles }: ProductDetailsSkeletonProps) => {
                   height={'33px'}
                 />
               </Typography>
-              <Typography variant='body1' gutterBottom>
+              <Typography sx={styles.description} variant='body1' gutterBottom>
                 {typographyRowsSkeleton}
                 <Skeleton variant='text' animation='wave' width={'28%'} />
               </Typography>

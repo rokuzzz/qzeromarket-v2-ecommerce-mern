@@ -107,7 +107,7 @@ const ProductDetailsContent = ({
 
   return (
     <Box sx={styles.contentWrapper}>
-      <Box>
+      <Box sx={styles.productInfoWrapper}>
         <Typography sx={styles.title} variant='h5' gutterBottom>
           {title}
         </Typography>
