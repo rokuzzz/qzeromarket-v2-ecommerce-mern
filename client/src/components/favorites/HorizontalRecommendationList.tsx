@@ -1,14 +1,12 @@
 import { useEffect } from 'react';
 import {
   Box,
-  IconButton,
   ImageList,
   ImageListItem,
   ImageListItemBar,
   Typography,
 } from '@mui/material';
 import styled from '@mui/material/styles/styled';
-import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 
 import { useAppDispatch, useAppSelector } from '../../hooks/common/appHooks';
 import {
@@ -90,24 +88,6 @@ const HorizontalRecommendationList = () => {
                 style={{ width: '100%' }}
               />
             </Link>
-            {/* <ImageListItemBar
-              sx={{
-                background:
-                  'linear-gradient(to bottom, rgba(0,0,0,0.5) 0%, ' +
-                  'rgba(0,0,0,0.2) 50%, rgba(0,0,0,0) 100%)',
-              }}
-              title={item.title}
-              position='top'
-              actionIcon={
-                <IconButton
-                  sx={{ color: 'white' }}
-                  aria-label={`star ${item.title}`}
-                >
-                  <FavoriteBorderIcon />
-                </IconButton>
-              }
-              actionPosition='left'
-            /> */}
             <ImageListItemBar
               title={item.title}
               subtitle={<span>price in eur: {item.price}.00</span>}
