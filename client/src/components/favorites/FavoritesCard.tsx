@@ -2,9 +2,7 @@ import {
   Button,
   Card,
   CardActionArea,
-  CardContent,
   CardMedia,
-  Typography,
 } from '@mui/material';
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
