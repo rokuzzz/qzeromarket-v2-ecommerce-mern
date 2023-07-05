@@ -1,12 +1,10 @@
 import { useEffect } from 'react';
 import {
-  Box,
   ImageList,
   ImageListItem,
   ImageListItemBar,
   Typography,
 } from '@mui/material';
-import styled from '@mui/material/styles/styled';
 
 import { useAppDispatch, useAppSelector } from '../../hooks/common/appHooks';
 import {
@@ -14,15 +12,7 @@ import {
   fetchFilteredProducts,
 } from '../../redux/slices/productSlice';
 import { Link } from 'react-router-dom';
-
-const FavoritesHorizontalListWrapper = styled(Box)(({ theme }) => ({
-  [theme.breakpoints.down('md')]: {
-    margin: '0 16px 32px 16px',
-  },
-  [theme.breakpoints.up('md')]: {
-    margin: '0 24px 48px 24px',
-  },
-}));
+import { FavoritesHorizontalListWrapper } from '../../styles/favorites';
 
 const HorizontalRecommendationList = () => {
   const dispatch = useAppDispatch();
@@ -32,9 +22,8 @@ const HorizontalRecommendationList = () => {
 
   useEffect(() => {
     dispatch(fetchFilteredProducts({ limit: '&limit=1000' }));
-
     dispatch(fetchBestsellers());
-  }, []);
+  }, [dispatch]);
 
   return (
     <FavoritesHorizontalListWrapper>

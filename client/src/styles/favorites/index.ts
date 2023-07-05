@@ -1,4 +1,4 @@
-import { CardContent, Typography } from '@mui/material';
+import { Box, CardContent, Typography } from '@mui/material';
 import styled from '@mui/material/styles/styled';
 
 export const FavoriteDetailsCardContent = styled(CardContent)(({ theme }) => ({
@@ -42,5 +42,15 @@ export const FavoritePriceTypography = styled(Typography)(({ theme }) => ({
   },
   [theme.breakpoints.down('sm')]: {
     margin: '12px 0 16px',
+  },
+}));
+
+// HorizontalRecommendationList
+export const FavoritesHorizontalListWrapper = styled(Box)(({ theme }) => ({
+  [theme.breakpoints.down('md')]: {
+    margin: '0 16px 32px 16px',
+  },
+  [theme.breakpoints.up('md')]: {
+    margin: '0 24px 48px 24px',
   },
 }));
