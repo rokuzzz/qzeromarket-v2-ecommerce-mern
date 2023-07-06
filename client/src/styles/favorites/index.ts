@@ -1,4 +1,10 @@
-import { Box, CardContent, Typography } from '@mui/material';
+import {
+  Box,
+  CardContent,
+  ImageList,
+  ImageListItem,
+  Typography,
+} from '@mui/material';
 import styled from '@mui/material/styles/styled';
 
 export const FavoriteDetailsCardContent = styled(CardContent)(({ theme }) => ({
@@ -54,3 +60,21 @@ export const FavoritesHorizontalListWrapper = styled(Box)(({ theme }) => ({
     margin: '0 24px 48px 24px',
   },
 }));
+
+export const StyledRecommendationList = styled(ImageList)({
+  display: 'flex',
+  flexDirection: 'row',
+  overflowX: 'scroll',
+  scrollbarWidth: 'none', // For Firefox
+  '&::-webkit-scrollbar': {
+    display: 'none', // For Chrome, Safari and Opera
+  },
+});
+
+export const StyledRecommendationListItem = styled(ImageListItem)({
+  flex: '0 0 auto',
+  position: 'relative',
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'center',
+});

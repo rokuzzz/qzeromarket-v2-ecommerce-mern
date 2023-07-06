@@ -25,7 +25,7 @@ const ProductDetailsImage = ({
     if (imgRef.current) {
       const imgHeight = imgRef.current.offsetHeight; // Get actual image height
       const availableHeight =
-        imgHeight - (buttonsHeight + 40);
+        imgHeight - (buttonsHeight + 30);
       setAvailableHeight(availableHeight);
     }
   };

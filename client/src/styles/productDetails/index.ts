@@ -23,7 +23,7 @@ export const ButtonsWrapper = styled(Box)(({ theme }) => ({
   margin: '24px 0 0',
   [theme.breakpoints.up('md')]: {
     position: 'absolute',
-    bottom: '8px',
+    bottom: '0px',
     left: '16px',
     right: '32px',
     width: '90%',
