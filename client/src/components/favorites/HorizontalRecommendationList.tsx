@@ -1,5 +1,7 @@
 import { useEffect } from 'react';
 import {
+  Box,
+  CircularProgress,
   ImageList,
   ImageListItem,
   ImageListItemBar,
@@ -11,7 +13,6 @@ import {
   fetchBestsellers,
   fetchFilteredProducts,
 } from '../../redux/slices/productSlice';
-import { Link } from 'react-router-dom';
 import {
   FavoritesHorizontalListWrapper,
   StyledRecommendationList,
@@ -43,9 +44,17 @@ const HorizontalRecommendationList = () => {
         Find Your Next Favorite
       </Typography>
       <StyledRecommendationList>
-        {data.map((item, index) => (
-          <RecommendationItem data={data} item={item} index={index} />
-        ))}
+        {isLoading ? (
+          <Box sx={{ margin: '124px auto' }}>
+            <CircularProgress color='secondary' />
+          </Box>
+        ) : (
+          <>
+            {data.map((item, index) => (
+              <RecommendationItem data={data} item={item} index={index} />
+            ))}
+          </>
+        )}
       </StyledRecommendationList>
     </FavoritesHorizontalListWrapper>
   );
