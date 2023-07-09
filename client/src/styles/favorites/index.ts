@@ -7,6 +7,26 @@ import {
 } from '@mui/material';
 import styled from '@mui/material/styles/styled';
 
+// FavoritesList
+export const FavoritesListWrapper = styled(Box)(({ theme }) => ({
+  [theme.breakpoints.down('md')]: {
+    margin: '0 8px 32px 8px',
+  },
+  [theme.breakpoints.up('md')]: {
+    margin: '0 48px 48px 48px',
+  },
+}));
+
+export const StyledHeadingBox = styled(Box)(({ theme }) => ({
+  [theme.breakpoints.down('md')]: {
+    margin: '25px 0 10px',
+  },
+  [theme.breakpoints.up('md')]: {
+    margin: '50px 0 20px',
+  },
+}));
+
+// FavoritesCard
 export const FavoriteDetailsCardContent = styled(CardContent)(({ theme }) => ({
   display: 'flex',
   flexDirection: 'row',

@@ -1,9 +1,9 @@
-import styled from '@mui/material/styles/styled';
 import { useTheme } from '@mui/material/styles';
-import { Box, Grid, Typography, useMediaQuery } from '@mui/material';
+import { Grid, Typography, useMediaQuery } from '@mui/material';
 import { useAppSelector } from '../../hooks/common/appHooks';
 import FavoritesCard from './FavoritesCard';
 import FavoritesCardSkeleton from './FavoritesCardSkeleton';
+import { FavoritesListWrapper, StyledHeadingBox } from '../../styles/favorites';
 
 const styles = {
   root: {
@@ -14,24 +14,6 @@ const styles = {
     opacity: '80%',
   },
 };
-
-const FavoritesListWrapper = styled(Box)(({ theme }) => ({
-  [theme.breakpoints.down('md')]: {
-    margin: '0 8px 32px 8px',
-  },
-  [theme.breakpoints.up('md')]: {
-    margin: '0 48px 48px 48px',
-  },
-}));
-
-const StyledHeadingBox = styled(Box)(({ theme }) => ({
-  [theme.breakpoints.down('md')]: {
-    margin: '25px 0 10px',
-  },
-  [theme.breakpoints.up('md')]: {
-    margin: '50px 0 20px',
-  },
-}));
 
 const FavoritesList = () => {
   const theme = useTheme();
