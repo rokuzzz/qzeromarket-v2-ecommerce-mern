@@ -1,9 +1,10 @@
 import { useTheme } from '@mui/material/styles';
-import { Grid, Typography, useMediaQuery } from '@mui/material';
+import { Box, Grid, Typography, useMediaQuery } from '@mui/material';
 import { useAppSelector } from '../../hooks/common/appHooks';
 import FavoritesCard from './FavoritesCard';
 import FavoritesCardSkeleton from './FavoritesCardSkeleton';
 import { FavoritesListWrapper, StyledHeadingBox } from '../../styles/favorites';
+import EmptyFavorites from './EmptyFavorites';
 
 const styles = {
   root: {
@@ -40,18 +41,24 @@ const FavoritesList = () => {
 
   return (
     <FavoritesListWrapper sx={styles.root}>
-      <StyledHeadingBox>
-        <Typography variant='h5' sx={styles.headingText}>
-          Favorites
-        </Typography>
-      </StyledHeadingBox>
-      <Grid
-        container
-        columnSpacing={isDownMedium ? 2 : 4}
-        rowSpacing={isDownMedium ? 3 : 6}
-      >
-        {isLoading ? skeletonCards : favoritesCards}
-      </Grid>
+      {data.favoritesItems?.length > 0 ? (
+        <>
+          <StyledHeadingBox>
+            <Typography variant='h5' sx={styles.headingText}>
+              Favorites
+            </Typography>
+          </StyledHeadingBox>
+          <Grid
+            container
+            columnSpacing={isDownMedium ? 2 : 4}
+            rowSpacing={isDownMedium ? 3 : 6}
+          >
+            {isLoading ? skeletonCards : favoritesCards}
+          </Grid>
+        </>
+      ) : (
+        <EmptyFavorites />
+      )}
     </FavoritesListWrapper>
   );
 };
