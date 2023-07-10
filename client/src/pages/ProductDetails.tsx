@@ -15,6 +15,7 @@ import ProductDetailsSkeleton from '../components/productDetails/ProductDetailsS
 import useProductDetails from '../hooks/useProductDetails';
 import Footer from '../components/navigation/Footer';
 import { ProductDetailsWrapper } from '../styles/productDetails';
+import NewProductsList from '../components/productDetails/NewProductsList';
 
 const ProductDetails = () => {
   const { data, isLoading } = useProductDetails();
@@ -87,6 +88,7 @@ const ProductDetails = () => {
           </Grid>
         </ProductDetailsWrapper>
       )}
+      <NewProductsList />
       <Footer />
     </>
   );

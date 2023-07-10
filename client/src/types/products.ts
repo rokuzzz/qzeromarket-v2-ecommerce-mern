@@ -17,6 +17,11 @@ export interface ProductSliceState {
     isLoading: boolean;
     error: string | undefined;
   };
+  newProducts: {
+    data: Product[];
+    isLoading: boolean;
+    error: string | undefined;
+  };
   currentProduct: {
     data: Product | undefined;
     isLoading: boolean;

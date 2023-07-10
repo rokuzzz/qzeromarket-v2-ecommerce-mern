@@ -19,6 +19,11 @@ const initialState: ProductSliceState = {
     isLoading: false,
     error: undefined,
   },
+  newProducts: {
+    data: [],
+    isLoading: false,
+    error: undefined,
+  },
   currentProduct: {
     data: undefined,
     isLoading: false,
@@ -46,6 +51,20 @@ export const fetchBestsellers = createAsyncThunk(
     try {
       const response = await axios.get(
         `https://qzero-market-backend.herokuapp.com/api/products?categories=Bestsellers&limit=1000`
+      );
+      return response.data ? response.data : [];
+    } catch (err) {
+      console.log(err);
+    }
+  }
+);
+
+export const fetchNewProducts = createAsyncThunk(
+  'fetchBestsellers',
+  async () => {
+    try {
+      const response = await axios.get(
+        `https://qzero-market-backend.herokuapp.com/api/products?categories=New&limit=1000`
       );
       return response.data ? response.data : [];
     } catch (err) {
@@ -184,6 +203,28 @@ const productSlice = createSlice({
       })
       .addCase(fetchBestsellers.rejected, (state, action) => {
         state.bestsellers = {
+          data: [],
+          isLoading: false,
+          error: action.error.message,
+        };
+      })
+      // fetchNewProducts
+      .addCase(fetchNewProducts.pending, (state) => {
+        state.newProducts = {
+          data: [],
+          isLoading: true,
+          error: undefined,
+        };
+      })
+      .addCase(fetchNewProducts.fulfilled, (state, action) => {
+        state.newProducts = {
+          data: action.payload,
+          isLoading: false,
+          error: undefined,
+        };
+      })
+      .addCase(fetchNewProducts.rejected, (state, action) => {
+        state.newProducts = {
           data: [],
           isLoading: false,
           error: action.error.message,
