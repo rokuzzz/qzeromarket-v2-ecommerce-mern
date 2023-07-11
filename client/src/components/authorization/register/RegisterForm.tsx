@@ -16,7 +16,7 @@ interface RegisterFormProps {
   formData: FormData;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   isDownSmall: boolean;
-  isLoading: boolean
+  isLoading: boolean;
 }
 
 const RegisterForm = ({
@@ -24,7 +24,7 @@ const RegisterForm = ({
   formData,
   onChange,
   isDownSmall,
-  isLoading
+  isLoading,
 }: RegisterFormProps) => {
   const formInputValues = [
     {
