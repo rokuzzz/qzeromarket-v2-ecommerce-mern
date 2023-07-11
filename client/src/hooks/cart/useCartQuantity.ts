@@ -18,7 +18,6 @@ const useCartQuantity = ({cartItems, _id}: UseCartQuantityProps) => {
 
   useEffect(() => {
     let timeout: NodeJS.Timeout;;
-
     if (currentQuantity !== undefined && currentQuantity !== cartQuantity) {
       timeout = setTimeout(() => {
         setCartQuantity(currentQuantity);
@@ -27,6 +26,7 @@ const useCartQuantity = ({cartItems, _id}: UseCartQuantityProps) => {
 
     return () => clearTimeout(timeout);
   }, [currentQuantity]);
+
   return {
     cartQuantity, 
     setCartQuantity

@@ -1,63 +1,31 @@
-import { Grid, Paper, useMediaQuery, useTheme } from '@mui/material';
-import { useNavigate } from 'react-router-dom';
-import { styled } from '@mui/material/styles';
+import { Grid, useMediaQuery, useTheme } from '@mui/material';
 
 import ParticlesBackground from '../../common/particles/ParticlesBackground';
-import { useEffect, useState } from 'react';
-import { useAppDispatch, useAppSelector } from '../../../hooks/common/appHooks';
-import { login, loginByToken } from '../../../redux/slices/userSlice';
 import LoginForm from './LoginForm';
 import SignInHeading from './SignInHeading';
-
-const LoginWrapper = styled(Grid)(({ theme }) => ({
-  height: '100vh',
-  backgroundColor: theme.palette.background.default,
-}));
-
-const LoginBox = styled(Paper)(({ theme }) => ({
-  boxSizing: 'border-box',
-  padding: theme.spacing(10, 0),
-  textAlign: 'center',
-  color: theme.palette.text.secondary,
-  boxShadow: 'rgb(38, 57, 77) 0px 20px 30px -10px',
-  [theme.breakpoints.down('sm')]: {
-    boxShadow: 'none',
-  },
-}));
+import useLogin from '../../../hooks/authorization/useLogin';
+import { LoginFormContainer, LoginWrapper } from '../../../styles/login';
 
 const SignIn = () => {
-  const { loggedInUser } = useAppSelector((state) => state.userReducer);
-  const { data, isLoading } = loggedInUser;
-
-  const dispatch = useAppDispatch();
-  const navigate = useNavigate();
   const theme = useTheme();
-
   const isDownSmall = useMediaQuery(theme.breakpoints.down('sm'));
 
-  const token = localStorage.getItem('access_token');
-  useEffect(() => {
-    if (data) {
-      navigate('/');
-    } else {
-      dispatch(loginByToken(token));
-    }
-  }, [data]);
-
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-
-  const handleLogin = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-
-    dispatch(login({ username, password }));
-  };
+  const {
+    handleLogin,
+    username,
+    setUsername,
+    password,
+    setPassword,
+    isLoading,
+  } = useLogin();
 
   return (
     <LoginWrapper container justifyContent='center' alignItems='center'>
       <ParticlesBackground />
       <Grid item xs={10} sm={8} md={4}>
-        <LoginBox sx={isDownSmall ? {} : { position: 'relative', zIndex: 3 }}>
+        <LoginFormContainer
+          sx={isDownSmall ? {} : { position: 'relative', zIndex: 3 }}
+        >
           <SignInHeading isDownSmall={isDownSmall} />
           <LoginForm
             onSubmit={(e) => handleLogin(e)}
@@ -68,7 +36,7 @@ const SignIn = () => {
             isDownSmall={isDownSmall}
             isLoading={isLoading}
           />
-        </LoginBox>
+        </LoginFormContainer>
       </Grid>
     </LoginWrapper>
   );
