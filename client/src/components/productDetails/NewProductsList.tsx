@@ -35,7 +35,7 @@ const NewProductsList = () => {
       >
         New Arrivals
       </Typography>
-      <Grid container spacing={1.5} justifyContent='center'>
+      <Grid container spacing={1.5}>
         {data.slice(0, 9).map((item) => (
           <Grid item xs={6} sm={6} md={3} key={item._id}>
             <Card sx={{ borderRadius: '0px', boxShadow: 'none' }}>
