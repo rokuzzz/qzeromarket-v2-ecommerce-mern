@@ -60,7 +60,7 @@ export const fetchBestsellers = createAsyncThunk(
 );
 
 export const fetchNewProducts = createAsyncThunk(
-  'fetchBestsellers',
+  'fetchNewProducts',
   async () => {
     try {
       const response = await axios.get(
