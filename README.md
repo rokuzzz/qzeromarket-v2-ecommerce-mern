@@ -7,3 +7,28 @@ The continuous evolution of this project's codebase reflects the numerous improv
 This application not only served as a testament to my previously acquired skills but also as an invaluable learning platform. I delved into aspects of programming that were new to me, such as making code more readable. The experience reinforced the understanding that we write code primarily for people, not machines. It is of paramount importance that the code we create is readable, understandable, and maintainable for other developers.
 
 Through qzeromarket v2, I have gained a profound appreciation for the art of programming and the importance of continuous learning and improvement. I'm excited to present qzeromarket v2, and I look forward to the many more learning opportunities that lie ahead.
+
+## Tech Stack
+The qzeromarket v2 application is built with the following technologies:
+
+**Client:** 
+- Axios
+- DALL-E (OpenAI) - Used for rendering product images
+- Jest
+- Material UI
+- Particles
+- React.js
+- React Router
+- React-Toastify
+- Redux Toolkit
+- Redux-persist
+- Styled Components
+- TypeScript
+
+**Server:** 
+- Express.js
+- Jest
+- Mongoose
+- MongoDB
+- Node.js
+- TypeScript
