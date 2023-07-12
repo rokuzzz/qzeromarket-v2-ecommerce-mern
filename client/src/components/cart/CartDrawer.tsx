@@ -1,16 +1,13 @@
-import { useEffect } from 'react';
 import { Box, Divider, Drawer } from '@mui/material';
 import { styled } from '@mui/system';
 
-import { useAppDispatch, useAppSelector } from '../../hooks/common/appHooks';
+import { useAppDispatch } from '../../hooks/common/appHooks';
 import useUserShoppingCart from '../../hooks/cart/useUserShoppingCart';
-import {
-  countTotalPrice,
-  getUsersShoppingCart,
-} from '../../redux/slices/cartSlice';
+import { countTotalPrice } from '../../redux/slices/cartSlice';
 import CartContent from './CartContent';
 import CartHeading from './CartHeading';
 import EmptyCartContent from './EmptyCartContent';
+import useToken from '../../hooks/common/useToken';
 
 const CartWrapper = styled(Box)(({ theme }) => ({
   padding: '12px 32px 8px 32px',
@@ -23,7 +20,7 @@ interface CartDrawerProps {
 }
 
 const CartDrawer = ({ cartIsOpen, setCartIsOpen }: CartDrawerProps) => {
-  const accessToken = localStorage.getItem('access_token') || '';
+  const accessToken = useToken();
 
   const dispatch = useAppDispatch();
   const { cartItems, totalPrice } = useUserShoppingCart({ accessToken });

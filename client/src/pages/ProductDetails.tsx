@@ -1,11 +1,4 @@
-import {
-  Grid,
-  Toolbar,
-  Typography,
-  useMediaQuery,
-  useTheme,
-} from '@mui/material';
-import styled from '@mui/material/styles/styled';
+import { Grid, Toolbar, useMediaQuery, useTheme } from '@mui/material';
 import { useState } from 'react';
 
 import Header from '../components/navigation/Header';
@@ -18,8 +11,6 @@ import { ProductDetailsWrapper } from '../styles/productDetails';
 import NewProductsList from '../components/productDetails/NewProductsList';
 
 const ProductDetails = () => {
-  const { data, isLoading } = useProductDetails();
-
   const theme = useTheme();
   const isUpMd = useMediaQuery(theme.breakpoints.up('md'));
 
@@ -65,6 +56,8 @@ const ProductDetails = () => {
       },
     },
   };
+
+  const { data, isLoading } = useProductDetails();
 
   return (
     <>
