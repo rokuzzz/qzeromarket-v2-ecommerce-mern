@@ -32,3 +32,19 @@ The qzeromarket v2 application is built with the following technologies:
 - MongoDB
 - Node.js
 - TypeScript
+
+## API Reference
+
+#### Register a new user.
+
+```https://qzero-market-backend.herokuapp.com/api/auth/register
+  POST /auth/register
+```
+
+| Parameter | Type     | Description                |
+| :-------- | :------- | :------------------------- |
+| `firstname` | `string` | **Required** |
+| `lastname` | `string` | **Required** |
+| `username` | `string` | **Required** |
+| `email` | `string` | **Required** |
+| `password` | `string` | **Required** |
