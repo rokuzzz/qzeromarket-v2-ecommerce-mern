@@ -41,7 +41,7 @@ The qzeromarket v2 application is built with the following technologies:
   POST /auth/register
 ```
 
-| Parameter | Type     | Description                |
+| Request Body | Type     | Description                |
 | :-------- | :------- | :------------------------- |
 | `firstname` | `string` | **Required** |
 | `lastname` | `string` | **Required** |
@@ -55,7 +55,7 @@ The qzeromarket v2 application is built with the following technologies:
   POST /auth/login
 ```
 
-| Parameter | Type     | Description                |
+| Request Body | Type     | Description                |
 | :-------- | :------- | :------------------------- |
 | `username` | `string` | **Required** |
 | `password` | `string` | **Required** |
@@ -103,11 +103,14 @@ The qzeromarket v2 application is built with the following technologies:
 | Parameter | Type     | Description                |
 | :-------- | :------- | :------------------------- |
 | `id` | `string` | **Required** |
-| `firstname` | `string` |  |
-| `lastname` | `string` |  |
-| `username` | `string` |  |
-| `email` | `string` |  |
-| `password` | `string` |  |
+
+| Request Body | Type     | Description                |
+| :-------- | :------- | :------------------------- |
+| `firstname` | `string` | **Not required**  |
+| `lastname` | `string` | **Not required** |
+| `username` | `string` | **Not required** |
+| `email` | `string` | **Not required** |
+| `password` | `string` | **Not required** |
 
 | Header | Type     | Description                |
 | :-------- | :------- | :------------------------- |
@@ -118,6 +121,91 @@ The qzeromarket v2 application is built with the following technologies:
 ```https://qzero-market-backend.herokuapp.com/api/users/{id}
   DELETE /users/{id}
 ```
+| Parameter | Type     | Description                |
+| :-------- | :------- | :------------------------- |
+| `id` | `string` | **Required** |
+
+
+| Header | Type     | Description                |
+| :-------- | :------- | :------------------------- |
+| `authorization` | `string` | **Required**. Your JWT token |
+
+#### Create a product
+
+```https://qzero-market-backend.herokuapp.com/api/products
+  POST /products
+```
+
+| Request Body | Type     | Description                |
+| :-------- | :------- | :------------------------- |
+| `title` | `string` | **Required** |
+| `description` | `string` | **Required** |
+| `price` | `number` | **Required** |
+| `categories` | `string[]` | **Required** |
+| `image` | `multipart/form-data` | **Required** |
+
+| Header | Type     | Description                |
+| :-------- | :------- | :------------------------- |
+| `authorization` | `string` | **Required**. Your JWT token |
+
+#### Get product by id
+
+```https://qzero-market-backend.herokuapp.com/api/products/{id}
+  GET /products/{id}
+```
+
+| Parameter | Type     | Description                |
+| :-------- | :------- | :------------------------- |
+| `id` | `string` | **Required** |
+
+| Header | Type     | Description                |
+| :-------- | :------- | :------------------------- |
+| `authorization` | `string` | **Required**. Your JWT token |
+
+#### Get filtered products
+
+```https://qzero-market-backend.herokuapp.com/api/products/?categories=All&sort=price&order=desc&page=0&limit=10
+  GET /products
+```
+
+| Query | Type     | Description                |
+| :-------- | :------- | :------------------------- |
+| `categories` | `string` | **Not required** |
+| `sort` | `string` | **Not required** |
+| `order` | `string` | **Not required** |
+| `page` | `string` | **Not required** |
+| `limit` | `string` | **Not required** |
+
+
+#### Update a product
+
+```https://qzero-market-backend.herokuapp.com/api/products/{id}
+  PUT /products/{id}
+```
+
+| Parameter | Type     | Description                |
+| :-------- | :------- | :------------------------- |
+| `id` | `string` | **Required** |
+
+| Request Body | Type     | Description                |
+| :-------- | :------- | :------------------------- |
+| `title` | `string` | **Not required**  |
+| `description` | `string` | **Not required** |
+| `price` | `string` | **Not required** |
+| `categories` | `string` | **Not required** |
+
+| Header | Type     | Description                |
+| :-------- | :------- | :------------------------- |
+| `authorization` | `string` | **Required**. Your JWT token |
+
+#### Delete a product
+
+```https://qzero-market-backend.herokuapp.com/api/products/{id}
+  DELETE /products/{id}
+```
+| Parameter | Type     | Description                |
+| :-------- | :------- | :------------------------- |
+| `id` | `string` | **Required** |
 
 | Header | Type     | Description                |
 | :-------- | :------- | :------------------------- |
