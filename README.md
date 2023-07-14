@@ -35,7 +35,7 @@ The qzeromarket v2 application is built with the following technologies:
 
 ## API Reference
 
-#### Register a new user.
+#### Register a new user
 
 ```https://qzero-market-backend.herokuapp.com/api/auth/register
   POST /auth/register
@@ -48,3 +48,77 @@ The qzeromarket v2 application is built with the following technologies:
 | `username` | `string` | **Required** |
 | `email` | `string` | **Required** |
 | `password` | `string` | **Required** |
+
+#### Login
+
+```https://qzero-market-backend.herokuapp.com/api/auth/login
+  POST /auth/login
+```
+
+| Parameter | Type     | Description                |
+| :-------- | :------- | :------------------------- |
+| `username` | `string` | **Required** |
+| `password` | `string` | **Required** |
+
+#### Get user by id
+
+```https://qzero-market-backend.herokuapp.com/api/users/find/{id}
+  GET /users/find/{id}
+```
+
+| Parameter | Type     | Description                |
+| :-------- | :------- | :------------------------- |
+| `id` | `string` | **Required** |
+
+| Header | Type     | Description                |
+| :-------- | :------- | :------------------------- |
+| `authorization` | `string` | **Required**. Your JWT token |
+
+#### Get all users
+
+```https://qzero-market-backend.herokuapp.com/api/users
+  GET /users
+```
+
+| Header | Type     | Description                |
+| :-------- | :------- | :------------------------- |
+| `authorization` | `string` | **Required**. Your JWT token |
+
+#### Get user by jwt
+
+```https://qzero-market-backend.herokuapp.com/api/users/profile
+  GET /users/profile
+```
+
+| Header | Type     | Description                |
+| :-------- | :------- | :------------------------- |
+| `authorization` | `string` | **Required**. Your JWT token |
+
+#### Update a user
+
+```https://qzero-market-backend.herokuapp.com/api/users/{id}
+  PUT /users/{id}
+```
+
+| Parameter | Type     | Description                |
+| :-------- | :------- | :------------------------- |
+| `id` | `string` | **Required** |
+| `firstname` | `string` |  |
+| `lastname` | `string` |  |
+| `username` | `string` |  |
+| `email` | `string` |  |
+| `password` | `string` |  |
+
+| Header | Type     | Description                |
+| :-------- | :------- | :------------------------- |
+| `authorization` | `string` | **Required**. Your JWT token |
+
+#### Delete a user
+
+```https://qzero-market-backend.herokuapp.com/api/users/{id}
+  DELETE /users/{id}
+```
+
+| Header | Type     | Description                |
+| :-------- | :------- | :------------------------- |
+| `authorization` | `string` | **Required**. Your JWT token |
