@@ -1,32 +1,212 @@
-# Fullstack-Typescript-Project
+# qzeromarket v2
 
-You can follow the same topics as your backend project. It is also possible to switch the topic
+The "qzeromarket v2" is a full-stack e-commerce application developed with the MERN stack, leveraging TypeScript and Redux Toolkit. As a student and budding developer, the creation of this application has been a challenging yet enlightening journey that has significantly advanced my skills in full-stack web development.
 
-## Prerequisites
+The continuous evolution of this project's codebase reflects the numerous improvements and iterations it has undergone. With each alteration, I have strived for better performance, maintainability, and scalability, treating each development phase with the utmost seriousness and respect.
 
-1. Install mongodb or use MongoDB Atlas (cloud version) or:
-2. Install postgresql or use heroku (or any cloud-host psql database)
-2. Install nodejs (if you don't have it already)
+This application not only served as a testament to my previously acquired skills but also as an invaluable learning platform. I delved into aspects of programming that were new to me, such as making code more readable. The experience reinforced the understanding that we write code primarily for people, not machines. It is of paramount importance that the code we create is readable, understandable, and maintainable for other developers.
 
-## Setting Up for `API folder`
+Through qzeromarket v2, I have gained a profound appreciation for the art of programming and the importance of continuous learning and improvement. I'm excited to present qzeromarket v2, and I look forward to the many more learning opportunities that lie ahead.
 
-1. Create a `.env` file in the root directory and copy the content from `.env.example`
+## Tech Stack
+The qzeromarket v2 application is built with the following technologies:
 
-2. Make sure mongodb is running (if you are using local MongoDB)
-3. Install dependencies: `yarn`
-4. Use this command for development mode: `yarn run start:dev`
-5. If you need to customize your env, take a look at `secrets.ts` file
+**Client:** 
+- Axios
+- DALL-E (OpenAI) - Used for rendering product images
+- Jest
+- Material UI
+- Particles
+- React.js
+- React Router
+- React-Toastify
+- Redux Toolkit
+- Redux-persist
+- Styled Components
+- TypeScript
 
-## Requirements
+**Server:** 
+- Express.js
+- Jest
+- Mongoose
+- MongoDB
+- Node.js
+- TypeScript
 
-Below are the steps that you need to finish in order to finish this module
+## API Reference
 
-1. Explore the code base of the api folder, start with `server.ts` and `app.ts`
-2. Client folder is for the react frontend. Start with `api` first before moving on to `client`
-3. Create all the schema for your ERD
-4. Create CRUD endpoints for all the schema
-5. Separate the routers and controller, controller goes into the controller folders. Controllers only handles request and response, and will call service to process business logics.
-6. Create more controller for your app if needed. Eg: borrow books, add product to order
-7. For business logic like saving data to database, filtering, searching or updating, these are services and goes into services folder
-8. Add authentication middleware using passport, google and jwt strategy
-9. Add tests for your controllers and services. Remember to create the jwt token for your tests, because if your controller is protected, then the test should send the token also
+#### Register a new user
+
+```https://qzero-market-backend.herokuapp.com/api/auth/register
+  POST /auth/register
+```
+
+| Request Body | Type     | Description                |
+| :-------- | :------- | :------------------------- |
+| `firstname` | `string` | **Required** |
+| `lastname` | `string` | **Required** |
+| `username` | `string` | **Required** |
+| `email` | `string` | **Required** |
+| `password` | `string` | **Required** |
+
+#### Login
+
+```https://qzero-market-backend.herokuapp.com/api/auth/login
+  POST /auth/login
+```
+
+| Request Body | Type     | Description                |
+| :-------- | :------- | :------------------------- |
+| `username` | `string` | **Required** |
+| `password` | `string` | **Required** |
+
+#### Get user by id
+
+```https://qzero-market-backend.herokuapp.com/api/users/find/{id}
+  GET /users/find/{id}
+```
+
+| Parameter | Type     | Description                |
+| :-------- | :------- | :------------------------- |
+| `id` | `string` | **Required** |
+
+| Header | Type     | Description                |
+| :-------- | :------- | :------------------------- |
+| `authorization` | `string` | **Required**. Your JWT token |
+
+#### Get all users
+
+```https://qzero-market-backend.herokuapp.com/api/users
+  GET /users
+```
+
+| Header | Type     | Description                |
+| :-------- | :------- | :------------------------- |
+| `authorization` | `string` | **Required**. Your JWT token |
+
+#### Get user by jwt
+
+```https://qzero-market-backend.herokuapp.com/api/users/profile
+  GET /users/profile
+```
+
+| Header | Type     | Description                |
+| :-------- | :------- | :------------------------- |
+| `authorization` | `string` | **Required**. Your JWT token |
+
+#### Update a user
+
+```https://qzero-market-backend.herokuapp.com/api/users/{id}
+  PUT /users/{id}
+```
+
+| Parameter | Type     | Description                |
+| :-------- | :------- | :------------------------- |
+| `id` | `string` | **Required** |
+
+| Request Body | Type     | Description                |
+| :-------- | :------- | :------------------------- |
+| `firstname` | `string` | **Not required**  |
+| `lastname` | `string` | **Not required** |
+| `username` | `string` | **Not required** |
+| `email` | `string` | **Not required** |
+| `password` | `string` | **Not required** |
+
+| Header | Type     | Description                |
+| :-------- | :------- | :------------------------- |
+| `authorization` | `string` | **Required**. Your JWT token |
+
+#### Delete a user
+
+```https://qzero-market-backend.herokuapp.com/api/users/{id}
+  DELETE /users/{id}
+```
+| Parameter | Type     | Description                |
+| :-------- | :------- | :------------------------- |
+| `id` | `string` | **Required** |
+
+
+| Header | Type     | Description                |
+| :-------- | :------- | :------------------------- |
+| `authorization` | `string` | **Required**. Your JWT token |
+
+#### Create a product
+
+```https://qzero-market-backend.herokuapp.com/api/products
+  POST /products
+```
+
+| Request Body | Type     | Description                |
+| :-------- | :------- | :------------------------- |
+| `title` | `string` | **Required** |
+| `description` | `string` | **Required** |
+| `price` | `number` | **Required** |
+| `categories` | `string[]` | **Required** |
+| `image` | `multipart/form-data` | **Required** |
+
+| Header | Type     | Description                |
+| :-------- | :------- | :------------------------- |
+| `authorization` | `string` | **Required**. Your JWT token |
+
+#### Get product by id
+
+```https://qzero-market-backend.herokuapp.com/api/products/{id}
+  GET /products/{id}
+```
+
+| Parameter | Type     | Description                |
+| :-------- | :------- | :------------------------- |
+| `id` | `string` | **Required** |
+
+| Header | Type     | Description                |
+| :-------- | :------- | :------------------------- |
+| `authorization` | `string` | **Required**. Your JWT token |
+
+#### Get filtered products
+
+```https://qzero-market-backend.herokuapp.com/api/products/?categories=All&sort=price&order=desc&page=0&limit=10
+  GET /products
+```
+
+| Query | Type     | Description                |
+| :-------- | :------- | :------------------------- |
+| `categories` | `string` | **Not required** |
+| `sort` | `string` | **Not required** |
+| `order` | `string` | **Not required** |
+| `page` | `string` | **Not required** |
+| `limit` | `string` | **Not required** |
+
+
+#### Update a product
+
+```https://qzero-market-backend.herokuapp.com/api/products/{id}
+  PUT /products/{id}
+```
+
+| Parameter | Type     | Description                |
+| :-------- | :------- | :------------------------- |
+| `id` | `string` | **Required** |
+
+| Request Body | Type     | Description                |
+| :-------- | :------- | :------------------------- |
+| `title` | `string` | **Not required**  |
+| `description` | `string` | **Not required** |
+| `price` | `string` | **Not required** |
+| `categories` | `string` | **Not required** |
+
+| Header | Type     | Description                |
+| :-------- | :------- | :------------------------- |
+| `authorization` | `string` | **Required**. Your JWT token |
+
+#### Delete a product
+
+```https://qzero-market-backend.herokuapp.com/api/products/{id}
+  DELETE /products/{id}
+```
+| Parameter | Type     | Description                |
+| :-------- | :------- | :------------------------- |
+| `id` | `string` | **Required** |
+
+| Header | Type     | Description                |
+| :-------- | :------- | :------------------------- |
+| `authorization` | `string` | **Required**. Your JWT token |
