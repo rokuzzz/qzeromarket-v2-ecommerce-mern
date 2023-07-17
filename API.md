@@ -84,10 +84,72 @@
 ```https://qzero-market-backend.herokuapp.com/api/users/{id}
   DELETE /users/{id}
 ```
+
 | Parameter | Type     | Description                |
 | :-------- | :------- | :------------------------- |
 | `id` | `string` | **Required** |
 
+| Header | Type     | Description                |
+| :-------- | :------- | :------------------------- |
+| `authorization` | `string` | **Required**. Your JWT token |
+
+#### Create a category
+
+```https://qzero-market-backend.herokuapp.com/api/categories
+  POST /categories
+```
+
+| Request Body | Type     | Description                |
+| :-------- | :------- | :------------------------- |
+| `name` | `string` | **Required** |
+
+| Header | Type     | Description                |
+| :-------- | :------- | :------------------------- |
+| `authorization` | `string` | **Required**. Your JWT token |
+
+#### Get category by id
+
+```https://qzero-market-backend.herokuapp.com/api/categories/find/{id}
+  GET /categories/find/{id}
+```
+
+| Parameter | Type     | Description                |
+| :-------- | :------- | :------------------------- |
+| `id` | `string` | **Required** |
+
+#### Get all categories
+
+```https://qzero-market-backend.herokuapp.com/api/categories
+  GET /categories
+```
+
+#### Update a category
+
+```https://qzero-market-backend.herokuapp.com/api/categories/{id}
+  PUT /categories/{id}
+```
+
+| Parameter | Type     | Description                |
+| :-------- | :------- | :------------------------- |
+| `id` | `string` | **Required** |
+
+| Request Body | Type     | Description                |
+| :-------- | :------- | :------------------------- |
+| `name` | `string` | **Required**  |
+
+| Header | Type     | Description                |
+| :-------- | :------- | :------------------------- |
+| `authorization` | `string` | **Required**. Your JWT token |
+
+#### Delete a category
+
+```https://qzero-market-backend.herokuapp.com/api/categories/{id}
+  DELETE /categories/{id}
+```
+
+| Parameter | Type     | Description                |
+| :-------- | :------- | :------------------------- |
+| `id` | `string` | **Required** |
 
 | Header | Type     | Description                |
 | :-------- | :------- | :------------------------- |
