@@ -9,9 +9,9 @@ const Footer = () => {
     display: 'flex',
     justifyContent: 'space-between',
     width: 'auto',
-    margin: '12px 24px 24px',
+    margin: '24px 24px 32px',
     [theme.breakpoints.down('md')]: {
-      margin: '12px 0px 24px',
+      margin: '24px 0px 32px',
     },
     [theme.breakpoints.down('sm')]: {
       flexDirection: 'column',
