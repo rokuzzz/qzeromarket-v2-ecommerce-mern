@@ -1,5 +1,5 @@
 import { Product } from '../../types/products';
-import { ImageWrapper } from '../../styles/productDetails';
+import { ImageWrapper } from '../../styles/detailsSection';
 import { useEffect, useRef } from 'react';
 
 interface ProductDetailsImageProps {
@@ -24,8 +24,7 @@ const ProductDetailsImage = ({
   const updateHeight = () => {
     if (imgRef.current) {
       const imgHeight = imgRef.current.offsetHeight; // Get actual image height
-      const availableHeight =
-        imgHeight - (buttonsHeight + 30);
+      const availableHeight = imgHeight - (buttonsHeight + 30);
       setAvailableHeight(availableHeight);
     }
   };

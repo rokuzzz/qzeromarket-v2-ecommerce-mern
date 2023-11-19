@@ -1,16 +1,13 @@
-import { Grid, Toolbar, useMediaQuery, useTheme } from '@mui/material';
+import { Toolbar, useMediaQuery, useTheme } from '@mui/material';
 import { useState } from 'react';
 
 import Header from '../components/navigation/Header';
-import ProductDetailsImage from '../components/productDetails/ProductDetailsImage';
-import ProductDetailsContent from '../components/productDetails/ProductDetailsContent';
-import ProductDetailsSkeleton from '../components/productDetails/ProductDetailsSkeleton';
 import useProductDetails from '../hooks/useProductDetails';
 import Footer from '../components/navigation/Footer';
-import { ProductDetailsWrapper } from '../styles/productDetails';
-import NewProductsList from '../components/productDetails/NewProductsList';
+import NewProductsList from '../components/LatestArrivalsList';
+import DetailsSection from '../components/DetailsSection';
 
-const ProductDetails = () => {
+const ItemDetailsPage = () => {
   const theme = useTheme();
   const isUpMd = useMediaQuery(theme.breakpoints.up('md'));
 
@@ -63,28 +60,16 @@ const ProductDetails = () => {
     <>
       <Header />
       <Toolbar sx={{ height: '60px' }} />
-      {isLoading ? (
-        <ProductDetailsSkeleton styles={styles} />
-      ) : (
-        <ProductDetailsWrapper>
-          <Grid container spacing={2}>
-            <Grid item xs={12} md={7}>
-              <ProductDetailsImage
-                styles={styles}
-                data={data}
-                setAvailableHeight={setAvailableHeight}
-              />
-            </Grid>
-            <Grid item xs={12} md={5}>
-              <ProductDetailsContent styles={styles} data={data} />
-            </Grid>
-          </Grid>
-        </ProductDetailsWrapper>
-      )}
+      <DetailsSection
+        isLoading={isLoading}
+        styles={styles}
+        data={data}
+        setAvailableHeight={setAvailableHeight}
+      />
       <NewProductsList />
       <Footer />
     </>
   );
 };
 
-export default ProductDetails;
+export default ItemDetailsPage;

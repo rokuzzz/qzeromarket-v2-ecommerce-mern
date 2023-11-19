@@ -9,9 +9,9 @@ import useUserShoppingCart from '../../hooks/cart/useUserShoppingCart';
 import { modifyFavorites } from '../../redux/slices/favoritesSlice';
 import useFavoriteStatus from '../../hooks/favorites/useFavoriteStatus';
 import useToken from '../../hooks/common/useToken';
-import CartInteractionButtons from './CartInteractionButtons';
-import ModifyFavoritesButton from './ModifyFavoritesButton';
-import { ButtonsWrapper } from '../../styles/productDetails';
+import CartInteractionButtons from './interaction/CartInteractionButtons';
+import ModifyFavoritesButton from './interaction/ModifyFavoritesButton';
+import { ButtonsWrapper } from '../../styles/detailsSection';
 
 interface ProductDetailsContentProps {
   styles: any;

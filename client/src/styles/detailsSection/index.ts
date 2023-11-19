@@ -2,7 +2,7 @@ import { Box } from '@mui/material';
 import styled from '@mui/material/styles/styled';
 
 // ProductDetails
-export const ProductDetailsWrapper = styled(Box)(({ theme }) => ({
+export const DetailsSectionWrapper = styled(Box)(({ theme }) => ({
   [theme.breakpoints.down('sm')]: {
     margin: '0 0 16px',
     padding: '0px',

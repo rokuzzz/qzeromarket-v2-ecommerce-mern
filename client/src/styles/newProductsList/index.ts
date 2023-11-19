@@ -1,7 +1,7 @@
 import { Box } from '@mui/material';
 import styled from '@mui/material/styles/styled';
 
-export const NewProductsListWrapper = styled(Box)(({ theme }) => ({
+export const LatestArrivalsListWrapper = styled(Box)(({ theme }) => ({
   [theme.breakpoints.up('md')]: {
     margin: '24px 48px',
   },

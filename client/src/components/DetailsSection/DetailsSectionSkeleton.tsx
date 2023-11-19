@@ -1,11 +1,10 @@
 import { Box, Grid, Skeleton, Typography, useMediaQuery } from '@mui/material';
-import styled from '@mui/material/styles/styled';
 import {
   ButtonsWrapper,
   ImageWrapper,
-  ProductDetailsWrapper,
+  DetailsSectionWrapper,
   SquareSkeleton,
-} from '../../styles/productDetails';
+} from '../../styles/detailsSection';
 
 interface ProductDetailsSkeletonProps {
   styles: any;
@@ -42,7 +41,7 @@ const ProductDetailsSkeleton = ({ styles }: ProductDetailsSkeletonProps) => {
   );
 
   return (
-    <ProductDetailsWrapper>
+    <DetailsSectionWrapper>
       <Grid container spacing={2}>
         <Grid item xs={12} md={7}>
           <ImageWrapper>
@@ -105,7 +104,7 @@ const ProductDetailsSkeleton = ({ styles }: ProductDetailsSkeletonProps) => {
           </Box>
         </Grid>
       </Grid>
-    </ProductDetailsWrapper>
+    </DetailsSectionWrapper>
   );
 };
 
