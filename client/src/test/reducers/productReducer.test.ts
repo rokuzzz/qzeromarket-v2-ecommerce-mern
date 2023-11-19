@@ -1,32 +1,39 @@
 import { UpdatedProduct } from './../../types/products';
-import { getProductByID, createProduct, deleteProduct, updateProduct } from './../../redux/slices/productSlice';
-import { fetchFilteredProducts } from "../../redux/slices/productSlice"
-import createTestStore from "../utils/testStore"
+import {
+  getProductByID,
+  createProduct,
+  deleteProduct,
+  updateProduct,
+} from './../../redux/slices/productSlice';
+import { fetchFilteredProducts } from '../../redux/slices/productSlice';
+import createTestStore from '../utils/testStore';
 
-let store = createTestStore()
+let store = createTestStore();
 
 beforeEach(() => {
-  store = createTestStore()
-})
+  store = createTestStore();
+});
 
 describe('test product reducer', () => {
   test('should get a list of products based on the query parameters', async () => {
-    await store.dispatch(fetchFilteredProducts({
-      sort: '&sort=price',
-      order: '&order=asc',
-      page: '&page=1',
-      limit: '&limit=2',
-      categories: '&categories=All'
-    }))
+    await store.dispatch(
+      fetchFilteredProducts({
+        sort: '&sort=price',
+        order: '&order=asc',
+        page: '&page=1',
+        limit: '&limit=2',
+        categories: '&categories=All',
+      })
+    );
     // console.log(store.getState().productReducer.products)
-    expect(store.getState().productReducer.allProducts).toBeDefined()
-  })
+    expect(store.getState().productReducer.allProducts).toBeDefined();
+  });
 
   test('should get product by id', async () => {
-    await store.dispatch(getProductByID('6405e0093f82c42eb099c9fc'))
+    await store.dispatch(getProductByID('645cd922cbb517001417c49d'));
     // console.log(store.getState().productReducer.currentProduct)
-    expect(store.getState().productReducer.currentProduct).toBeDefined()
-  })
+    expect(store.getState().productReducer.currentProduct).toBeDefined();
+  });
 
   // // does not work yet
   // test('should create a new product', async () => {
@@ -56,33 +63,44 @@ describe('test product reducer', () => {
   // })
 
   test('should update the product by id', async () => {
-    await store.dispatch(getProductByID('641332460308e700143c46f2'))
-    const productTitle = store.getState().productReducer.currentProduct.data?.title
+    await store.dispatch(getProductByID('641332460308e700143c46f2'));
+    const productTitle =
+      store.getState().productReducer.currentProduct.data?.title;
 
     const updatedProduct: UpdatedProduct = {
-      title: 'Striped Wool Socks (2-Pack)'
-    }
-    await store.dispatch(updateProduct({
-      id: '641332460308e700143c46f2',
-      updatedProductData: updatedProduct,
-      token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzZGJiZDEyZTkzNjQ2NTJlNGRlMDM3ZiIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTY3ODk3NDE5OCwiZXhwIjoxNjc5MjMzMzk4fQ._QRx4F3aZrQSSn-nxSJ4_SG3mJso3wzLGFlvKfFS7lQ'
-    }))
+      title: 'Striped Wool Socks (2-Pack)',
+    };
+    await store.dispatch(
+      updateProduct({
+        id: '641332460308e700143c46f2',
+        updatedProductData: updatedProduct,
+        token:
+          'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzZGJiZDEyZTkzNjQ2NTJlNGRlMDM3ZiIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTY3ODk3NDE5OCwiZXhwIjoxNjc5MjMzMzk4fQ._QRx4F3aZrQSSn-nxSJ4_SG3mJso3wzLGFlvKfFS7lQ',
+      })
+    );
 
-    await store.dispatch(getProductByID('641332460308e700143c46f2'))
-    const updatedProductTitle = store.getState().productReducer.currentProduct.data?.title
+    await store.dispatch(getProductByID('641332460308e700143c46f2'));
+    const updatedProductTitle =
+      store.getState().productReducer.currentProduct.data?.title;
 
-    expect(productTitle == updatedProductTitle).toBeFalsy()
-  })
+    expect(productTitle == updatedProductTitle).toBeFalsy();
+  });
 
   test('should delete the product and return updated product list', async () => {
-    await store.dispatch(fetchFilteredProducts({}))
-    const prevState = store.getState().productReducer.allProducts
+    await store.dispatch(fetchFilteredProducts({}));
+    const prevState = store.getState().productReducer.allProducts;
 
-    await store.dispatch(deleteProduct({
-      id: '64109a5f17481300140bb28f',
-      token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzZGJiZDEyZTkzNjQ2NTJlNGRlMDM3ZiIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTY3ODk3NDE5OCwiZXhwIjoxNjc5MjMzMzk4fQ._QRx4F3aZrQSSn-nxSJ4_SG3mJso3wzLGFlvKfFS7lQ'
-    }))
+    await store.dispatch(
+      deleteProduct({
+        id: '64109a5f17481300140bb28f',
+        token:
+          'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzZGJiZDEyZTkzNjQ2NTJlNGRlMDM3ZiIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTY3ODk3NDE5OCwiZXhwIjoxNjc5MjMzMzk4fQ._QRx4F3aZrQSSn-nxSJ4_SG3mJso3wzLGFlvKfFS7lQ',
+      })
+    );
 
-    expect(prevState.data.length - store.getState().productReducer.allProducts.data.length).toBe(1)
-  })
-})
+    expect(
+      prevState.data.length -
+        store.getState().productReducer.allProducts.data.length
+    ).toBe(1);
+  });
+});

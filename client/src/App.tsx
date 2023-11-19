@@ -3,10 +3,10 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 import PrivateRoute from './utils/router/PrivateRoute';
-import Home from './pages/Home';
 import EntryPage from './pages/EntryPage';
 import SignUp from './components/authorization/register/SignUp';
-import ProductDetails from './pages/ProductDetails';
+import Store from './pages/Store';
+import ItemDetailsPage from './pages/ItemDetailsPage';
 import Favorites from './pages/Favorites';
 
 function App() {
@@ -14,8 +14,8 @@ function App() {
     <>
       <Routes>
         <Route path='/' element={<PrivateRoute />}>
-          <Route path='/' element={<Home />} />
-          <Route path='/products/:productId' element={<ProductDetails />} />
+          <Route path='/' element={<Store />} />
+          <Route path='/products/:productId' element={<ItemDetailsPage />} />
           <Route path='/favorites' element={<Favorites />} />
         </Route>
         <Route path='/login' element={<EntryPage />} />
