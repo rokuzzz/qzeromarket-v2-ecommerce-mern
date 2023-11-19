@@ -2,9 +2,9 @@ import { useTheme } from '@mui/material/styles';
 import styled from '@mui/material/styles/styled';
 import { Box, Grid, Toolbar, Typography, useMediaQuery } from '@mui/material';
 
-import { Product } from './../../types/products';
-import ProductCard from './ProductCard';
-import ProductCardSkeleton from './ProductCardSkeleton';
+import { Product } from '../../types/products';
+import ProductCard from './StoreCard';
+import ProductCardSkeleton from './StoreCardSkeleton';
 
 const styles = {
   root: {
@@ -63,7 +63,7 @@ const ProductListWrapper = styled(Box)(({ theme }) => ({
     margin: '0 0px',
   },
   [theme.breakpoints.up('md')]: {
-    margin: '0 48px',
+    margin: '0 172px',
   },
 }));
 

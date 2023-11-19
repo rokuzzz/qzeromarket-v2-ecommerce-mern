@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../hooks/common/appHooks';
 import { fetchFilteredProducts } from '../redux/slices/productSlice';
 import Header from '../components/navigation/Header';
-import ProductList from '../components/products/ProductList';
+import ProductList from '../components/StoreList';
 import Footer from '../components/navigation/Footer';
 
 const Home = () => {
