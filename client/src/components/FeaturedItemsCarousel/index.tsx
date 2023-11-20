@@ -1,12 +1,5 @@
 import { useEffect } from 'react';
-import {
-  Box,
-  CircularProgress,
-  ImageList,
-  ImageListItem,
-  ImageListItemBar,
-  Typography,
-} from '@mui/material';
+import { Box, CircularProgress, Typography } from '@mui/material';
 
 import { useAppDispatch, useAppSelector } from '../../hooks/common/appHooks';
 import {
@@ -14,13 +7,12 @@ import {
   fetchFilteredProducts,
 } from '../../redux/slices/productSlice';
 import {
-  FavoritesHorizontalListWrapper,
-  StyledRecommendationList,
-  StyledRecommendationListItem,
+  FeaturedItemsCarouselWrapper,
+  StyledFeaturedCarousel,
 } from '../../styles/favorites';
-import RecommendationItem from './RecommendationItem';
+import FeaturedCard from './FeaturedCard';
 
-const HorizontalRecommendationList = () => {
+const FeaturedItemsCarousel = () => {
   const dispatch = useAppDispatch();
   const { bestsellers } = useAppSelector((state) => state.productReducer);
 
@@ -32,7 +24,7 @@ const HorizontalRecommendationList = () => {
   }, [dispatch]);
 
   return (
-    <FavoritesHorizontalListWrapper>
+    <FeaturedItemsCarouselWrapper>
       <Typography
         variant='h5'
         sx={{
@@ -43,7 +35,7 @@ const HorizontalRecommendationList = () => {
       >
         Find Your Next Favorite
       </Typography>
-      <StyledRecommendationList>
+      <StyledFeaturedCarousel>
         {isLoading ? (
           <Box sx={{ margin: '124px auto' }}>
             <CircularProgress color='secondary' />
@@ -51,13 +43,13 @@ const HorizontalRecommendationList = () => {
         ) : (
           <>
             {data.map((item, index) => (
-              <RecommendationItem data={data} item={item} index={index} />
+              <FeaturedCard data={data} item={item} index={index} />
             ))}
           </>
         )}
-      </StyledRecommendationList>
-    </FavoritesHorizontalListWrapper>
+      </StyledFeaturedCarousel>
+    </FeaturedItemsCarouselWrapper>
   );
 };
 
-export default HorizontalRecommendationList;
+export default FeaturedItemsCarousel;

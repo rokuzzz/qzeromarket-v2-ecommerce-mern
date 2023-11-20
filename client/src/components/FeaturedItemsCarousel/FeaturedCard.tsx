@@ -1,15 +1,16 @@
 import { Link } from 'react-router-dom';
+
 import { StyledRecommendationListItem } from '../../styles/favorites';
 import { Product } from '../../types/products';
 import { ImageListItemBar } from '@mui/material';
 
-interface RecommendationItemProps {
+interface FeaturedCardProps {
   data: Product[];
   item: Product;
   index: number;
 }
 
-const RecommendationItem = ({ data, item, index }: RecommendationItemProps) => {
+const FeaturedCard = ({ data, item, index }: FeaturedCardProps) => {
   return (
     <StyledRecommendationListItem
       key={index}
@@ -40,4 +41,4 @@ const RecommendationItem = ({ data, item, index }: RecommendationItemProps) => {
   );
 };
 
-export default RecommendationItem;
+export default FeaturedCard;
