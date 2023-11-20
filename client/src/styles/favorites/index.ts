@@ -72,7 +72,7 @@ export const FavoritePriceTypography = styled(Typography)(({ theme }) => ({
 }));
 
 // HorizontalRecommendationList
-export const FavoritesHorizontalListWrapper = styled(Box)(({ theme }) => ({
+export const FeaturedItemsCarouselWrapper = styled(Box)(({ theme }) => ({
   [theme.breakpoints.down('md')]: {
     margin: '0 16px 32px 16px',
   },
@@ -81,7 +81,7 @@ export const FavoritesHorizontalListWrapper = styled(Box)(({ theme }) => ({
   },
 }));
 
-export const StyledRecommendationList = styled(ImageList)({
+export const StyledFeaturedCarousel = styled(ImageList)({
   display: 'flex',
   flexDirection: 'row',
   overflowX: 'scroll',

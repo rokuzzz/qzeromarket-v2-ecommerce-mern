@@ -1,11 +1,11 @@
 import { Toolbar } from '@mui/material';
 
-import Header from '../components/navigation/Header';
-import FavoritesList from '../components/favorites/FavoritesList';
 import { useAppSelector } from '../hooks/common/appHooks';
 import useToken from '../hooks/common/useToken';
 import useFetchUserFavorites from '../hooks/favorites/useFetchUserFavorites';
-import HorizontalRecommendationList from '../components/favorites/HorizontalRecommendationList';
+import Header from '../components/navigation/Header';
+import FavoritesList from '../components/FavoritesList';
+import FeaturedItemsCarousel from '../components/FeaturedItemsCarousel';
 import Footer from '../components/navigation/Footer';
 
 const Favorites = () => {
@@ -21,7 +21,7 @@ const Favorites = () => {
       <Header />
       <Toolbar sx={{ height: '60px' }} />
       <FavoritesList />
-      <HorizontalRecommendationList />
+      <FeaturedItemsCarousel />
       <Footer />
     </>
   );

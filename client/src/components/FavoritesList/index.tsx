@@ -1,5 +1,6 @@
 import { useTheme } from '@mui/material/styles';
-import { Box, Grid, Typography, useMediaQuery } from '@mui/material';
+import { Grid, Typography, useMediaQuery } from '@mui/material';
+
 import { useAppSelector } from '../../hooks/common/appHooks';
 import FavoritesCard from './FavoritesCard';
 import FavoritesCardSkeleton from './FavoritesCardSkeleton';
