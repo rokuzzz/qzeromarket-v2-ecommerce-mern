@@ -1,7 +1,8 @@
-import { Button, Grid, Typography } from '@mui/material';
+import { Grid, Typography } from '@mui/material';
 import { Link } from 'react-router-dom';
 
-import FormInput from '../FormInput';
+import FormInput from '../common/FormInput';
+import AuthSubmitButton from '../common/AuthSubmitButton';
 
 interface FormData {
   firstname: string;
@@ -89,17 +90,7 @@ const RegisterForm = ({
           </Grid>
         ))}
         <Grid item xs={12} sx={{ mt: 2 }}>
-          <Button
-            type='submit'
-            fullWidth
-            size='large'
-            color='primary'
-            variant='contained'
-            disabled={isLoading ? true : false}
-            sx={{ mb: 1 }}
-          >
-            Sign up
-          </Button>
+          <AuthSubmitButton isLoading={isLoading} buttonText='Sign up' />
           <Typography
             color={'text.secondary'}
             sx={isDownSmall ? { position: 'relative', zIndex: 3 } : {}}

@@ -1,7 +1,8 @@
-import { Button, Grid, Typography } from '@mui/material';
+import { Grid, Typography } from '@mui/material';
 import React from 'react';
-import FormInput from '../FormInput';
+import FormInput from '../common/FormInput';
 import { Link } from 'react-router-dom';
+import AuthSubmitButton from '../common/AuthSubmitButton';
 
 interface LoginFormProps {
   onSubmit: React.FormEventHandler<HTMLFormElement> | undefined;
@@ -10,7 +11,7 @@ interface LoginFormProps {
   password: string;
   setPassword: (value: React.SetStateAction<string>) => void;
   isDownSmall: boolean;
-  isLoading: boolean
+  isLoading: boolean;
 }
 
 const LoginForm = ({
@@ -20,7 +21,7 @@ const LoginForm = ({
   password,
   setPassword,
   isDownSmall,
-  isLoading
+  isLoading,
 }: LoginFormProps) => {
   return (
     <form onSubmit={onSubmit}>
@@ -55,17 +56,7 @@ const LoginForm = ({
           />
         </Grid>
         <Grid item xs={12} sx={{ mt: 2 }}>
-          <Button
-            type='submit'
-            fullWidth
-            size='large'
-            color='primary'
-            variant='contained'
-            disabled={isLoading ? true : false}
-            sx={{ mb: 1 }}
-          >
-            Sign in
-          </Button>
+          <AuthSubmitButton isLoading={isLoading} buttonText='Sign in' />
           <Typography
             color={'text.secondary'}
             sx={isDownSmall ? { position: 'relative', zIndex: 3 } : {}}
