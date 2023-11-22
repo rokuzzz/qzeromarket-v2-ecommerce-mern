@@ -3,11 +3,11 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 import PrivateRoute from './utils/router/PrivateRoute';
-import EntryPage from './pages/EntryPage';
-import SignUp from './components/authorization/register/SignUp';
 import Store from './pages/Store';
 import ItemDetailsPage from './pages/ItemDetailsPage';
 import Favorites from './pages/Favorites';
+import SignIn from './pages/SignIn';
+import SignUp from './pages/SignUp';
 
 function App() {
   return (
@@ -18,7 +18,7 @@ function App() {
           <Route path='/products/:productId' element={<ItemDetailsPage />} />
           <Route path='/favorites' element={<Favorites />} />
         </Route>
-        <Route path='/login' element={<EntryPage />} />
+        <Route path='/login' element={<SignIn />} />
         <Route path='/register' element={<SignUp />} />
       </Routes>
       <ToastContainer limit={2} />
