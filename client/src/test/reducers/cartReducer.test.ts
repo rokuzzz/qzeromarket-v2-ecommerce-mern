@@ -3,7 +3,7 @@ import {
   modifyCart,
   countTotalPrice,
   cartReducer,
-} from './../../redux/slices/cartSlice';
+} from '../../modules/cart/redux/cartSlice';
 import createTestStore from '../utils/testStore';
 
 let store = createTestStore();

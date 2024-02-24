@@ -1,11 +1,11 @@
-import { UpdatedProduct } from './../../types/products';
+import { UpdatedProduct } from 'src/modules/common/redux/productSliceTypes';
 import {
   getProductByID,
   createProduct,
   deleteProduct,
   updateProduct,
-} from './../../redux/slices/productSlice';
-import { fetchFilteredProducts } from '../../redux/slices/productSlice';
+} from '../../modules/common/redux/productSlice';
+import { fetchFilteredProducts } from '../../modules/common/redux/productSlice';
 import createTestStore from '../utils/testStore';
 
 let store = createTestStore();

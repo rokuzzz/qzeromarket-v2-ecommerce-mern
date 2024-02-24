@@ -2,7 +2,7 @@ import {
   getAllFavorites,
   getUsersFavorites,
   modifyFavorites,
-} from '../../redux/slices/favoritesSlice';
+} from '../../modules/favorites/redux/favoritesSlice';
 import createTestStore from '../utils/testStore';
 
 let store = createTestStore();

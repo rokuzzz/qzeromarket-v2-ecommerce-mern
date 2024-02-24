@@ -1,8 +1,8 @@
-import { favoritesReducer } from './../../redux/slices/favoritesSlice';
-import { cartReducer } from './../../redux/slices/cartSlice';
-import { productReducer } from './../../redux/slices/productSlice';
+import { favoritesReducer } from '../../modules/favorites/redux/favoritesSlice';
+import { cartReducer } from '../../modules/cart/redux/cartSlice';
+import { productReducer } from '../../modules/common/redux/productSlice';
 import { configureStore } from '@reduxjs/toolkit';
-import { userReducer } from '../../redux/slices/userSlice';
+import { userReducer } from '../../modules/personal-information/redux/userSlice';
 
 const createTestStore = () => {
   const store = configureStore({
