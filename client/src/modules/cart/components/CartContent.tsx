@@ -7,8 +7,8 @@ import { modifyCart } from '../redux/cartSlice';
 import CartItem from './CartItem';
 
 interface CartContentProps {
-  cartItems: ProductInCart[] | undefined;
-  totalPrice: number | undefined;
+  cartItems?: ProductInCart[];
+  totalPrice?: number;
 }
 
 const CartContent = ({

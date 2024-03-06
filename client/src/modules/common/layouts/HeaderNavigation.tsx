@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Theme, useTheme } from '@mui/material/styles';
-import { Toolbar, IconButton, Box } from '@mui/material';
+import { Toolbar, IconButton, Box, Button, Grid } from '@mui/material';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import ShoppingBagIcon from '@mui/icons-material/ShoppingBag';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
@@ -12,6 +12,13 @@ import CartDrawer from '../../cart/CartDrawer';
 interface HeaderNavigationProps {
   isDownMd: boolean;
 }
+
+const linkStyle: React.CSSProperties | undefined = {
+  textDecoration: 'none',
+  color: '#0B1215',
+  textTransform: 'uppercase',
+  fontWeight: 500,
+};
 
 const HeaderNavigation = ({ isDownMd }: HeaderNavigationProps) => {
   const theme: Theme = useTheme();
@@ -27,49 +34,50 @@ const HeaderNavigation = ({ isDownMd }: HeaderNavigationProps) => {
     <Toolbar
       sx={
         isDownMd
-          ? { margin: '4px 16px 0px 16px', p: 0 }
-          : { margin: '4px 24px 0px 24px', p: 0 }
+          ? { margin: '4px 16px 0px 16px', padding: '0px' }
+          : { margin: '4px 148px 0px 164px', padding: '12px 0px' }
       }
     >
-      <Link
-        to={'/'}
-        style={{ textDecoration: 'none', width: '20px' }}
-        onMouseEnter={handleMouseEnter}
-        onMouseLeave={handleMouseLeave}
-      >
-        <AppLogo
-          key={new Date().getTime()}
-          fill={
-            isHovered
-              ? theme.palette.secondary.main
-              : theme.palette.primary.contrastText
-          }
-          style={{ width: '60px' }}
-        />
-      </Link>
-      <Box sx={{ flexGrow: 1 }} />
-      <Box sx={{ display: { xs: 'none', sm: 'flex' } }}>
-        <Link
-          to={'/favorites'}
-          style={{ textDecoration: 'none', color: 'inherit' }}
-        >
-          <IconButton size='large' color='inherit' aria-label='profile'>
-            <FavoriteIcon />
-          </IconButton>
-        </Link>
-        <IconButton
-          size='large'
-          color='inherit'
-          aria-label='cart'
-          onClick={toggleCartOpen}
-        >
-          <ShoppingBagIcon />
-        </IconButton>
-        <CartDrawer cartIsOpen={cartIsOpen} setCartIsOpen={setCartIsOpen} />
-        <IconButton size='large' color='inherit' aria-label='profile'>
-          <AccountCircleIcon />
-        </IconButton>
-      </Box>
+      <Grid container alignItems='center'>
+        <Grid item xs={3} container justifyContent='space-between'>
+          <Link to={'/'} style={linkStyle}>
+            Home
+          </Link>
+          <Link to={'/'} style={linkStyle}>
+            Store
+          </Link>
+          <Link to={'/'} style={linkStyle}>
+            About
+          </Link>
+        </Grid>
+
+        <Grid item xs={6} container justifyContent='center'>
+          <Link
+            to={'/'}
+            style={{ textDecoration: 'none', width: '100px' }}
+            onMouseEnter={handleMouseEnter}
+            onMouseLeave={handleMouseLeave}
+          >
+            <AppLogo
+              key={new Date().getTime()}
+              fill={isHovered ? theme.palette.secondary.main : '#0B1215'}
+              style={{ width: '100px' }}
+            />
+          </Link>
+        </Grid>
+
+        <Grid item xs={3} container justifyContent='space-between'>
+          <Link to={'/'} style={linkStyle}>
+            Profile
+          </Link>
+          <Link to={'/favorites'} style={linkStyle}>
+            Favorites
+          </Link>
+          <Link to={'/'} style={linkStyle}>
+            Cart
+          </Link>
+        </Grid>
+      </Grid>
     </Toolbar>
   );
 };

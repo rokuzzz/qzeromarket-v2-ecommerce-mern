@@ -30,7 +30,15 @@ const Header = ({ selectedTab, handleTabChange }: HeaderProps) => {
 
   return (
     <HideOnScroll>
-      <AppBar>
+      <AppBar
+        sx={{
+          backgroundColor: '#ffffff',
+          width: '100vw',
+          margin: 0,
+          padding: '0px',
+          boxSizing: 'border-box',
+        }}
+      >
         <HeaderNavigation isDownMd={isDownMd} />
         {hasTabs && (
           <HeaderTabs

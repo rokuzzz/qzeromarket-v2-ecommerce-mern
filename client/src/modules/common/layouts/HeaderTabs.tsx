@@ -18,10 +18,12 @@ const HeaderTabs = ({ value, onChange, isUpMd, isDownSm }: HeaderTabsProps) => {
   return (
     <Box
       sx={{
-        maxWidth: '100%',
+        width: '100vw',
+        maxWidth: '100vw',
         margin: isDownSm ? '0 16px' : isUpMd ? '0 8px' : '0px',
         display: 'flex',
         justifyContent: 'center',
+        backgroundColor: '#0B1215',
       }}
     >
       <Tabs
