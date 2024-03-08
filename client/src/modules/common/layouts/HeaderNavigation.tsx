@@ -39,7 +39,7 @@ const HeaderNavigation = ({ isDownMd }: HeaderNavigationProps) => {
       }
     >
       <Grid container alignItems='center'>
-        <Grid item xs={3} container justifyContent='space-between'>
+        <Grid item md={4} lg={3} container justifyContent='space-between'>
           <Link to={'/'} style={linkStyle}>
             Home
           </Link>
@@ -51,7 +51,7 @@ const HeaderNavigation = ({ isDownMd }: HeaderNavigationProps) => {
           </Link>
         </Grid>
 
-        <Grid item xs={6} container justifyContent='center'>
+        <Grid item md={4} lg={6} container justifyContent='center'>
           <Link
             to={'/'}
             style={{ textDecoration: 'none', width: '100px' }}
@@ -66,12 +66,12 @@ const HeaderNavigation = ({ isDownMd }: HeaderNavigationProps) => {
           </Link>
         </Grid>
 
-        <Grid item xs={3} container justifyContent='space-between'>
+        <Grid item md={4} lg={3} container justifyContent='space-between'>
           <Link to={'/'} style={linkStyle}>
             Profile
           </Link>
           <Link to={'/favorites'} style={linkStyle}>
-            Favorites
+            Favs
           </Link>
           <Link to={'/'} style={linkStyle}>
             Cart
