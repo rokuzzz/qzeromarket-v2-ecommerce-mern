@@ -2,10 +2,10 @@ import { Toolbar, useMediaQuery, useTheme } from '@mui/material';
 import { useState } from 'react';
 
 import useItemDetails from './hooks/useItemDetails';
-import Header from 'src/modules/common/layouts/Header';
+import Header from 'src/modules/navigation/Header';
 import DetailsSection from 'src/modules/item-details/components/details-section/DetailsSection';
 import LatestArrivalsList from 'src/modules/item-details/components/LatestArrivalsList';
-import Footer from 'src/modules/common/layouts/Footer';
+import Footer from 'src/modules/navigation/Footer';
 
 const ItemDetails = () => {
   const theme = useTheme();

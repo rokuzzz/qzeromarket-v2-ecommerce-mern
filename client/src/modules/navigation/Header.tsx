@@ -1,8 +1,8 @@
 import { AppBar, Slide, useMediaQuery, useTheme } from '@mui/material';
 import useScrollTrigger from '@mui/material/useScrollTrigger';
 
-import HeaderNavigation from './HeaderNavigation';
-import HeaderTabs from './HeaderTabs';
+import HeaderNavigation from './components/HeaderNavigation';
+import HeaderTabs from './components/HeaderTabs';
 
 function HideOnScroll({ children }: { children: React.ReactElement }) {
   const trigger = useScrollTrigger();

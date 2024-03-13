@@ -2,9 +2,9 @@ import { useEffect, useState } from 'react';
 
 import { useAppDispatch, useAppSelector } from '../common/hooks/appHooks';
 import { fetchFilteredProducts } from '../common/redux/productSlice';
-import Header from '../common/layouts/Header';
+import Header from '../navigation/Header';
 import StoreList from './components/StoreList';
-import Footer from '../common/layouts/Footer';
+import Footer from '../navigation/Footer';
 
 const StorePage = () => {
   const { data, isLoading } = useAppSelector(
