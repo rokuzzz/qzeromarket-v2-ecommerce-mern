@@ -1,17 +1,13 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Theme, useTheme } from '@mui/material/styles';
+import { Theme, styled, useTheme } from '@mui/material/styles';
 import { Toolbar, IconButton, Box, Button, Grid } from '@mui/material';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import ShoppingBagIcon from '@mui/icons-material/ShoppingBag';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 
-import { ReactComponent as AppLogo } from '../assets/qzeromarket-logo.svg';
+import { ReactComponent as AppLogo } from 'src/modules/common/assets/qzeromarket-logo.svg';
 import CartDrawer from '../../cart/CartDrawer';
-
-interface HeaderNavigationProps {
-  isDownMd: boolean;
-}
 
 const linkStyle: React.CSSProperties | undefined = {
   textDecoration: 'none',
@@ -20,7 +16,23 @@ const linkStyle: React.CSSProperties | undefined = {
   fontWeight: 500,
 };
 
-const HeaderNavigation = ({ isDownMd }: HeaderNavigationProps) => {
+const ToggleCartButton = styled(Button)({
+  fontSize: '16px',
+  fontFamily:
+    "-apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif",
+  color: '#0B1215',
+  lineHeight: 1,
+  textTransform: 'uppercase',
+  fontWeight: 500,
+  padding: 0,
+  minWidth: 'auto',
+  minHeight: 'auto',
+  '&:hover': {
+    backgroundColor: 'transparent',
+  },
+});
+
+const NavBarDesktop = () => {
   const theme: Theme = useTheme();
 
   const [isHovered, setIsHovered] = useState(false);
@@ -31,13 +43,7 @@ const HeaderNavigation = ({ isDownMd }: HeaderNavigationProps) => {
   const toggleCartOpen = () => setCartIsOpen(!cartIsOpen);
 
   return (
-    <Toolbar
-      sx={
-        isDownMd
-          ? { margin: '4px 16px 0px 16px', padding: '0px' }
-          : { margin: '4px 148px 0px 164px', padding: '12px 0px' }
-      }
-    >
+    <Toolbar sx={{ margin: '4px 148px 0px 164px', padding: '12px 0px' }}>
       <Grid container alignItems='center'>
         <Grid item md={4} lg={3} container justifyContent='space-between'>
           <Link to={'/'} style={linkStyle}>
@@ -73,13 +79,14 @@ const HeaderNavigation = ({ isDownMd }: HeaderNavigationProps) => {
           <Link to={'/favorites'} style={linkStyle}>
             Favs
           </Link>
-          <Link to={'/'} style={linkStyle}>
+          <ToggleCartButton variant={'text'} onClick={toggleCartOpen}>
             Cart
-          </Link>
+          </ToggleCartButton>
+          <CartDrawer cartIsOpen={cartIsOpen} setCartIsOpen={setCartIsOpen} />
         </Grid>
       </Grid>
     </Toolbar>
   );
 };
 
-export default HeaderNavigation;
+export default NavBarDesktop;
