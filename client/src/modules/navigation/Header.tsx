@@ -33,7 +33,7 @@ const Header = ({ selectedTab, handleTabChange }: HeaderProps) => {
       <AppBar
         sx={{
           backgroundColor: '#ffffff',
-          width: '100vw',
+          width: '100%',
           margin: 0,
           padding: '0px',
           boxSizing: 'border-box',
