@@ -1,10 +1,7 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Theme, useTheme } from '@mui/material/styles';
-import { Toolbar, IconButton, Box, Button, Grid } from '@mui/material';
-import FavoriteIcon from '@mui/icons-material/Favorite';
-import ShoppingBagIcon from '@mui/icons-material/ShoppingBag';
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import { Toolbar, Grid } from '@mui/material';
 
 import { ReactComponent as AppLogo } from 'src/modules/common/assets/qzeromarket-logo.svg';
 import CartDrawer from 'src/modules/cart/CartDrawer';
