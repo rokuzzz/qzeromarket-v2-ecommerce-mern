@@ -18,7 +18,7 @@ const NavBarDesktop = () => {
   const toggleCartOpen = () => setCartIsOpen(!cartIsOpen);
 
   return (
-    <Toolbar sx={{ margin: '4px 148px 0px 164px', padding: '12px 0px' }}>
+    <Toolbar sx={{ margin: '4px 148px 0px', padding: '12px 0px' }}>
       <Grid container alignItems='center'>
         <Grid item md={4} lg={3} container justifyContent='space-between'>
           <Link to={'/'} style={linkStyle}>

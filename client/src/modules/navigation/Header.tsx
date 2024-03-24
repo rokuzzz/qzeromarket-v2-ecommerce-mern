@@ -1,8 +1,9 @@
 import { AppBar, Slide, useMediaQuery, useTheme } from '@mui/material';
 import useScrollTrigger from '@mui/material/useScrollTrigger';
 
-import HeaderNavigation from './components/NavBarDesktop';
 import HeaderTabs from './components/HeaderTabs';
+import NavBarDesktop from './components/NavBarDesktop';
+import NavBarMobile from './components/NavBarMobile';
 
 function HideOnScroll({ children }: { children: React.ReactElement }) {
   const trigger = useScrollTrigger();
@@ -39,7 +40,7 @@ const Header = ({ selectedTab, handleTabChange }: HeaderProps) => {
           boxSizing: 'border-box',
         }}
       >
-        {isDownMd ? <></> : <HeaderNavigation />}
+        {isDownMd ? <NavBarMobile /> : <NavBarDesktop />}
         {hasTabs && (
           <HeaderTabs
             value={selectedTab}
